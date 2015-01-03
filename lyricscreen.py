@@ -25,7 +25,8 @@ if __name__=='__main__':
 	main()
 """
 
-from server import WebSocketServer
+from wsserver import WebSocketServer
+from httpserver import WebInterfaceServerManager
 from playlist import Playlist
 
 """
@@ -60,3 +61,7 @@ for s in p.songs:
 # Start websocket server for web interface connections
 s = WebSocketServer()
 s.start()
+
+# Start the http server for serving the webapp pages
+h = WebInterfaceServerManager()
+h.start()

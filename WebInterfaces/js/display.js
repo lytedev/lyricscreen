@@ -43,7 +43,7 @@
 			setText(e.data.substring(6).trim());
 		}
 
-		if (e.data.substring(0, 6) == "display refresh") {
+		if (e.data.substring(0, 6) == "display refresh ") {
 			setText(e.data.substring(6).trim());
 		}
 	}
