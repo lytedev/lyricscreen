@@ -1,0 +1,1051 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"conn",
+				"connString"
+			],
+			[
+				"hand",
+				"handshake"
+			],
+			[
+				"pre",
+				"pre-line"
+			],
+			[
+				"table",
+				"table-cell"
+			],
+			[
+				"p",
+				"pre-line"
+			],
+			[
+				"key",
+				"array_key_exists"
+			],
+			[
+				"phone_typ",
+				"phone_type_id"
+			],
+			[
+				"phon",
+				"phone_type_id"
+			],
+			[
+				"player",
+				"player2"
+			],
+			[
+				"plyae",
+				"player2"
+			],
+			[
+				"Stt",
+				"SettingsEncoder"
+			],
+			[
+				"Settings",
+				"SettingsEncoder"
+			],
+			[
+				"Lyric",
+				"LyricScreenWidget"
+			],
+			[
+				"Lyr",
+				"LyricScreenWidget"
+			],
+			[
+				"Lyrics",
+				"LyricScreenWindow"
+			],
+			[
+				"verse",
+				"verseName"
+			],
+			[
+				"ver",
+				"verseName"
+			],
+			[
+				"archive",
+				"archive_csv"
+			],
+			[
+				"archi",
+				"archive_dir"
+			],
+			[
+				"arhi",
+				"archive_dir"
+			],
+			[
+				"IN",
+				"InputOption"
+			],
+			[
+				"Input",
+				"InputOption"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Client/sass/client.scss",
+			"settings":
+			{
+				"buffer_size": 544,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Client/client.html",
+			"settings":
+			{
+				"buffer_size": 250,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Client/js/client.js",
+			"settings":
+			{
+				"buffer_size": 891,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server.py",
+			"settings":
+			{
+				"buffer_size": 889,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "song.py",
+			"settings":
+			{
+				"buffer_size": 2143,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lyricscreen.py",
+			"settings":
+			{
+				"buffer_size": 391,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Python",
+	"command_palette":
+	{
+		"height": 81.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"scss",
+				"Set Syntax: SCSS"
+			],
+			[
+				"keybi",
+				"Preferences: Key Bindings - User"
+			],
+			[
+				"keybin",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"hex",
+				"Hex Viewer: Toggle Hex View"
+			],
+			[
+				"remp",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"sidebar",
+				"View: Toggle Side Bar"
+			],
+			[
+				"pack",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"minimap",
+				"View: Toggle Minimap"
+			],
+			[
+				"sett",
+				"Preferences: Settings - Default"
+			],
+			[
+				"settings",
+				"Preferences: Settings - User"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"reinde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"status",
+				"View: Toggle Status Bar"
+			],
+			[
+				"minmap",
+				"View: Toggle Minimap"
+			],
+			[
+				"sideb",
+				"View: Toggle Side Bar"
+			],
+			[
+				"menu",
+				"View: Toggle Menu"
+			],
+			[
+				"minim",
+				"View: Toggle Minimap"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"toggl side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"setting",
+				"Preferences: Settings - User"
+			],
+			[
+				"pref",
+				"Preferences: Settings - Default"
+			],
+			[
+				"prvo",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"packresv",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"packares",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"enu",
+				"Preferences: Settings - User"
+			],
+			[
+				"stat",
+				"View: Toggle Status Bar"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"setti def",
+				"Preferences: Settings - Default"
+			],
+			[
+				"setti user",
+				"Preferences: Settings - User"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Daniel/Documents/code/python/lyricscreen",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/css/maps",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/js",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/sass"
+	],
+	"file_history":
+	[
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/gulpfile.js",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/css/client.css",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/build/rev-manifest.json",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/sass/client.scss",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/client.html",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Client/css/client-3d3cae18.css",
+		"/C/Users/Daniel/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/Daniel/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/map.py",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/Songs/Glory.txt",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/lyricscreen.py",
+		"/C/Users/Daniel/Documents/code/python/lyricscreen/server.py",
+		"/C/Users/Public/Applications/Steam/SteamApps/common/Terraria/serverconfig.txt",
+		"/C/Users/Daniel/Documents/My Games/Terraria/Players/Dat_Booty.plr",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/playlist.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Songs/I Have Decided to Follow Jesus.txt",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Songs/Desert Song.txt",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Songs/Dance With Me.txt",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/map.py",
+		"/C/Users/Public/Applications/xampp/htdocs/vinehash/schema/2013-08-27_14-29-01_extended-token-columns_daniel.sql",
+		"/C/Users/Daniel/Documents/scratch.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/settings.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/lyricscreen.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/verse.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/song.py",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Client/client.html",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Client/client.css",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/Client/client.js",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/server.py",
+		"/C/Users/Daniel/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Daniel/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/Public/Games/World of Warcraft/Interface/AddOns/Tukui/Tukui.xml",
+		"/C/Users/Public/Games/World of Warcraft/Interface/AddOns/Tukui/developer/test.lua",
+		"/C/Users/Public/Games/World of Warcraft/Interface/AddOns/Tukui/developer/commands.lua",
+		"/C/Users/Public/Games/World of Warcraft/Interface/AddOns/Tukui/Tukui.toc",
+		"/C/Users/Public/Games/Minecraft/server.properties",
+		"/C/Users/Daniel/Documents/Repositories/python/lyricscreen/viewer.html",
+		"/C/Users/Public/Applications/xampp/htdocs/war/war.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/schema.sql",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/footer.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/header.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/index.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/people.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/calls.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/data.php",
+		"/C/Users/Public/Applications/xampp/htdocs/test.php",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/song.py",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/schema.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/database.php",
+		"/C/Users/Daniel/Documents/index.html",
+		"/C/Users/Daniel/AppData/Local/Temp/7zE5F9C.tmp/index.html",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/lyricscreen.sublime-project",
+		"/C/Users/Public/Applications/xampp/htdocs/war/index.html",
+		"/C/Users/Public/Applications/xampp/htdocs/war/index.php",
+		"/C/Users/Public/Applications/xampp/htdocs/contacts/assets/js/jquery.min.js",
+		"/C/Users/Public/Applications/xampp/htdocs/war/deck.php",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/settings.py",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/lyricscreen.py",
+		"/C/Users/Daniel/AppData/Roaming/Sublime Text 3/Packages/Default/exec.py",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/map.py",
+		"/C/Users/Daniel/Google Drive/projects/python/lyricscreen/verse.py",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Glory.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Rescue.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Desert Song.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/The More I Seek You.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Trading My Sorrows.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/I See Heaven.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/So Good to Me.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Joyful Joyful We Adore Thee.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Bless The Lord.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Better is One Day.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/I Love You Lord.txt",
+		"/C/Users/Public/Applications/SublimeText/I Belong to You.txt",
+		"/C/Users/Public/Applications/SublimeText/You're Beautiful.txt",
+		"/C/Users/Public/Applications/SublimeText/Dance With Me.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/This is the Air I Breathe.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/You're Beautiful.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/You Alone.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Your Love Oh Lord.txt",
+		"/C/Users/Public/Applications/SublimeText/The More I Seek You.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Great I Am.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Come Thou Fount.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Still.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/Christ is Risen.txt",
+		"/C/Users/Daniel/Google Drive/projects/LyricScreen/LyricScreen/bin/Debug/Songs/How Great Thou Art.txt",
+		"/C/Users/Public/Applications/SublimeText/So Good to Me.txt",
+		"/C/Users/Public/Applications/SublimeText/Bless The Lord.txt",
+		"/C/Users/Public/Applications/SublimeText/Great I Am.txt",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/config/base.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/laravel/framework/src/Illuminate/Foundation/ConfigPublisher.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/swiftmailer/swiftmailer/test-suite/config.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/controllers/DevController.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/composer.json",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/At the Foot of the Cross.txt",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/In Christ Alone.txt",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/You Alone.txt",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/I Stand Amazed.txt",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/Amazing Grace.txt",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/views/layout.blade.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/nesbot/carbon/tests/DayOfWeekModifiersTest.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/nikic/php-parser/lib/PHPParser/Node/Expr/Yield.php",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/You Alone Are God.txt",
+		"/C/Users/Daniel/Documents/Repositories/LyricScreen/LyricScreen/bin/Debug/Songs/Glory.txt",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/nesbot/carbon/tests/IsTest.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/public/index.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/CONTRIBUTING.md",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/models/Site.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/commands/addcsv.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/swiftmailer/swiftmailer/tests/unit/Swift/Plugins/AntiFloodPluginTest.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/public/css/custom.css",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/routes.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/models/Movement.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/views/dashboard.blade.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/commands/top1mcron.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/commands/tempcycle.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/database/migrations/2013_12_05_174003_create_initial_tables.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/laravel/framework/src/Illuminate/Foundation/Application.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/symfony/console/Symfony/Component/Console/Input/InputOption.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/.gitignore",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/start/artisan.php",
+		"/C/Users/Public/Applications/xampp/top-1m.csv",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/archive/csv/2013-12-09_top-1m.csv",
+		"/C/Users/Public/Applications/xampp/apache/conf/extra/httpd-vhosts.conf",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/config/base.php.example",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/vendor/laravel/framework/src/Illuminate/Database/Connection.php",
+		"/C/Users/Public/Applications/xampp/htdocs/miyagi/app/config/database.php",
+		"/C/Users/Public/Applications/xampp/mysql/bin/my.ini"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 120.0,
+		"where_history":
+		[
+			"<open folders>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"div",
+			", f, g",
+			"scripts",
+			"cssOutput",
+			"config.cssOutput + \"",
+			"78",
+			"headers[",
+			"clients",
+			"tab",
+			"center",
+			"call",
+			"+",
+			"		.'",
+			",  ",
+			"\n	",
+			"phone",
+			"AUTO_INCREMENT=",
+			"; )",
+			"player2",
+			"\", \"",
+			"self",
+			"))\n",
+			"Q",
+			"self10",
+			"tab",
+			"Glory",
+			"verses",
+			"print",
+			"state.genVerseNum",
+			"verse",
+			"l.strip()",
+			"line",
+			"pass",
+			"inHeader",
+			"self",
+			"\n		",
+			"\\",
+			"fold",
+			"tab",
+			"scroll",
+			",\n",
+			"doth",
+			"’",
+			", \n",
+			".\n",
+			",\n",
+			" i ",
+			"i",
+			"Chorus",
+			"Joy",
+			"Chorus",
+			"so good",
+			"So Good",
+			"Great I am",
+			"’",
+			"[CHORUS]",
+			"O ",
+			"I live, I live",
+			";",
+			"\n\n",
+			"start",
+			"current_rank",
+			"addcs",
+			"main",
+			"public_path",
+			"assets/",
+			"http",
+			"//",
+			"/admin",
+			"title",
+			"site_url",
+			"\n\n",
+			"\n",
+			"App::",
+			"timestamp =",
+			"error",
+			"F9U4nB7hZsM",
+			"date",
+			"');\n",
+			"memory",
+			"sys_get_temp_dir",
+			"basename",
+			"addcsv",
+			"okefokefokefok",
+			"pathname",
+			"memory_engine",
+			"memory",
+			"options",
+			"OPTIONS",
+			"PDO(",
+			"$query",
+			"false",
+			"put your unique phrase here",
+			"password_here",
+			"username_here",
+			"Im",
+			"Maker Of Heaven\n",
+			"Maker",
+			"Of",
+			"ssl",
+			"openssl"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"asset",
+			"",
+			"/"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Client/sass/client.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 544,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								333,
+								333
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SCSS/SCSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Client/client.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								171,
+								171
+							],
+							[
+								195,
+								195
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Client/js/client.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 891,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								412,
+								412
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "server.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30,
+								30
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "song.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2143,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "lyricscreen.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 391,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								357,
+								357
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.exec":
+	{
+		"height": 271.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.hex_viewer_inspector":
+	{
+		"height": 98.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"project": "lyricscreen.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				".txt",
+				"Songs\\Glory.txt"
+			],
+			[
+				"sett",
+				"settings.py"
+			],
+			[
+				"ly",
+				"lyricscreen.py"
+			],
+			[
+				"verse",
+				"verse.py"
+			],
+			[
+				"dance",
+				"Songs\\Dance With Me.txt"
+			],
+			[
+				"lyri",
+				"lyricscreen.py"
+			],
+			[
+				"song",
+				"song.py"
+			],
+			[
+				"map",
+				"map.py"
+			],
+			[
+				"sche",
+				"C:\\Users\\Public\\Applications\\xampp\\htdocs\\contacts\\schema.sql"
+			],
+			[
+				"",
+				"song.py"
+			],
+			[
+				"sng",
+				"song.py"
+			],
+			[
+				"lyr",
+				"lyricscreen.py"
+			],
+			[
+				"sub",
+				"lyricscreen.sublime-project"
+			],
+			[
+				"l",
+				"lyricscreen.py"
+			],
+			[
+				"glory",
+				"Glory.txt"
+			],
+			[
+				"ibel",
+				"I Belong to You.txt"
+			],
+			[
+				"re",
+				"C:\\Users\\Daniel\\Google Drive\\projects\\LyricScreen\\LyricScreen\\readme.md"
+			],
+			[
+				"you",
+				"You're Beautiful.txt"
+			],
+			[
+				"themo",
+				"The More I Seek You.txt"
+			],
+			[
+				"this",
+				"This is the Air I Breathe.txt"
+			],
+			[
+				"ilove",
+				"I Love You Lord.txt"
+			],
+			[
+				"bette",
+				"Better is One Day.txt"
+			],
+			[
+				"sog",
+				"So Good to Me.txt"
+			],
+			[
+				"joyfu",
+				"Joyful Joyful We Adore Thee.txt"
+			],
+			[
+				"bless",
+				"Bless The Lord.txt"
+			],
+			[
+				"come",
+				"Come Thou Fount.txt"
+			],
+			[
+				"sogo",
+				"So Good to Me.txt"
+			],
+			[
+				"great",
+				"Great I Am.txt"
+			],
+			[
+				"confbas",
+				"config\\base.php"
+			],
+			[
+				"ista",
+				"C:\\Users\\Daniel\\Documents\\Repositories\\LyricScreen\\LyricScreen\\bin\\Debug\\Songs\\I Stand Amazed.txt"
+			],
+			[
+				"control",
+				"app\\controllers\\DevController.php"
+			],
+			[
+				"site",
+				"app\\models\\Site.php"
+			],
+			[
+				"addcsv",
+				"app\\commands\\addcsv.php"
+			],
+			[
+				"gitif",
+				"vendor\\swiftmailer\\swiftmailer\\tests\\unit\\Swift\\Plugins\\AntiFloodPluginTest.php"
+			],
+			[
+				".css",
+				"public\\css\\custom.css"
+			],
+			[
+				"route",
+				"app\\routes.php"
+			],
+			[
+				"migration2",
+				"app\\database\\migrations\\2013_12_05_174003_create_initial_tables.php"
+			],
+			[
+				"top1",
+				"app\\commands\\top1mcron.php"
+			],
+			[
+				"temp",
+				"app\\commands\\tempcycle.php"
+			],
+			[
+				"illumfounda",
+				"vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php"
+			],
+			[
+				"inputoption",
+				"vendor\\symfony\\console\\Symfony\\Component\\Console\\Input\\InputOption.php"
+			],
+			[
+				"top1m",
+				"app\\commands\\top1mcron.php"
+			],
+			[
+				"illumdataconne",
+				"vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php"
+			],
+			[
+				".sql",
+				"bin\\sql\\miyagi_update.sql"
+			],
+			[
+				"base",
+				"config\\base.php.example"
+			],
+			[
+				"header",
+				"wordpress\\wp-includes\\theme-compat\\header.php"
+			],
+			[
+				"wp-con",
+				"wp-config.php"
+			],
+			[
+				"index.",
+				"index.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 625.0,
+		"selected_items":
+		[
+			[
+				"",
+				"C:\\Users\\Daniel\\Documents\\Repositories\\LyricScreen\\LyricScreeen.sublime-project"
+			],
+			[
+				"game",
+				"C:\\Users\\Daniel\\Documents\\Repositories\\gamestory\\gamestory.sublime-workspace"
+			]
+		],
+		"width": 475.0
+	},
+	"select_symbol":
+	{
+		"height": 369.0,
+		"selected_items":
+		[
+		],
+		"width": 605.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 240.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

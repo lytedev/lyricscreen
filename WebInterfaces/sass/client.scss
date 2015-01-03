@@ -1,0 +1,140 @@
+@import 'fontawesome/font-awesome';
+
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	background: #000;
+	color: #fff;
+	font-size: 6vw;
+}
+
+#nav-menu {
+	position: absolute;
+	height: 10vh;
+	bottom: 0;
+	width: 100%;
+	margin: 0 auto;
+	clear: both;
+	font-size: 0;
+	text-align: center;
+
+	button {
+		box-sizing: border-box;
+		font-size: 32px;
+		display: inline-block;
+		color: #fff;
+		border: 0;
+		background: #333;
+		border: solid 1px #444;
+
+		padding: 0;
+		margin-top: 1px;
+		width: 20%;
+		max-width: 120px;
+		height: 10vh;
+	}
+}
+
+#control-panel {
+	margin: 0;
+	padding: 0;
+	font-family: "Segoe UI", "Lucida Grande", "Tahoma", sans-serif;
+	font-size: 16px;
+	color: #888;
+	background: #222;
+	border-bottom: solid 2px #444;
+	position: absolute;
+	top: 0;
+	bottom: 20%;
+	left: 0;
+	right: 0;
+
+	li {
+		list-style: none;
+	}
+}
+
+#debug-console {
+	z-index: 5;
+	overflow-y: auto;
+	border-right: solid 2px #444;
+	margin: 0;
+	padding: 0;
+	font-family: Consolas, monospace;
+	font-size: 11px;
+	color: #888;
+	background: #222;
+	padding: 0.5vw;
+	position: absolute;
+	top: 80%;
+	bottom: 0;
+	left: 0;
+	right: 50%;
+
+	.timestamp {
+		color: #555;
+	}
+
+	li {
+		list-style: none;
+	}
+}
+
+#slides {
+	z-index: 5;
+
+	&.preview {
+		position: absolute;
+		top: 80%;
+		bottom: 0;
+		left: 50%;
+		right: 0;
+
+		.basic-slide {
+			font-size: 1.8vh;
+
+			&.error {
+				font-size: 4vh;
+			}
+		}
+	}
+}
+
+.basic-slide {
+	z-index: 5;
+
+	text-align: center;
+	font-size: 10vh;
+	line-height: 1em;
+	background: #000;
+	color: #fff;
+
+	display: none;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	&.active {
+		display: flex;
+	}
+
+	&.error {
+		color: #f40;
+		font-size: 20vh;
+	}
+}
+
+.basic-slide span {
+	display: block;
+	white-space: pre-line;
+}

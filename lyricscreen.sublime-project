@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"name": "Project Root",
+			"path": "."
+		}
+	],
+	"build_systems":
+	[
+		{
+			"name": "Python",
+			"cmd": ["python", "${project_path}/lyricscreen.py"]
+		}
+	]
+}

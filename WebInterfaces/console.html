@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LyricScreen Console</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/all.css" />
+</head>
+<body>
+	<div id="control-panel">
+		<button id="blank">Blank</button>
+		<button id="restart-playlist">Restart</button>
+		<div id="nav-menu">
+			<button id="previous-song"><i class="fa fa-step-backward"></i></button>
+			<button id="previous-verse"><i class="fa fa-backward"></i></button>
+			<button id="freeze"><i class="fa fa-pause"></i></button>
+			<button id="next-verse"><i class="fa fa-forward"></i></button>
+			<button id="next-song"><i class="fa fa-step-forward"></i></button>
+		</div>
+		<div id="realtime-preview"></div>
+	</div>
+	<ul id="debug-console"></ul>
+	<ul id="slides" class="preview">
+		<li class="basic-slide active error">&times;</li>
+	</ul>
+	<script src="js/console.js"></script>
+	<script src="js/display.js"></script>
+</body>
+</html>
