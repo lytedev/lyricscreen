@@ -133,6 +133,9 @@ class Song(object):
 		currentVerse = map.getCurrentVerseName()
 		return self.getVerseByName(currentVerse)
 
+	def goToVerse(self, verse_id):
+		return self.getVerseByName(self.getCurrentMap().goToVerse(verse_id))
+
 	def nextVerse(self):
 		return self.getVerseByName(self.getCurrentMap().nextVerse())
 

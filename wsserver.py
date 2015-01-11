@@ -8,6 +8,7 @@ Simple websocket server implementation.
 """
 
 import sys
+
 import jsonpickle
 import asyncio
 import websockets
@@ -156,6 +157,10 @@ class WebSocketServer(object):
 			if msg is None or msg == "disconnect": 
 				break
 
+			elif msg == "state": 
+				v = self.playlist.nextVerse()
+				yield from sock.send("state: " + jsonpickle.encode(self.playlist))
+
 			elif msg == "next" or msg == "next verse": 
 				v = self.playlist.nextVerse()
 				yield from self.updateDisplays()
@@ -185,6 +190,24 @@ class WebSocketServer(object):
 
 			elif msg == "restart playlist": 
 				self.loadPlaylist("Default")
+				yield from self.updateDisplays()
+
+			elif msg.startswith("goto verse"): 
+				vid = msg[10:].strip()
+				try: 
+					vid = int(vid)
+				except ValueError:
+					continue
+				self.playlist.goToVerse(vid)
+				yield from self.updateDisplays()
+
+			elif msg.startswith("goto song"): 
+				sid = msg[9:].strip()
+				try: 
+					sid = int(sid)
+				except ValueError:
+					continue
+				self.playlist.goToSong(sid)
 				yield from self.updateDisplays()
 
 			elif msg == "kill": 

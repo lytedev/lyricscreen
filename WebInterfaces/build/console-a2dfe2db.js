@@ -47,7 +47,7 @@
 			case 1006:
 				print("Console: Failed to connect.");
 				break;
-			case 1000:
+			case 1000: 
 				print("Console: Connection closed.");
 				break;
 		}
@@ -126,8 +126,7 @@
 			var slide = document.createElement("li");
 			slide.className = "jump-to-verse";
 			slide.setAttribute('data-verse', vi);
-			var slideText = document.createTextNode(getSongVerseByName(currentSong, currentMap.verses[vi]).content.replace("\n", "<br />"))
-			console.log(slideText);
+			var slideText = document.createTextNode(getSongVerseByName(currentSong, currentMap.verses[vi]).content)
 			slide.appendChild(slideText);
 			songVerses.appendChild(slide);
 		}

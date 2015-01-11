@@ -2,14 +2,14 @@
 
 A probably-overkill and powerful way of managing lyrics or verse displays for concerts or church services. 
 
-# Requirements
+## Requirements
 
 * Python >= 3.3
 * `asyncio` module (if Python < 3.4) `pip install asyncio`
 * `websockets` module `pip install websockets`
 * `jsonpickle` module `pip install jsonpickle`
 
-# Basic Usage
+## Basic Usage
 
 Sorry for the barebones stuff here, this whole thing is under heavy development and is highly experimental. 
 
@@ -20,7 +20,7 @@ Add the default playlist (`Playlists/Default.txt`). (Documentation on Playlist f
 * Point your browser at `localhost:8000` as specified by the httpserver's instructions. 
 Add and setup your necessary displays.
 
-# Concerns
+## Concerns
 
 * There is zero security currently implemented. Anyone could theoretically open up their browser and open a console through your http server and do whatever. 
 * Currently absolutely zero ease-of-use and UX. Eventual goal is run the program and have everything pre configured and managable from one interface without needing to edit configs or restart stuff. 

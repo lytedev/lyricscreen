@@ -30,6 +30,10 @@ class Map(object):
 		self.currentVerse = max(0, min(self.currentVerse, numVerses - 1))
 		return self.verses[self.currentVerse]
 		
+	def goToVerse(self, verse_id):
+		self.currentVerse = verse_id
+		return self.getCurrentVerseName()
+		
 	def nextVerse(self):
 		self.currentVerse += 1
 		return self.getCurrentVerseName()

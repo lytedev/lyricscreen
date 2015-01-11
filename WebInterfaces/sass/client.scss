@@ -106,6 +106,40 @@ body {
 	}
 }
 
+#realtime-preview {
+	clear: both;
+}
+
+#blank, #restart-playlist {
+	padding: 20px;
+}
+
+#song-verses {
+	margin: 0;
+	margin-top: 2em;
+	overflow: auto;
+
+	position: absolute;
+	top: 15%;
+	bottom: 15%;
+	left: 0;
+	right: 0;
+}
+
+.jump-to-verse {
+	font-family: serif;
+	background-color: #000;
+	padding: 1em;
+	width: 30%;
+	margin: 1.6666%;
+	height: 15vh;
+	float: left;
+	font-size: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: center;
+}
+
 .basic-slide {
 	z-index: 5;
 

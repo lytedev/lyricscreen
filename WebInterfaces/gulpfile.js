@@ -96,7 +96,6 @@ gulp.task('watch', ['default'], function() {
     });
     
     watch("*.html", function() {
-        gulp.start('build-styles');
         livereload.changed();
     });
 

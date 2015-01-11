@@ -2200,6 +2200,39 @@ body {
         font-size: 4vh; }
 
 /* line 109, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+#realtime-preview {
+  clear: both; }
+
+/* line 113, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+#blank, #restart-playlist {
+  padding: 20px; }
+
+/* line 117, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+#song-verses {
+  margin: 0;
+  margin-top: 2em;
+  overflow: auto;
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0;
+  right: 0; }
+
+/* line 129, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+.jump-to-verse {
+  font-family: serif;
+  background-color: #000;
+  padding: 1em;
+  width: 30%;
+  margin: 1.6666%;
+  height: 15vh;
+  float: left;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center; }
+
+/* line 143, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
 .basic-slide {
   z-index: 5;
   text-align: center;
@@ -2215,15 +2248,15 @@ body {
   bottom: 0;
   left: 0;
   right: 0; }
-  /* line 127, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+  /* line 161, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
   .basic-slide.active {
     display: flex; }
-  /* line 131, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+  /* line 165, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
   .basic-slide.error {
     color: #f40;
     font-size: 20vh; }
 
-/* line 137, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
+/* line 171, C:/Users/Daniel/Documents/code/python/lyricscreen/WebInterfaces/sass/client.scss */
 .basic-slide span {
   display: block;
   white-space: pre-line; }

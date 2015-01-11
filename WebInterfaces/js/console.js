@@ -65,7 +65,7 @@
 		}
 		if (e.data.substring(0, 6) == "state:") {
 			state = JSON.parse(e.data.substring(6).trim());
-			window.server_state = state;
+			reloadWithState(state);
 			console.log(state);
 		}
 	};
@@ -83,18 +83,22 @@
 	// Interface
 	document.getElementById("next-verse").onclick = function() {
 		sock.send("next");
+		sock.send("state");
 	};
 
 	document.getElementById("previous-verse").onclick = function() {
 		sock.send("previous");
+		sock.send("state");
 	};
 
 	document.getElementById("next-song").onclick = function() {
 		sock.send("next song");
+		sock.send("state");
 	};
 
 	document.getElementById("previous-song").onclick = function() {
 		sock.send("previous song");
+		sock.send("state");
 	};
 
 	document.getElementById("freeze").onclick = function() {
@@ -108,5 +112,50 @@
 	document.getElementById("restart-playlist").onclick = function() {
 		sock.send("restart playlist");
 	};
+
+	function reloadWithState(state) {
+		window.server_state = state;
+		for (var si = 0; si < state.songs.length; si++) {
+			// Add song switcher
+		}
+
+		var songVerses = document.getElementById("song-verses");
+		while (songVerses.firstChild) {
+			songVerses.removeChild(songVerses.firstChild);
+		}
+
+		var currentSong = state.songs[state.currentSong];
+		var currentMap = currentSong.maps[currentSong.currentMap];
+		for (var vi = 0; vi < currentMap.verses.length; vi++) {
+			var slide = document.createElement("li");
+			slide.className = "jump-to-verse";
+			slide.setAttribute('data-verse', vi);
+			var slideText = getSongVerseByName(currentSong, currentMap.verses[vi]).content.replace(/\n/g, "<br />")
+			slide.innerHTML = slideText;
+			songVerses.appendChild(slide);
+		}
+
+		rebindDynamicEvents();
+		console.log("State:", state);
+	}
+
+	function getSongVerseByName(song, verseName) {
+		for (var i = 0; i < song.verses.length; i++) {
+			if (song.verses[i].name == verseName) {
+				return song.verses[i];
+			}
+		}
+	}
+
+	function rebindDynamicEvents() {
+		var elements = document.getElementsByClassName('jump-to-verse');
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].onclick = function(e) {
+				console.log(e);
+				console.log(this);
+				sock.send("goto verse " + this.getAttribute("data-verse"));
+			};
+		}
+	}
 
 }());

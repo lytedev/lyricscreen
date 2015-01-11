@@ -93,6 +93,10 @@ class Playlist(object):
 		if not s: return False
 		return s.getCurrentVerse()
 
+	def goToSong(self, song_id): 
+		self.currentSong = song_id
+		return self.getCurrentSong()
+
 	def nextSong(self): 
 		self.currentSong += 1
 		return self.getCurrentSong()
@@ -106,6 +110,10 @@ class Playlist(object):
 
 	def isAtEnd(self):
 		return self.currentSong == (len(self.songs) - 1)
+
+	def goToVerse(self, verse_id):
+		s = self.getCurrentSong()
+		return self.getCurrentSong().goToVerse(verse_id)
 
 	def nextVerse(self):
 		s = self.getCurrentSong()
