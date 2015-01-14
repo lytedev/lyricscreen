@@ -255,7 +255,7 @@ class WebSocketServer(object):
 				self.playlist.goToSong(sid)
 				yield from self.updateAll()
 
-			elif msg == "kill": 
+			elif msg == "kill" or msg == "quit" or msg == "exit": 
 				"""Force the server to stop excecution."""
 				sys.exit(0)
 

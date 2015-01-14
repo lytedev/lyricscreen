@@ -20,8 +20,7 @@ body {
 
 	overflow: auto;
 	margin: 0;
-	padding: 0;
-	padding-top: 10px;
+	padding: 10px 0;
 
 	list-style: none;
 
@@ -37,6 +36,7 @@ body {
 		text-align: center;
 		cursor: pointer;
 		border: solid 5px transparent;	
+		overflow: hidden;
 
 		&.active {
 			border: solid 5px #888;
@@ -69,6 +69,7 @@ body {
 }
 
 #nav-menu {
+	z-index: 10;
 	position: absolute;
 	top: 60%;
 	bottom: 20%;
@@ -80,6 +81,9 @@ body {
 
 	button {
 		background: #222;
+		padding: 0;
+		color: #ccc;
+		text-shadow: 0px 0.05em 1px #000;
 		border: 0;
 		width: 20%;
 		height: 10vh;
@@ -93,6 +97,7 @@ body {
 
 		&:hover {
 			background: #333;
+			color: #fff;
 		}
 	}
 

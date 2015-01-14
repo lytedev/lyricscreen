@@ -72,8 +72,10 @@ class Song(object):
 				self.title = l
 			elif self.title != "" and ":" in l:
 				m = Map.fromLine(line)
-				m.verses.insert(0, "Title")
-				m.verses.append("Empty Verse")
+				if m.verses[0] != "Title":
+					m.verses.insert(0, "Title")
+				if m.verses[len(m.verses) - 1] != "Empty Verse":
+					m.verses.append("Empty Verse")
 				self.maps.append(m)
 		return f
 

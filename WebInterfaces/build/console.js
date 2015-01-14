@@ -281,7 +281,7 @@
 		};
 
 		this.onStateChange = function(state) {
-
+			var song = state.getCurrentSong();
 			for (var si = 0; si < state.data.songs.length; si++) {
 				// TODO: Add song switcher
 			}
@@ -291,12 +291,34 @@
 				songVerses.removeChild(songVerses.firstChild);
 			}
 
+			if (state.data.currentSong > 0) {
+				var slide = document.createElement("li");
+				slide.className = "basic message-button";
+				slide.setAttribute('data-message', "goto song " + (state.data.currentSong - 1));
+				var slideText = "Go to Previous Song";
+				slide.innerHTML = slideText;
+				songVerses.appendChild(slide);
+			}
+
+			var map = state.getCurrentMap(song);
 			var verses = state.getCurrentSongVerses();
 			for (var vi = 0; vi < verses.length; vi++) {
 				var slide = document.createElement("li");
 				slide.className = "basic jump-to-verse";
+				if (vi == map.currentVerse) {
+					slide.className += " active";
+				}
 				slide.setAttribute('data-verse', vi);
 				var slideText = verses[vi].content.replace(/\n/g, "<br />")
+				slide.innerHTML = slideText;
+				songVerses.appendChild(slide);
+			}
+
+			if (state.data.currentSong < state.data.songs.length - 1) {
+				var slide = document.createElement("li");
+				slide.className = "basic message-button";
+				slide.setAttribute('data-message', "next song");
+				var slideText = "Go to Next Song";
 				slide.innerHTML = slideText;
 				songVerses.appendChild(slide);
 			}
@@ -322,11 +344,15 @@
 		this.jumpToVerseCallback = function(e, that) {
 			console.log(e, that);
 			this.client.send("goto verse " + that.dataset.verse);
+			e.preventDefault();
+			return false;
 		};
 
 		this.messageButtonCallback = function(e, that) {
 			console.log(e, that);
 			this.client.send(that.dataset.message);
+			e.preventDefault();
+			return false;
 		};
 
 		return this;
