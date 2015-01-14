@@ -31,7 +31,9 @@ class Map(object):
 		return self.verses[self.currentVerse]
 		
 	def goToVerse(self, verse_id):
-		self.currentVerse = verse_id
+		numVerses = len(self.verses)
+		if numVerses == 0: return False
+		self.currentVerse = max(0, min(verse_id, numVerses - 1))
 		return self.getCurrentVerseName()
 		
 	def nextVerse(self):
@@ -50,4 +52,8 @@ class Map(object):
 
 	def restart(self):
 		self.currentVerse = 0 
+		return self.getCurrentVerseName()
+
+	def finish(self):
+		self.currentVerse = len(self.verses) - 1
 		return self.getCurrentVerseName()

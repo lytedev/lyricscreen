@@ -24,3 +24,14 @@ Add and setup your necessary displays.
 
 * There is zero security currently implemented. Anyone could theoretically open up their browser and open a console through your http server and do whatever. 
 * Currently absolutely zero ease-of-use and UX. Eventual goal is run the program and have everything pre configured and managable from one interface without needing to edit configs or restart stuff. 
+
+## TODO
+
+* Some sort of config file/system?
+	* Specifies hosting info (IP, port)
+	* Playlist to load on startup
+* Authentication info/system for console connections?
+* Better UI/UX for default web admin client
+* More complex, optional song formatting options for fancier slides (background images?) 
+* More of a goal than a TODO, but I would like for everything to be managed from either a default web client (including total control and management of songs and playlist files) or Sublime Text or custom clients.
+* I'm sure the code is terribly organized and can be better modularized. In truth, I'm not a Python expert (obviously) and I know all the node people are laughing at me for writing this in Python. <3

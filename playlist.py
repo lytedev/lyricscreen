@@ -17,6 +17,7 @@ playlists_dir = path.abspath(path.dirname(sys.argv[0]) + "/Playlists/")
 class Playlist(object):
 	def __init__(self):
 		self.name = "Playlist"
+		self.songsToLoad = []
 		self.songs = []
 		self.currentSong = -1 
 		self.file = ""
@@ -39,18 +40,18 @@ class Playlist(object):
 		if path.exists(raw_path):
 			p.file = f
 		else:
-			print("File doesn't exist {0}".format(path.abspath(raw_path)))
+			print("Warning: Playlist file doesn't exist {0}".format(path.abspath(raw_path)))
 			return False
 		return p.reload()
 
 	def reload(self): 
 		filePath = playlists_dir + "/" + self.file + ".txt"
 		if not path.exists(path.abspath(filePath)):
-			print("File doesn't exist {0}".format(path.abspath(filePath)))
+			print("Warning: Playlist file doesn't exist {0}".format(path.abspath(filePath)))
 			return False
 		f = open(path.abspath(filePath))
 		if not f: 
-			print("Failed to open file {0}".format(self.file))
+			print("Error: Failed to open Playlist file {0}".format(self.file))
 			return False
 		self.loadSongs(self.loadHeader(f))
 		return self
@@ -78,9 +79,15 @@ class Playlist(object):
 			elif l[0] == "#" or l[0:2] == "//":
 				pass
 			elif l != "":
-				s = Song.load(l)
+				self.songsToLoad.append(l)
+				ls = l.split(':')
+				s = Song.load(ls[0])
 				if s != False: 
+					if len(ls) > 1:
+						s.goToMapByName(ls[1])
 					self.songs.append(s)
+				else:
+					print("Error: Failed to open Song {0}".format(l))
 
 	def getCurrentSong(self):
 		numSongs = len(self.songs)
@@ -94,7 +101,9 @@ class Playlist(object):
 		return s.getCurrentVerse()
 
 	def goToSong(self, song_id): 
-		self.currentSong = song_id
+		numSongs = len(self.songs)
+		if numSongs == 0: return False
+		self.currentSong = max(0, min(song_id, numSongs - 1))
 		return self.getCurrentSong()
 
 	def nextSong(self): 
@@ -102,8 +111,18 @@ class Playlist(object):
 		return self.getCurrentSong()
 
 	def previousSong(self): 
-		self.currentSong -= 1
-		return self.getCurrentSong()
+		"""Misleadingly works like most media players in that we won't 
+		actually jump to the previous song unless we're on the first verse 
+		(title), so more accurately a "restartSong" most of the time, 
+		perhaps."""
+		song = self.getCurrentSong()
+		if song == False: 
+			return False
+		if song.isAtStart():
+			self.currentSong -= 1
+			return self.getCurrentSong()
+		song.goToVerse(0)
+		return song
 
 	def isAtStart(self):
 		return self.currentSong == 0
@@ -131,7 +150,7 @@ class Playlist(object):
 		if s.isAtStart():
 			if not self.isAtStart(): 
 				s = self.previousSong()
-				s.restart()
+				s.finish()
 				return self.getCurrentVerse()
 			else:
 				return False
@@ -142,6 +161,20 @@ class Playlist(object):
 
 	def isAtSongEnd(self):
 		return self.currentSong == (len(self.songs) - 1)
+
+	def restart(self):
+		self.currentSong = 0;
+		s = self.getCurrentSong()
+		if s:
+			s.restart();
+		return s
+
+	def finish(self):
+		self.currentSong = len(self.songs);
+		s = self.getCurrentSong()
+		if s:
+			s.finish();
+		return s
 
 	def __str__(self):
 		return '<Playlist Object {Name: '+self.name+'}>'

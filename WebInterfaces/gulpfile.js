@@ -7,7 +7,6 @@ var concat = require('gulp-concat');
 var gulpif = require('gulp-if');
 var _ = require('underscore');
 var del = require('del');
-var watch = require('gulp-watch');
 
 /*
  |----------------------------------------------------------------
@@ -80,24 +79,31 @@ gulp.task('default', ['build'], function() {
 
 });
 
+gulp.task('livereload', [], function() {
+
+    livereload.changed();
+
+});
+
+gulp.task('reload-styles', ['build-styles'], function() {
+
+    livereload.changed();
+
+});
+
+gulp.task('reload-scripts', ['build-scripts'], function() {
+
+    livereload.changed();
+
+});
 
 gulp.task('watch', ['default'], function() {
 
     livereload.listen();
     
-    watch("sass/*.scss", function() {
-        gulp.start('build-styles');
-        livereload.changed();
-    });
-
-    watch("js/*.js", function() {
-        gulp.start('build-scripts');
-        livereload.changed();
-    });
-    
-    watch("*.html", function() {
-        livereload.changed();
-    });
+    gulp.watch("sass/*.scss", ['reload-styles']);
+    gulp.watch("js/*.js", ['reload-scripts']);
+    gulp.watch("*.html", ['livereload']);
 
 });
 

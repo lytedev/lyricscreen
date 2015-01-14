@@ -30,7 +30,7 @@ class Song(object):
 		if path.exists(raw_path):
 			s.file = path.abspath(raw_path)
 		else:
-			print("File doesn't exist {0}".format(path.abspath(raw_path)))
+			print("Warning: Song file doesn't exist {0}".format(path.abspath(raw_path)))
 			return False
 		return s.reload()
 
@@ -41,7 +41,7 @@ class Song(object):
 		self.verses = []
 		f = open(self.file)
 		if not f: 
-			print("Failed to open file {0}".format(self.file))
+			print("Warning: Failed to open Song file {0}".format(self.file))
 			return False
 		self.loadVerses(self.loadHeader(f))
 		self.verses.insert(0, Verse("Title", self.title))
@@ -72,6 +72,8 @@ class Song(object):
 				self.title = l
 			elif self.title != "" and ":" in l:
 				m = Map.fromLine(line)
+				m.verses.insert(0, "Title")
+				m.verses.append("Empty Verse")
 				self.maps.append(m)
 		return f
 
@@ -109,7 +111,7 @@ class Song(object):
 		self.verses.append(Verse("Title", self.title))
 		self.verses.append(Verse("Empty Verse", ""))
 
-		defaultMap = Map()
+		defaultMap = Map("Default")
 		vh.insert(0, "Title")
 		vh.append("Empty Verse")
 		defaultMap.verses = vh
@@ -136,6 +138,27 @@ class Song(object):
 	def goToVerse(self, verse_id):
 		return self.getVerseByName(self.getCurrentMap().goToVerse(verse_id))
 
+	def goToMapByName(self, name):
+		i = 0
+		for m in self.maps: 
+			if m.name == name:
+				self.currentMap = i
+				break
+			i += 1
+		return self.getCurrentMap()
+
+	def getMapByName(self, name):
+		for m in self.maps: 
+			if m.name == name:
+				return m
+		return False
+
+	def goToMap(self, map_id):
+		numMaps = len(self.maps)
+		if numMaps == 0: return False
+		self.currentMap = max(0, min(map_id, numMaps - 1))
+		return self.getCurrentMap()
+
 	def nextVerse(self):
 		return self.getVerseByName(self.getCurrentMap().nextVerse())
 
@@ -150,6 +173,9 @@ class Song(object):
 
 	def restart(self): 
 		return self.getVerseByName(self.getCurrentMap().restart())
+
+	def finish(self): 
+		return self.getVerseByName(self.getCurrentMap().finish())
 
 	def __str__(self):
 		return '<Song Object {Title: '+self.title+'}>'

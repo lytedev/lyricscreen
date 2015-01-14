@@ -1,7 +1,7 @@
 (function(){
 
 	function print(s) {
-		console.log(s)
+		// console.log(s);
 	}
 
 	if (typeof window.dbg_print !== "undefined") {
@@ -9,7 +9,7 @@
 	}
 
 	function clearText() {
-		var slides = document.getElementById("slides");
+		var slides = document.getElementById("display");
 		while (slides.firstChild) {
 			slides.removeChild(slides.firstChild);
 		}
@@ -17,24 +17,24 @@
 
 	function errorText() {
 		clearText();
-		var slides = document.getElementById("slides");
-		slides.innerHTML = '<li class="basic-slide active error">&times;</li>';
+		var slides = document.getElementById("display");
+		slides.innerHTML = '<li class="slide active error">&times;</li>';
 	}
 
 	function setText(text) {
 		clearText();
-		var slides = document.getElementById("slides");
-		slides.innerHTML = '<li class="basic-slide active"><span>' + text + '</span></li>';
+		var slides = document.getElementById("display");
+		slides.innerHTML = '<li class="basic slide active"><span class="content">' + text + '</span></li>';
 	}
 
 	print("Display: Initializing...")
-	var connString = window.location.host.split(":")[0] + ":9876/display"
+	var connString = window.location.host.split(":")[0] + ":8417/display"
 	var sock = new WebSocket("ws://" + connString);
 	print("Display: Connecting to ws://" + connString + "...")
 
 	sock.onopen = function(e) {
 		print("Display: Connected.");
-		console.log("Open", e);
+		print("Open", e);
 		clearText();
 	};
 

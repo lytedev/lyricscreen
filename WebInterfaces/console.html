@@ -4,28 +4,34 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>LyricScreen Console</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
 
 	<link rel="stylesheet" type="text/css" href="css/all.css" />
 </head>
 <body>
 	<div id="control-panel">
-		<button id="blank">Blank</button>
-		<button id="restart-playlist">Restart</button>
 		<ul id="song-verses"></ul>
-		<div id="nav-menu">
-			<button id="previous-song"><i class="fa fa-step-backward"></i></button>
-			<button id="previous-verse"><i class="fa fa-backward"></i></button>
-			<button id="freeze"><i class="fa fa-pause"></i></button>
-			<button id="next-verse"><i class="fa fa-forward"></i></button>
-			<button id="next-song"><i class="fa fa-step-forward"></i></button>
-		</div>
-		<div id="realtime-preview"></div>
 	</div>
+
+	<div id="nav-menu">
+		<button class="message-button" data-message="previous song"><i class="fa fa-step-backward"></i></button>
+		<button class="message-button" data-message="previous verse"><i class="fa fa-backward"></i></button>
+		<button class="message-button" data-message="freeze"><i class="fa fa-pause"></i></button>
+		<button class="message-button" data-message="next verse"><i class="fa fa-forward"></i></button>
+		<button class="message-button" data-message="next song"><i class="fa fa-step-forward"></i></button>
+		<button class="message-button" data-message="restart"><i class="fa fa-fast-backward"></i></button>
+		<button class="message-button" data-message="blank"><i class="fa fa-toggle-on"></i></button>
+		<button class="message-button" data-message="reload"><i class="fa fa-refresh"></i></button>
+		<button class="message-button" data-message=""></button>
+		<button class="message-button" data-message="finish"><i class="fa fa-fast-forward"></i></button>
+	</div>
+
 	<ul id="debug-console"></ul>
-	<ul id="slides" class="preview">
-		<li class="basic-slide active error">&times;</li>
+
+	<ul id="display" class="preview">
+		<li class="slide active error">&times;</li>
 	</ul>
+
 	<script src="js/console.js"></script>
 	<script src="js/display.js"></script>
 </body>
