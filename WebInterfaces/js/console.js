@@ -230,6 +230,9 @@
 	 */
 	var AdminInterface = function() {
 		this.debugConsole = false;
+		this.songVerses = false;
+		this.freezeButton = false;
+		this.blankButton = false;
 		this.client = false;
 
 		/**
@@ -242,6 +245,9 @@
 			this.client.onStateChange = this.onStateChange.bind(this);
 
 			this.debugConsole = document.getElementById("debug-console");
+			this.songVerses = document.getElementById("song-verses");
+			this.freezeButton = document.getElementById("freeze-button");
+			this.blankButton = document.getElementById("blank-button");
 
 			window.onbeforeunload = function() {
 				this.client.disconnect();
@@ -286,9 +292,8 @@
 				// TODO: Add song switcher
 			}
 
-			var songVerses = document.getElementById("song-verses");
-			while (songVerses.firstChild) {
-				songVerses.removeChild(songVerses.firstChild);
+			while (this.songVerses.firstChild) {
+				this.songVerses.removeChild(this.songVerses.firstChild);
 			}
 
 			if (state.data.currentSong > 0) {
@@ -297,7 +302,7 @@
 				slide.setAttribute('data-message', "goto song " + (state.data.currentSong - 1));
 				var slideText = "Go to Previous Song";
 				slide.innerHTML = slideText;
-				songVerses.appendChild(slide);
+				this.songVerses.appendChild(slide);
 			}
 
 			var map = state.getCurrentMap(song);
@@ -309,9 +314,11 @@
 					slide.className += " active";
 				}
 				slide.setAttribute('data-verse', vi);
-				var slideText = verses[vi].content.replace(/\n/g, "<br />")
+				var slideText = "";
+				slideText += "<span class=\"verse-name\">" + verses[vi].name + "</span>";
+				slideText += verses[vi].content.replace(/\n/g, "<br />")
 				slide.innerHTML = slideText;
-				songVerses.appendChild(slide);
+				this.songVerses.appendChild(slide);
 			}
 
 			if (state.data.currentSong < state.data.songs.length - 1) {
@@ -320,10 +327,28 @@
 				slide.setAttribute('data-message', "next song");
 				var slideText = "Go to Next Song";
 				slide.innerHTML = slideText;
-				songVerses.appendChild(slide);
+				this.songVerses.appendChild(slide);
 			}
 
+			this.updateFreezeButton(state);
+
 			this.rebindInterfaceEvents();
+		};
+
+		this.updateFreezeButton = function(state) {
+			if (state.data.isFrozen) {
+				this.freezeButton.innerHTML = "<i class=\"fa fa-play\"></i>";
+			} else {
+				this.freezeButton.innerHTML = "<i class=\"fa fa-pause\"></i>";
+			}
+		};
+
+		this.updateFreezeButton = function(state) {
+			if (state.data.isBlank) {
+				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-on\"></i>";
+			} else {
+				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-off\"></i>";
+			}
 		};
 
 		this.rebindInterfaceEvents = function() {

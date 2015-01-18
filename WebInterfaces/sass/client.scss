@@ -37,6 +37,17 @@ body {
 		cursor: pointer;
 		border: solid 5px transparent;	
 		overflow: hidden;
+		position: relative;
+
+		.verse-name {
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-family: monospace;
+			font-size: 1.5vh;
+			color: #888;
+			padding-left: 0.2em;
+		}
 
 		&.active {
 			border: solid 5px #888;
@@ -50,10 +61,14 @@ body {
 			border: solid 5px #333;
 		}
 
-		@media screen and (min-width: 1200px) {
+		@media screen and (max-width: 920px) {
+			width: 48%;
+			margin: 5px 1%;
+		}
+
+		@media screen and (min-width: 1200px) and (max-width: 1900px) {
 			width: 23%;
 			margin: 5px 1%;
-
 		}
 
 		@media screen and (min-width: 1900px) {
