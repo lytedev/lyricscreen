@@ -1,8 +1,8 @@
 {
-	/* 
-	This project file purposefully hides a lot of stuff for development 
-	purposes and for managing songs and playlists quickly. Feel free to modify 
-	for your preferences. 
+	/*
+	This project file purposefully hides a lot of stuff for development
+	purposes and for managing songs and playlists quickly. Feel free to modify
+	for your preferences.
 	*/
 
 	"folders":
@@ -10,12 +10,12 @@
 		{
 			"name": "Project Root",
 			"file_exclude_patterns": [
-				"*.sublime-*", 
+				"*.sublime-*",
 				"npm-debug.log"
 			],
 			"folder_exclude_patterns": [
-				"__pycache__", 
-				"Songs", 
+				"__pycache__",
+				"Songs",
 				"Playlists",
 				"WebInterfaces"
 			],
@@ -24,7 +24,7 @@
 		{
 			"name": "Web Client",
 			"file_exclude_patterns": [
-				"*.sublime-*", 
+				"*.sublime-*",
 				"npm-debug.log"
 			],
 			"folder_exclude_patterns": ["build"],
@@ -33,14 +33,14 @@
 		{
 			"name": "Songs",
 			"file_exclude_patterns": [".gitignore"],
-			"folder_exclude_patterns": [""],
-			"path": "Songs"
+			"folder_exclude_patterns": [],
+			"path": "./Songs"
 		},
 		{
 			"name": "Playlists",
 			"file_exclude_patterns": [".gitignore"],
 			"folder_exclude_patterns": [""],
-			"path": "Playlists"
+			"path": "./Playlists"
 		}
 	]
 }

@@ -12,7 +12,7 @@ from os import path
 from map import Map
 from verse import Verse
 
-songs_dir = path.abspath(path.dirname(sys.argv[0]) + "/Songs/")
+songs_dir = path.abspath(path.dirname(__file__) + "/Songs/")
 
 class Song(object):
 	def __init__(self):
@@ -39,8 +39,8 @@ class Song(object):
 			return False
 
 		self.verses = []
-		f = open(self.file)
-		if not f: 
+		f = open(self.file, encoding="utf-8")
+		if not f:
 			print("Warning: Failed to open Song file {0}".format(self.file))
 			return False
 		self.loadVerses(self.loadHeader(f))
@@ -95,13 +95,13 @@ class Song(object):
 			elif l[0] == "(":
 				l = l.strip("()")
 				vh.append(l)
-				pass 
+				pass
 			elif ":" in l and v.name == "":
 				v.name = line.partition(':')[0]
 				v.content = ""
 			elif v.name == "" and l != "":
 				v.name = "Generated Verse "+str(gvn)
-				v.content = l+"\n"
+				v.content = l.replace('’','\'')+"\n"
 				gvn+=1
 			elif l != "" and v.name != "":
 				v.content += l+"\n"
@@ -126,7 +126,7 @@ class Song(object):
 		return self.maps[self.currentMap]
 
 	def getVerseByName(self, name):
-		for v in self.verses: 
+		for v in self.verses:
 			if v.name == name:
 				return v
 		return False
@@ -142,7 +142,7 @@ class Song(object):
 
 	def goToMapByName(self, name):
 		i = 0
-		for m in self.maps: 
+		for m in self.maps:
 			if m.name == name:
 				self.currentMap = i
 				break
@@ -150,7 +150,7 @@ class Song(object):
 		return self.getCurrentMap()
 
 	def getMapByName(self, name):
-		for m in self.maps: 
+		for m in self.maps:
 			if m.name == name:
 				return m
 		return False
@@ -173,10 +173,10 @@ class Song(object):
 	def isAtEnd(self):
 		return self.getCurrentMap().isAtEnd()
 
-	def restart(self): 
+	def restart(self):
 		return self.getVerseByName(self.getCurrentMap().restart())
 
-	def finish(self): 
+	def finish(self):
 		return self.getVerseByName(self.getCurrentMap().finish())
 
 	def __str__(self):
