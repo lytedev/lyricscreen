@@ -101,14 +101,15 @@ class Song(object):
 				v.content = ""
 			elif v.name == "" and l != "":
 				v.name = "Generated Verse "+str(gvn)
-				v.content = l.replace('’','\'')+"\n"
-				gvn+=1
+				v.content = l + "\n"
+				gvn += 1
 			elif l != "" and v.name != "":
-				v.content += l+"\n"
+				v.content += l + "\n"
+
 		if v.name.strip() != "":
 			v.content = v.content.strip()
 			self.addVerse(v)
-			v = Verse()
+			vh.append(v.name)
 
 		self.verses.append(Verse("Title", self.title))
 		self.verses.append(Verse("Empty Verse", ""))
