@@ -2,3 +2,4 @@ WebInterfaces/node_modules/
 WebInterfaces/bower_components/
 __pycache__/
 npm-debug.log
+*.sublime-workspace
