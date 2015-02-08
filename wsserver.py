@@ -7,29 +7,29 @@ Simple websocket server implementation.
 
 """
 
-import sys
-
-import jsonpickle
-import asyncio
-import websockets
-import pprint
+import sys, jsonpickle, asyncio, websockets, pprint, signal
 
 from playlist import Playlist
 
 class WebSocketServer(object):
-	def __init__(self, host = "0.0.0.0", port = 8417):
+	def __init__(self, host = "0.0.0.0", port = 8417, playlist_name = None, loop = None):
 		"""Initialization for a Playlist-managing websocket server."""
 		# Hosting information
 		self.host = host
 		self.port = port
 
-		# Sockets to keep track of		
+		# Sockets to keep track of
 		self.displays = []
 		self.consoles = []
 
+		self.loop = loop
+
 		# Load default playlist
-		self.loadPlaylist()
-		
+		if playlist_name == None:
+			self.loadPlaylist()
+		else:
+			self.loadPlaylist(playlist_name)
+
 	def loadPlaylist(self, p = "Default"):
 		"""Load the given Playlist."""
 		self.playlist = Playlist.load(p)
@@ -49,32 +49,52 @@ class WebSocketServer(object):
 			print("  {0}. {1} ({2} Verse(s) in {3} Map, {4} Map(s))".format(i, s.title, len(m.verses), m.name, len(s.maps)))
 			i += 1
 
+		self.updateAll()
+
 	def start(self):
 		"""Start the server listening and connection-accepting loop."""
 		print("Server Starting...")
 		self.sock = websockets.serve(self.connection, self.host, self.port)
-		self.loop = asyncio.get_event_loop()
-		self.loop.run_until_complete(self.sock)
+
+		our_loop = False
+		if self.loop == None:
+			our_loop = True
+			self.loop = asyncio.get_event_loop()
+
+		self.check_for_kill_signals()
+
+		if our_loop:
+			self.loop.run_until_complete(self.sock)
+
 		print("Ready for connections at {0}:{1}".format(self.host, self.port))
-		try:
+
+		if our_loop:
 			self.loop.run_forever()
-		finally:
-			self.loop.close()
+
+	def check_for_kill_signals(self):
+		self.loop.call_later(1, self.check_for_kill_signals)
 
 	@asyncio.coroutine
-	def connection(self, sock, path): 
+	def stop(self, message = ""):
+		if message.strip() != "":
+			message = " - " + message
+		print("Stopping WebSocketServer{0}".format(message))
+		self.loop.close()
+
+	@asyncio.coroutine
+	def connection(self, sock, path):
 		"""Handle a socket connection."""
 		# Identify ourselves (not required, just nice, I guess?)
 		yield from sock.send("lyricscreen server 0.2.0")
 
 		# Handle our connection paths
-		if path.startswith("/display"): 
+		if path.startswith("/display"):
 			yield from self.displayConnection(sock, path)
 
-		if path.startswith("/console"): 
+		if path.startswith("/console"):
 			yield from self.consoleConnection(sock, path)
-				
-	def sendToConsoles(self, message): 
+
+	def sendToConsoles(self, message):
 		"""Send the given string to all Console sockets."""
 		bad_consoles = []
 		for sock in self.consoles:
@@ -96,13 +116,13 @@ class WebSocketServer(object):
 		for d in bad_displays:
 			self.displays.remove(d)
 
-	def sendToAll(self, message): 
+	def sendToAll(self, message):
 		"""Send string all sockets."""
 		yield from self.sendToConsoles(message)
 		yield from self.sendToDisplays(message)
 
 	def output(self, s):
-		"""Print the string to the console and send the message to all 
+		"""Print the string to the console and send the message to all
 		sockets."""
 		print(s)
 		yield from self.sendToAll("console: {0}".format(s))
@@ -113,7 +133,7 @@ class WebSocketServer(object):
 		yield from self.output("Display connected.")
 
 		check = self.checkAll()
-		if check[0] == False: 
+		if check[0] == False:
 			self.output("No playlist loaded.")
 		else:
 			# Update out displays (including this one)
@@ -123,7 +143,7 @@ class WebSocketServer(object):
 		while True:
 			# Displays don't get to do very much
 			msg = yield from sock.recv()
-			if msg is None or msg == "disconnect": 
+			if msg is None or msg == "disconnect":
 				break
 
 		# Close the connection and remove the display
@@ -135,7 +155,7 @@ class WebSocketServer(object):
 		self.consoles.append(sock)
 		yield from self.output("Console connected.")
 
-		if self.playlist == False: 
+		if self.playlist == False:
 			self.output("No playlist loaded.")
 		else:
 		# And the current slide
@@ -148,14 +168,14 @@ class WebSocketServer(object):
 			msg = yield from sock.recv()
 			if msg is not None:
 				msg = msg.strip()
-			if msg is None or msg == "disconnect": 
+			if msg is None or msg == "disconnect":
 				break
 
-			elif msg == "state": 
+			elif msg == "state":
 				"""A message requesting the current Playlist state."""
 				yield from sock.send("state: " + jsonpickle.encode(self.playlist))
 
-			elif msg == "next" or msg == "next verse": 
+			elif msg == "next" or msg == "next verse":
 				"""Go to the next Verse."""
 				check = self.checkVerse()
 				if check[0] == True:
@@ -163,53 +183,53 @@ class WebSocketServer(object):
 				yield from self.updateAll()
 
 			elif msg == "previous" or msg == "prev" or \
-				msg == "previous verse" or msg == "prev verse": 
+				msg == "previous verse" or msg == "prev verse":
 				"""Go to the previous Verse."""
 				check = self.checkVerse()
 				if check[0] == True:
 					self.playlist.previousVerse()
 				yield from self.updateAll()
 
-			elif msg == "next song": 
+			elif msg == "next song":
 				"""Go to the next Song."""
 				check = self.checkSong()
 				if check[0] == True:
 					self.playlist.nextSong().restart()
 				yield from self.updateAll()
 
-			elif msg == "prev song" or msg == "previous song": 
+			elif msg == "prev song" or msg == "previous song":
 				"""Go to the previous Song."""
 				check = self.checkSong()
 				if check[0] == True:
 					self.playlist.previousSong().restart()
 				yield from self.updateAll()
 
-			elif msg == "blank": 
+			elif msg == "blank":
 				"""Flip the Playlist's blank flag."""
 				self.playlist.isBlank = not self.playlist.isBlank
 				yield from self.updateAll()
 
-			elif msg == "freeze": 
+			elif msg == "freeze":
 				"""Flip the Playlist's freeze flag."""
 				self.playlist.isFrozen = not self.playlist.isFrozen
 				yield from self.updateAll()
 
-			elif msg == "restart playlist" or msg == "restart": 
+			elif msg == "restart playlist" or msg == "restart":
 				"""Jump to the very beginning of the Playlist."""
 				yield from self.output("Restarting Playlist.")
 				if self.checkPlaylist()[0]:
 					self.playlist.restart()
 				yield from self.updateAll()
 
-			elif msg == "finish playlist" or msg == "finish": 
+			elif msg == "finish playlist" or msg == "finish":
 				"""Jump to the very beginning of the Playlist."""
 				yield from self.output("Restarting Playlist.")
 				if self.checkPlaylist()[0]:
 					self.playlist.finish()
 				yield from self.updateAll()
 
-			elif msg == "reload" or msg == "reload all" or msg == "reload playlist": 
-				"""Reload the current Playlist but try to remember our current 
+			elif msg == "reload" or msg == "reload all" or msg == "reload playlist":
+				"""Reload the current Playlist but try to remember our current
 				Song, Map, Verse, etc."""
 				yield from self.output("Reloading Playlist...")
 				if self.checkAll()[0]:
@@ -229,33 +249,33 @@ class WebSocketServer(object):
 							m.goToVerse(curVerse)
 				yield from self.updateAll()
 
-			elif msg.startswith("load") or msg.startswith("load playlist"): 
+			elif msg.startswith("load") or msg.startswith("load playlist"):
 				"""Load the specified Playlist."""
 				playlist = msg.replace("load playlist", "", 1).replace("load", "", 1).strip()
 				self.loadPlaylist(playlist)
 				yield from self.updateDisplays()
 
-			elif msg.startswith("goto verse"): 
+			elif msg.startswith("goto verse"):
 				"""Jump to the specified Verse in the current Song."""
 				vid = msg[10:].strip()
-				try: 
+				try:
 					vid = int(vid)
 				except ValueError:
 					continue
 				self.playlist.goToVerse(vid)
 				yield from self.updateAll()
 
-			elif msg.startswith("goto song"): 
+			elif msg.startswith("goto song"):
 				"""Jump to the specified Song in the current Playlist."""
 				sid = msg[9:].strip()
-				try: 
+				try:
 					sid = int(sid)
 				except ValueError:
 					continue
 				self.playlist.goToSong(sid)
 				yield from self.updateAll()
 
-			elif msg == "kill" or msg == "quit" or msg == "exit": 
+			elif msg == "kill" or msg == "quit" or msg == "exit":
 				"""Force the server to stop excecution."""
 				sys.exit(0)
 
@@ -267,19 +287,19 @@ class WebSocketServer(object):
 
 	def updateDisplays(self, v = False):
 		"""Tell every display what to display."""
-		if self.playlist.isBlank: 
-			# If the Playlist is blank, tell the slides to display nothing. 
+		if self.playlist.isBlank:
+			# If the Playlist is blank, tell the slides to display nothing.
 			yield from self.sendToDisplays("slide: " + " ")
 		if v == False: # No verse specified...
 			check = self.checkPlaylist()
-			if check[0] == False: 
+			if check[0] == False:
 				# No current valid Playlist
 				yield from self.sendToDisplays("slide: " + " ")
-				return 
+				return
 			v = self.playlist.getCurrentVerse()
 		if v != False: # Given a proper verse (or we loaded the current one)
 			displayState = "slide: " + v.content
-			if self.playlist.isFrozen or self.playlist.isBlank: 
+			if self.playlist.isFrozen or self.playlist.isBlank:
 				# Frozen or blank, we don't tell the displays to change
 				yield from self.sendToConsoles(displayState)
 			else:
@@ -303,9 +323,9 @@ class WebSocketServer(object):
 	# Verify that we have certain bits of data for sanity reasons
 
 	def checkAll(self):
-		"""Verifies we have a valid Playlist with a current valid Song and 
-		a current valid Verse. Returns the Playlist as data if all's well.""" 
-		if self.playlist == False: 
+		"""Verifies we have a valid Playlist with a current valid Song and
+		a current valid Verse. Returns the Playlist as data if all's well."""
+		if self.playlist == False:
 			return False, "no playlist", "No Playlist loaded."
 		elif self.playlist.getCurrentSong() == False:
 			return False, "no song in playlist", "No Songs in Playlist."
@@ -315,9 +335,9 @@ class WebSocketServer(object):
 			return True, self.playlist, "Check passed."
 
 	def checkVerse(self):
-		"""Verifies we have a valid Playlist with a current valid Song and 
-		a current valid Verse. Returns the Verse as data if all's well.""" 
-		if self.playlist == False: 
+		"""Verifies we have a valid Playlist with a current valid Song and
+		a current valid Verse. Returns the Verse as data if all's well."""
+		if self.playlist == False:
 			return False, "no playlist", "No Playlist loaded."
 		elif self.playlist.getCurrentSong() == False:
 			return False, "no song in playlist", "No Songs in Playlist."
@@ -330,22 +350,46 @@ class WebSocketServer(object):
 			return True, verse, "Check passed."
 
 	def checkSong(self):
-		"""Verifies we have a valid Playlist with a current valid Song. 
-		Returns the Song as data if all's well.""" 
-		if self.playlist == False: 
+		"""Verifies we have a valid Playlist with a current valid Song.
+		Returns the Song as data if all's well."""
+		if self.playlist == False:
 			return False, "no playlist", "No Playlist loaded."
 
 		song = self.playlist.getCurrentSong()
-		
+
 		if song == False:
 			return False, "no song in playlist", "No Songs in Playlist."
 		else:
 			return True, song, "Check passed."
 
 	def checkPlaylist(self):
-		"""Verifies we have a valid Playlist. Returns the Playlist as data if 
-		all's well.""" 
-		if self.playlist == False: 
+		"""Verifies we have a valid Playlist. Returns the Playlist as data if
+		all's well."""
+		if self.playlist == False:
 			return False, "no playlist", "No Playlist loaded."
 		else:
 			return True, self.playlist, "Check passed."
+
+def usage():
+	"""Present command line documentation"""
+	print("Usage: python wsserver.py [port] [host_address]")
+	print("  port			The port to listen on for connections. Default: 8000")
+	print("  host_address	The address to listen on connections. Default: 0.0.0.0")
+
+if __name__ == "__main__":
+	port = 8000
+	addr = ""
+	if len(sys.argv) > 1:
+		try:
+			port = int(sys.argv[1])
+		except ValueError:
+			print("Error: Could not parse given port value '{0}'.".format(sys.argv[1]))
+			usage()
+	if len(sys.argv) > 2:
+		if is_valid_hostname(sys.argv[2]):
+			addr = sys.argv[2]
+		else:
+			print("Error: Invalid hostname '{0}'.".format(sys.argv[2]))
+			usage()
+	sm = WebSocketServer(addr, port)
+	sm.start()

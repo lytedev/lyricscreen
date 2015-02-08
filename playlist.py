@@ -36,7 +36,6 @@ class Playlist(object):
 	def load(f = "Default"):
 		p = Playlist()
 		raw_path = path.abspath(playlists_dir + "/" + f + ".txt")
-		print(raw_path)
 		if path.exists(raw_path):
 			p.file = f
 		else:

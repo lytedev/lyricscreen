@@ -9,59 +9,42 @@ Application entry point.
 
 """
 
-"""
-import sys, os
+import optparse, sys, os, threading, signal, asyncio
 
-from song import Song
-from settings import Settings
-
-def main():
-	s = Song.load("Dance With Me")
-	for v in s.verses.values():
-		print(""+str(v)+"\n")
-
-# Entry Point
-if __name__=='__main__':
-	main()
-"""
-
+from queue import Queue
 from wsserver import WebSocketServer
 from httpserver import WebInterfaceServerManager
 from playlist import Playlist
 
-"""
+if __name__ == "__main__":
+	# Get event loop for websocket server
+	loop = asyncio.get_event_loop()
 
-# Print entire playlist and contents
-p = Playlist.load()
-print(p)
-for s in p.songs: 
-	print("\t" + str(s))
-	for v in s.verses:
-		print("\t\t" + str(v))
+	# Create server objects
+	websocket_server = WebSocketServer(loop=loop)
+	http_server = WebInterfaceServerManager()
 
-# Print current verse, move to next verse, repeat.
-print(p.getCurrentVerse())
-print(p.nextVerse())
-print(p.nextVerse())
-print(p.nextVerse())
+	# Create server threads
+	websocket_server_thread = threading.Thread(target=websocket_server.start)
+	http_server_thread = threading.Thread(target=http_server.start)
+	websocket_server_thread.daemon = True
+	http_server_thread.daemon = True
 
-"""
+	# Start threads
+	websocket_server_thread.start()
+	http_server_thread.start()
 
-"""
+	# Create thread queue
+	q = Queue()
 
-# Print entire playlist and songs' maps
-print(p)
-for s in p.songs: 
-	print("\t" + str(s))
-	for v in s.maps:
-		print("\t\t" + str(v))
+	# Put threads in queue
+	q.put(websocket_server_thread)
+	q.put(http_server_thread)
 
-"""
+	# Run async event loop
+	loop.run_until_complete(s.sock)
+	loop.run_forever()
 
-# Start websocket server for web interface connections
-s = WebSocketServer()
-s.start()
+	# Halt program until threads have run
+	q.join()
 
-# Start the http server for serving the webapp pages
-h = WebInterfaceServerManager()
-h.start()
