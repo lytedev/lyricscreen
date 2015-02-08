@@ -3,23 +3,28 @@ import sys, re
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 class WebInterfaceRequestHandler(SimpleHTTPRequestHandler):
-	"""docstring for WebInterfaceRequestHandler"""
+	"""Simple request handler for our default web interface"""
 	def __init__(self, server_address, RequestHandlerClass, b):
 		super(WebInterfaceRequestHandler, self).__init__(server_address, RequestHandlerClass, b)
 
 	def do_GET(self):
+		"""Handle HTTP GET requests"""
+		# Force virtual web root to be in WebInterfaces
 		self.path = "/WebInterfaces" + self.path
 
-		if self.path == "/WebInterfaces/console":
+		# Simple redirects for the console page
+ 		if self.path == "/WebInterfaces/console" or self.path == "/WebInterfaces/admin":
 			self.path = "/WebInterfaces/console.html"
 
+		# Simple redirects for the display
 		if self.path == "/WebInterfaces/" or self.path == "/WebInterfaces/display":
 			self.path = "/WebInterfaces/display.html"
 
+		# Basic request handler
 		super(WebInterfaceRequestHandler, self).do_GET()
 
 class WebInterfaceServerManager(object):
-	"""docstring for WebInterfaceServerManager"""
+	"""Simple HTTP server manager"""
 	def __init__(self, address="", port=8000):
 		super(WebInterfaceServerManager, self).__init__()
 		self.port = port
@@ -32,7 +37,7 @@ class WebInterfaceServerManager(object):
 			addr = "0.0.0.0"
 		self.httpd = HTTPServer(server_info, WebInterfaceRequestHandler)
 		print("Started HTTP server on {1}:{0}".format(self.port, addr))
-		print("    Visit http://localhost:{0} in your browser".format(self.port))
+		print("    Visit http://localhost:{0}/console in your browser".format(self.port))
 		self.httpd.serve_forever()
 
 def is_valid_hostname(hostname):
@@ -57,12 +62,14 @@ def usage():
 if __name__ == "__main__":
 	port = 8000
 	addr = ""
+	# Check if port was specified
 	if len(sys.argv) > 1:
 		try:
 			port = int(sys.argv[1])
 		except ValueError:
 			print("Error: Could not parse given port value '{0}'.".format(sys.argv[1]))
 			usage()
+	# Check if host address was specified
 	if len(sys.argv) > 2:
 		if is_valid_hostname(sys.argv[2]):
 			addr = sys.argv[2]

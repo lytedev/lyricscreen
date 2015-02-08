@@ -13,7 +13,7 @@ from playlist import Playlist
 
 class WebSocketServer(object):
 	def __init__(self, host = "0.0.0.0", port = 8417, playlist_name = None, loop = None):
-		"""Initialization for a Playlist-managing websocket server."""
+		"""Initialization for a Playlist-managing websocket server"""
 		# Hosting information
 		self.host = host
 		self.port = port
@@ -22,13 +22,157 @@ class WebSocketServer(object):
 		self.displays = []
 		self.consoles = []
 
+		# Set our async event loop
 		self.loop = loop
+
+		# Build our message/handler map
+		self.message_map = {
+			# A message requesting the current Playlist state
+			"state": self.sendState,
+
+			# Go to the next Verse
+ 			"next": self.nextVerse,
+ 			"next verse": self.nextVerse,
+
+ 			# Go to the previous Verse
+			"previous": self.previousVerse,
+			"prev": self.previousVerse,
+			"previous verse": self.previousVerse,
+			"prev verse": self.previousVerse,
+
+			# Go to the next Song
+			"next song": self.nextSong,
+
+			# Go the the previous Song
+			"previous song": self.previousSong,
+			"prev song": self.previousSong,
+
+			# Toggle `isBlank` flag
+			"blank": self.toggleBlank,
+			"toggle blank": self.toggleBlank,
+
+			# Toggle `isFrozen` flag
+			"freeze": self.toggleFrozen,
+			"toggle freeze": self.toggleFrozen,
+			"frozen": self.toggleFrozen,
+			"toggle frozen": self.toggleFrozen,
+		}
 
 		# Load default playlist
 		if playlist_name == None:
 			self.loadPlaylist()
 		else:
 			self.loadPlaylist(playlist_name)
+
+	def sendState(self, sock, msg):
+		"""Message Handler: Send the current Playlist state to the given socket"""
+		yield from sock.send("state: " + jsonpickle.encode(self.playlist))
+
+	def nextVerse(self, sock, msg):
+		"""Message Handler: Move our Playlist to the next verse"""
+		check = self.checkVerse()
+		if check[0] == True:
+			self.playlist.nextVerse()
+		yield from self.updateAll()
+
+	def previousVerse(self, sock, msg):
+		"""Message Handler: Move our Playlist to the previous Verse"""
+		check = self.checkVerse()
+		if check[0] == True:
+			self.playlist.previousVerse()
+		yield from self.updateAll()
+
+	def nextSong(self, sock, msg):
+		"""Message Handler: Move our Playlist to the next Song"""
+		check = self.checkSong()
+		if check[0] == True:
+			self.playlist.nextSong().restart()
+		yield from self.updateAll()
+
+	def previousSong(self, sock, msg):
+		"""Message Handler: Move our Playlist to the previous Song"""
+		check = self.checkSong()
+		if check[0] == True:
+			self.playlist.previousSong().restart()
+		yield from self.updateAll()
+
+	def toggleBlank(self, sock, msg):
+		"""Message Handler: Toggle the Playlist's `isBlank` flag"""
+		if self.playlist:
+			self.playlist.isBlank = not self.playlist.isBlank
+		yield from self.updateAll()
+
+	def toggleFrozen(self, sock, msg):
+		"""Message Handler: Toggle the Playlist's `isFrozen` flag""":
+		if self.playlist:
+			self.playlist.isFrozen = not self.playlist.isFrozen
+		yield from self.updateAll()
+
+	elif msg == "restart playlist" or msg == "restart":
+		"""Jump to the very beginning of the Playlist."""
+		yield from self.output("Restarting Playlist.")
+		if self.checkPlaylist()[0]:
+			self.playlist.restart()
+		yield from self.updateAll()
+
+	elif msg == "finish playlist" or msg == "finish":
+		"""Jump to the very beginning of the Playlist."""
+		yield from self.output("Restarting Playlist.")
+		if self.checkPlaylist()[0]:
+			self.playlist.finish()
+		yield from self.updateAll()
+
+	elif msg == "reload" or msg == "reload all" or msg == "reload playlist":
+		"""Reload the current Playlist but try to remember our current
+		Song, Map, Verse, etc."""
+		yield from self.output("Reloading Playlist...")
+		if self.checkAll()[0]:
+			curSong = self.playlist.currentSong
+			curMap = self.playlist.getCurrentSong().currentMap
+			curVerse = self.playlist.getCurrentSong().getCurrentMap().currentVerse
+			isBlank = self.playlist.isBlank
+			isFrozen = self.playlist.isFrozen
+		self.loadPlaylist(self.playlist.file)
+		if self.checkAll()[0]:
+			self.playlist.isBlank = isBlank
+			self.playlist.isFrozen = isFrozen
+			s = self.playlist.goToSong(curSong)
+			if self.checkSong()[0]:
+				m = s.goToMap(curMap)
+				if self.checkVerse()[0]:
+					m.goToVerse(curVerse)
+		yield from self.updateAll()
+
+	elif msg.startswith("load") or msg.startswith("load playlist"):
+		"""Load the specified Playlist."""
+		playlist = msg.replace("load playlist", "", 1).replace("load", "", 1).strip()
+		self.loadPlaylist(playlist)
+		yield from self.updateDisplays()
+
+	elif msg.startswith("goto verse"):
+		"""Jump to the specified Verse in the current Song."""
+		vid = msg[10:].strip()
+		try:
+			vid = int(vid)
+		except ValueError:
+			continue
+		self.playlist.goToVerse(vid)
+		yield from self.updateAll()
+
+	elif msg.startswith("goto song"):
+		"""Jump to the specified Song in the current Playlist."""
+		sid = msg[9:].strip()
+		try:
+			sid = int(sid)
+		except ValueError:
+			continue
+		self.playlist.goToSong(sid)
+		yield from self.updateAll()
+
+	elif msg == "kill" or msg == "quit" or msg == "exit":
+		"""Force the server to stop excecution."""
+		sys.exit(0)
+
 
 	def loadPlaylist(self, p = "Default"):
 		"""Load the given Playlist."""
@@ -170,114 +314,9 @@ class WebSocketServer(object):
 				msg = msg.strip()
 			if msg is None or msg == "disconnect":
 				break
-
-			elif msg == "state":
-				"""A message requesting the current Playlist state."""
-				yield from sock.send("state: " + jsonpickle.encode(self.playlist))
-
-			elif msg == "next" or msg == "next verse":
-				"""Go to the next Verse."""
-				check = self.checkVerse()
-				if check[0] == True:
-					self.playlist.nextVerse()
-				yield from self.updateAll()
-
-			elif msg == "previous" or msg == "prev" or \
-				msg == "previous verse" or msg == "prev verse":
-				"""Go to the previous Verse."""
-				check = self.checkVerse()
-				if check[0] == True:
-					self.playlist.previousVerse()
-				yield from self.updateAll()
-
-			elif msg == "next song":
-				"""Go to the next Song."""
-				check = self.checkSong()
-				if check[0] == True:
-					self.playlist.nextSong().restart()
-				yield from self.updateAll()
-
-			elif msg == "prev song" or msg == "previous song":
-				"""Go to the previous Song."""
-				check = self.checkSong()
-				if check[0] == True:
-					self.playlist.previousSong().restart()
-				yield from self.updateAll()
-
-			elif msg == "blank":
-				"""Flip the Playlist's blank flag."""
-				self.playlist.isBlank = not self.playlist.isBlank
-				yield from self.updateAll()
-
-			elif msg == "freeze":
-				"""Flip the Playlist's freeze flag."""
-				self.playlist.isFrozen = not self.playlist.isFrozen
-				yield from self.updateAll()
-
-			elif msg == "restart playlist" or msg == "restart":
-				"""Jump to the very beginning of the Playlist."""
-				yield from self.output("Restarting Playlist.")
-				if self.checkPlaylist()[0]:
-					self.playlist.restart()
-				yield from self.updateAll()
-
-			elif msg == "finish playlist" or msg == "finish":
-				"""Jump to the very beginning of the Playlist."""
-				yield from self.output("Restarting Playlist.")
-				if self.checkPlaylist()[0]:
-					self.playlist.finish()
-				yield from self.updateAll()
-
-			elif msg == "reload" or msg == "reload all" or msg == "reload playlist":
-				"""Reload the current Playlist but try to remember our current
-				Song, Map, Verse, etc."""
-				yield from self.output("Reloading Playlist...")
-				if self.checkAll()[0]:
-					curSong = self.playlist.currentSong
-					curMap = self.playlist.getCurrentSong().currentMap
-					curVerse = self.playlist.getCurrentSong().getCurrentMap().currentVerse
-					isBlank = self.playlist.isBlank
-					isFrozen = self.playlist.isFrozen
-				self.loadPlaylist(self.playlist.file)
-				if self.checkAll()[0]:
-					self.playlist.isBlank = isBlank
-					self.playlist.isFrozen = isFrozen
-					s = self.playlist.goToSong(curSong)
-					if self.checkSong()[0]:
-						m = s.goToMap(curMap)
-						if self.checkVerse()[0]:
-							m.goToVerse(curVerse)
-				yield from self.updateAll()
-
-			elif msg.startswith("load") or msg.startswith("load playlist"):
-				"""Load the specified Playlist."""
-				playlist = msg.replace("load playlist", "", 1).replace("load", "", 1).strip()
-				self.loadPlaylist(playlist)
-				yield from self.updateDisplays()
-
-			elif msg.startswith("goto verse"):
-				"""Jump to the specified Verse in the current Song."""
-				vid = msg[10:].strip()
-				try:
-					vid = int(vid)
-				except ValueError:
-					continue
-				self.playlist.goToVerse(vid)
-				yield from self.updateAll()
-
-			elif msg.startswith("goto song"):
-				"""Jump to the specified Song in the current Playlist."""
-				sid = msg[9:].strip()
-				try:
-					sid = int(sid)
-				except ValueError:
-					continue
-				self.playlist.goToSong(sid)
-				yield from self.updateAll()
-
-			elif msg == "kill" or msg == "quit" or msg == "exit":
-				"""Force the server to stop excecution."""
-				sys.exit(0)
+			else:
+				if msg in self.message_map:
+					self.message_map[msg](sock, msg)
 
 		self.consoles.remove(sock)
 		yield from self.output("Console disconnected.")
