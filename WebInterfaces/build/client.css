@@ -1817,7 +1817,7 @@ body {
   text-shadow: 0px 0.04em 0.04em rgba(0, 0, 0, 0.9);
   line-height: 1.1em;
   color: #fff;
-  background: #000 url('../Backgrounds/blue-cross.jpg');
+  background-color: #000;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%; }
@@ -1831,6 +1831,12 @@ body.just-controls #song-verses {
 body.just-controls #nav-menu {
   bottom: 0%;
   top: 80%; }
+@media screen and (min-width: 1200px) {
+  body.just-controls #song-verses {
+    bottom: 10%; }
+  body.just-controls #nav-menu {
+    bottom: 0%;
+    top: 90%; } }
 
 
 /*# sourceMappingURL=maps/client.css.map */
