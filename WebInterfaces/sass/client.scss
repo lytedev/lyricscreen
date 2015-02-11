@@ -1,10 +1,12 @@
 @import 'fontawesome/font-awesome';
+@import 'googlefonts';
 
 // Box sizing everywhere
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 
 body {
+	font-family: "Lato", Verdana, sans-serif;
 	background: #111;
 	color: #fff;
 	margin: 0;
@@ -20,22 +22,23 @@ body {
 
 	overflow: auto;
 	margin: 0;
-	padding: 10px 0;
+	padding: 20px 10px;
 
 	list-style: none;
 
 	li {
-		font-size: 1.8vh;
+		font-size: 1.4vh;
+		font-weight: 400;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		width: 30.33333333%;
-		margin: 5px 1.5%;
+		margin: 10px 1.5%;
 		height: 15vh;
 		float: left;
 		text-align: center;
 		cursor: pointer;
-		border: solid 5px transparent;	
+		border: solid 5px transparent;
 		overflow: hidden;
 		position: relative;
 
@@ -53,7 +56,7 @@ body {
 			border: solid 5px #888;
 
 			&:hover {
-				border: solid 5px #888;	
+				border: solid 5px #888;
 			}
 		}
 
@@ -80,6 +83,26 @@ body {
 
 	@media screen and (min-width: 1200px) {
 		bottom: 30%;
+	}
+
+	&::-webkit-scrollbar {
+	    height: 8px;
+	    width: 8px;
+	    background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+	    background: #666;
+	    -webkit-border-radius: 1ex;
+	    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+
+	    &:hover {
+	    	background: #888;
+	    }
+	}
+
+	&::-webkit-scrollbar-corner {
+	    background: #000;
 	}
 }
 
@@ -141,7 +164,7 @@ body {
 	li {
 		margin: 0;
 
-		.timestamp { 
+		.timestamp {
 			color: #444;
 		}
 	}
@@ -210,8 +233,44 @@ body {
 }
 
 .basic {
-	font-family: "Times New Roman", serif;
+	font-family: "Lato", sans-serif;
+	font-weight: 300;
+	text-shadow: 0px 0.04em 0.04em rgba(0, 0, 0, 0.9);
 	line-height: 1.1em;
-	background: #000;
 	color: #fff;
+	background-color: #000;
+	background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('../Backgrounds/blue-cross.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+body.just-controls {
+	#display {
+		display: none;
+	}
+
+	#debug-console {
+		display: none;
+	}
+
+	#song-verses {
+		bottom: 20%;
+	}
+
+	#nav-menu {
+		bottom: 0%;
+		top: 80%;
+	}
+
+	@media screen and (min-width: 1200px) {
+		#song-verses {
+			bottom: 10%;
+		}
+
+		#nav-menu {
+			bottom: 0%;
+			top: 90%;
+		}
+	}
 }

@@ -234,6 +234,7 @@
 		this.freezeButton = false;
 		this.blankButton = false;
 		this.client = false;
+		this.shortcutKeyClicks = false;
 
 		/**
 		 * Prepares the interface for use.
@@ -249,11 +250,54 @@
 			this.freezeButton = document.getElementById("freeze-button");
 			this.blankButton = document.getElementById("blank-button");
 
+			var that = this;
 			window.onbeforeunload = function() {
-				this.client.disconnect();
+				that.client.disconnect();
 			};
 
+			window.onkeydown = function(e) {
+				return that.onKeyDown(e);
+			};
+
+			this.bindClickShortcutKeys();
+
 			this.client.connect();
+		};
+
+		this.bindClickShortcutKeys = function() {
+			var clickShortcutElements = document.querySelectorAll('[data-click-shortcut-keys]');
+			console.log(clickShortcutElements);
+
+			this.shortcutKeyClicks = {};
+			for (var i = 0; i < clickShortcutElements.length; i++) {
+				var e = clickShortcutElements[i];
+				var shortcutData = e.dataset.clickShortcutKeys;
+				var shortcuts = shortcutData.split(",");
+				for (var j = 0; j < shortcuts.length; j++) {
+					this.shortcutKeyClicks[shortcuts[j].trim()] = e;
+				}
+			}
+		};
+
+		this.onKeyDown = function(e) {
+			var key = "" + e.keyCode;
+			if (e.ctrlKey) key = "c" + key;
+			if (e.altKey) key = "a" + key;
+			if (e.shiftKey) key = "s" + key;
+			if (e.metaKey) key = "m" + key;
+			console.log(e.keyCode, key);
+			if (key in this.shortcutKeyClicks) {
+				var ele = this.shortcutKeyClicks[key];
+				var me = new MouseEvent('click', {
+					'view': window,
+					'bubbles': true,
+					'cancelable': true,
+				});
+				var result = ele.dispatchEvent(me);
+				e.preventDefault();
+				return false;
+			}
+			return true;
 		};
 
 		/**
@@ -292,6 +336,7 @@
 				// TODO: Add song switcher
 			}
 
+			var scroll = this.songVerses.scrollTop;
 			while (this.songVerses.firstChild) {
 				this.songVerses.removeChild(this.songVerses.firstChild);
 			}
@@ -307,11 +352,13 @@
 
 			var map = state.getCurrentMap(song);
 			var verses = state.getCurrentSongVerses();
+			var activeSlide = false;
 			for (var vi = 0; vi < verses.length; vi++) {
 				var slide = document.createElement("li");
 				slide.className = "basic jump-to-verse";
 				if (vi == map.currentVerse) {
 					slide.className += " active";
+					activeSlide = slide;
 				}
 				slide.setAttribute('data-verse', vi);
 				var slideText = "";
@@ -319,6 +366,19 @@
 				slideText += verses[vi].content.replace(/\n/g, "<br />")
 				slide.innerHTML = slideText;
 				this.songVerses.appendChild(slide);
+			}
+			this.songVerses.scrollTop = scroll;
+			if (activeSlide != false) {
+				var svr = this.songVerses.getBoundingClientRect();
+				var vpmin = this.songVerses.scrollTop;
+				var vpmax = vpmin + svr.height;
+				var smin = activeSlide.offsetTop;
+				var smax = smin + activeSlide.offsetHeight;
+				if (smin < vpmin) {
+					this.songVerses.scrollTop = smin - 1;
+				} else if (smax > vpmax) {
+					this.songVerses.scrollTop = (smax - svr.height) + 1;
+				}
 			}
 
 			if (state.data.currentSong < state.data.songs.length - 1) {
@@ -330,6 +390,7 @@
 				this.songVerses.appendChild(slide);
 			}
 
+			this.updateBlankButton(state);
 			this.updateFreezeButton(state);
 
 			this.rebindInterfaceEvents();
@@ -343,11 +404,11 @@
 			}
 		};
 
-		this.updateFreezeButton = function(state) {
+		this.updateBlankButton = function(state) {
 			if (state.data.isBlank) {
-				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-on\"></i>";
-			} else {
 				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-off\"></i>";
+			} else {
+				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-on\"></i>";
 			}
 		};
 
@@ -367,14 +428,12 @@
 		/* Interface Element Callbacks */
 
 		this.jumpToVerseCallback = function(e, that) {
-			console.log(e, that);
 			this.client.send("goto verse " + that.dataset.verse);
 			e.preventDefault();
 			return false;
 		};
 
 		this.messageButtonCallback = function(e, that) {
-			console.log(e, that);
 			this.client.send(that.dataset.message);
 			e.preventDefault();
 			return false;

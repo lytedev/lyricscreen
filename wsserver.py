@@ -31,12 +31,9 @@ class WebSocketServer(object):
 			"state": self.sendState,
 
 			# Go to the next Verse
- 			"next": self.nextVerse,
  			"next verse": self.nextVerse,
 
  			# Go to the previous Verse
-			"previous": self.previousVerse,
-			"prev": self.previousVerse,
 			"previous verse": self.previousVerse,
 			"prev verse": self.previousVerse,
 
@@ -48,14 +45,36 @@ class WebSocketServer(object):
 			"prev song": self.previousSong,
 
 			# Toggle `isBlank` flag
-			"blank": self.toggleBlank,
 			"toggle blank": self.toggleBlank,
 
 			# Toggle `isFrozen` flag
-			"freeze": self.toggleFrozen,
 			"toggle freeze": self.toggleFrozen,
-			"frozen": self.toggleFrozen,
 			"toggle frozen": self.toggleFrozen,
+
+			# Move to start of Playlist
+			"restart playlist": self.restartPlaylist,
+
+			# Move to end of Playlist
+			"finish playlist": self.finishPlaylist,
+
+			# Hot reload Playlist
+			"reload playlist": self.reloadPlaylist,
+
+			# Load a Playlist
+			"load playlist": self.loadPlaylist,
+
+			# Go to a Verse
+			"goto verse": self.gotoVerse,
+
+			# Go to a Song
+			"goto song": self.gotoSong,
+
+			# Kill the server
+			"kill": self.killServer,
+
+			# Acknowledge/Pong
+			"syn": self.ackClient,
+			"ping": self.pongClient,
 		}
 
 		# Load default playlist
@@ -66,6 +85,7 @@ class WebSocketServer(object):
 
 	def sendState(self, sock, msg):
 		"""Message Handler: Send the current Playlist state to the given socket"""
+		print("Sending state...")
 		yield from sock.send("state: " + jsonpickle.encode(self.playlist))
 
 	def nextVerse(self, sock, msg):
@@ -103,27 +123,27 @@ class WebSocketServer(object):
 		yield from self.updateAll()
 
 	def toggleFrozen(self, sock, msg):
-		"""Message Handler: Toggle the Playlist's `isFrozen` flag""":
+		"""Message Handler: Toggle the Playlist's `isFrozen` flag"""
 		if self.playlist:
 			self.playlist.isFrozen = not self.playlist.isFrozen
 		yield from self.updateAll()
 
-	elif msg == "restart playlist" or msg == "restart":
-		"""Jump to the very beginning of the Playlist."""
+	def restartPlaylist(self, sock, msg):
+		"""Message Handler: Jump to the very beginning of the Playlist."""
 		yield from self.output("Restarting Playlist.")
 		if self.checkPlaylist()[0]:
 			self.playlist.restart()
 		yield from self.updateAll()
 
-	elif msg == "finish playlist" or msg == "finish":
-		"""Jump to the very beginning of the Playlist."""
+	def finishPlaylist(self, sock, msg):
+		"""Message Handler: Jump to the very beginning of the Playlist."""
 		yield from self.output("Restarting Playlist.")
 		if self.checkPlaylist()[0]:
 			self.playlist.finish()
 		yield from self.updateAll()
 
-	elif msg == "reload" or msg == "reload all" or msg == "reload playlist":
-		"""Reload the current Playlist but try to remember our current
+	def reloadPlaylist(self, sock, msg):
+		"""Message Handler: Reload the current Playlist but try to remember our current
 		Song, Map, Verse, etc."""
 		yield from self.output("Reloading Playlist...")
 		if self.checkAll()[0]:
@@ -143,36 +163,40 @@ class WebSocketServer(object):
 					m.goToVerse(curVerse)
 		yield from self.updateAll()
 
-	elif msg.startswith("load") or msg.startswith("load playlist"):
-		"""Load the specified Playlist."""
-		playlist = msg.replace("load playlist", "", 1).replace("load", "", 1).strip()
-		self.loadPlaylist(playlist)
+	def loadPlaylist(self, sock, msg):
+		"""Message Handler: Load the specified Playlist."""
+		self.loadPlaylist(msg)
 		yield from self.updateDisplays()
 
-	elif msg.startswith("goto verse"):
-		"""Jump to the specified Verse in the current Song."""
-		vid = msg[10:].strip()
+	def gotoVerse(self, sock, msg):
+		"""Message Handler: Jump to the specified Verse in the current Song."""
 		try:
-			vid = int(vid)
+			vid = int(msg)
 		except ValueError:
-			continue
+			return
 		self.playlist.goToVerse(vid)
 		yield from self.updateAll()
 
-	elif msg.startswith("goto song"):
-		"""Jump to the specified Song in the current Playlist."""
-		sid = msg[9:].strip()
+	def gotoSong(self, sock, msg):
+		"""Message Handler: Jump to the specified Song in the current Playlist."""
 		try:
-			sid = int(sid)
+			sid = int(msg)
 		except ValueError:
-			continue
+			return
 		self.playlist.goToSong(sid)
 		yield from self.updateAll()
 
-	elif msg == "kill" or msg == "quit" or msg == "exit":
-		"""Force the server to stop excecution."""
+	def killServer(self, sock, msg):
+		"""Message Handler: Force the server to stop excecution."""
 		sys.exit(0)
 
+	def ackClient(self, sock, msg):
+		"""Message Handler: Acknowledge the client."""
+		yield from sock.send("ack")
+
+	def pongClient(self, sock, msg):
+		"""Message Handler: Acknowledge the client."""
+		yield from sock.send("pong")
 
 	def loadPlaylist(self, p = "Default"):
 		"""Load the given Playlist."""
@@ -302,7 +326,7 @@ class WebSocketServer(object):
 		if self.playlist == False:
 			self.output("No playlist loaded.")
 		else:
-		# And the current slide
+			# And the current slide
 			v = self.playlist.getCurrentVerse()
 			if v != False:
 				yield from sock.send("slide: " + v.content)
@@ -315,8 +339,16 @@ class WebSocketServer(object):
 			if msg is None or msg == "disconnect":
 				break
 			else:
-				if msg in self.message_map:
-					self.message_map[msg](sock, msg)
+				handled = False
+				for keyphrase in self.message_map:
+					if msg.startswith(keyphrase):
+						args = msg.replace(keyphrase, "", 1).strip()
+						callback = self.message_map[keyphrase]
+						yield from callback(sock, args)
+						handled = True
+						break
+				if not handled:
+					print("Received unknown command: {0}".format(msg))
 
 		self.consoles.remove(sock)
 		yield from self.output("Console disconnected.")

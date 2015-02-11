@@ -42,7 +42,7 @@ if __name__ == "__main__":
 	q.put(http_server_thread)
 
 	# Run async event loop
-	loop.run_until_complete(s.sock)
+	loop.run_until_complete(websocket_server.sock)
 	loop.run_forever()
 
 	# Halt program until threads have run

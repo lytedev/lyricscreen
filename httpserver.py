@@ -9,11 +9,12 @@ class WebInterfaceRequestHandler(SimpleHTTPRequestHandler):
 
 	def do_GET(self):
 		"""Handle HTTP GET requests"""
-		# Force virtual web root to be in WebInterfaces
-		self.path = "/WebInterfaces" + self.path
+		# Force virtual web root to be in WebInterfaces (except backgrounds)
+		if not self.path.startswith("/Backgrounds/"):
+			self.path = "/WebInterfaces" + self.path
 
 		# Simple redirects for the console page
- 		if self.path == "/WebInterfaces/console" or self.path == "/WebInterfaces/admin":
+		if self.path == "/WebInterfaces/console" or self.path == "/WebInterfaces/admin":
 			self.path = "/WebInterfaces/console.html"
 
 		# Simple redirects for the display

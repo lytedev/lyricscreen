@@ -18,7 +18,7 @@
 	}; // Prototype methods follow
 
 	AdminState.prototype.fromJSON = function(json) {
-		if (typeof json !== "string") return; 
+		if (typeof json !== "string") return;
 		this.setState(JSON.parse(json));
 	};
 
@@ -53,7 +53,7 @@
 	};
 
 	/**
-	 * The websocket client class for managing an administrator connection. 
+	 * The websocket client class for managing an administrator connection.
 	 * @param [callback] A logging callback.
 	 */
 	var AdminWebSocketClient = function() {
@@ -69,7 +69,7 @@
 
 		/**
 		 * Disconnect the current socket if connected.
-		 * @return {void} 
+		 * @return {void}
 		 */
 		this.disconnect = function() {
 			if (this.socket != false) {
@@ -81,7 +81,7 @@
 
 		/**
 		 * Initializes the websocket and attempts to connect to the server.
-		 * @return {void} 
+		 * @return {void}
 		 */
 		this.connect = function() {
 			var host = window.location.host.split(":")[0];
@@ -101,7 +101,7 @@
 		/**
 		 * Add the event listeners for the socket events and our custom message events.
 		 *
-		 * Changes to this should/will break compatibility. 
+		 * Changes to this should/will break compatibility.
 		 * Cross-reference with socketMessage().
 		 */
 		this.addSocketHandlers = function() {
@@ -127,7 +127,7 @@
 		 *
 		 * This also re-dispatches predefined events with custom handlers.
 		 *
-		 * Changes to this should/will break compatibility. 
+		 * Changes to this should/will break compatibility.
 		 * Cross-reference with addSocketHandlers().
 		 * @param  {WebSocket.MessageEvent} e The websocket message event object. `e.data` contains the message string.
 		 * @return {void}
@@ -211,7 +211,7 @@
 				case 1006:
 					this.log("Client: Failed to connect.");
 					break;
-				case 1000: 
+				case 1000:
 					this.log("Client: Connection closed.");
 					break;
 			}
@@ -237,7 +237,7 @@
 
 		/**
 		 * Prepares the interface for use.
-		 * @return {void} 
+		 * @return {void}
 		 */
 		this.setup = function() {
 			this.client = new AdminWebSocketClient();
@@ -257,10 +257,10 @@
 		};
 
 		/**
-		 * Prints the specified message to our debug console and the development 
+		 * Prints the specified message to our debug console and the development
 		 * console.
 		 * @param  {string} message Our message string.
-		 * @return {void} 
+		 * @return {void}
 		 */
 		this.print = function(message) {
 			console.log(message);
@@ -330,6 +330,7 @@
 				this.songVerses.appendChild(slide);
 			}
 
+			this.updateBlankButton(state);
 			this.updateFreezeButton(state);
 
 			this.rebindInterfaceEvents();
@@ -343,11 +344,11 @@
 			}
 		};
 
-		this.updateFreezeButton = function(state) {
+		this.updateBlankButton = function(state) {
 			if (state.data.isBlank) {
-				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-on\"></i>";
-			} else {
 				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-off\"></i>";
+			} else {
+				this.blankButton.innerHTML = "<i class=\"fa fa-toggle-on\"></i>";
 			}
 		};
 
