@@ -7,6 +7,46 @@
 		return str.substring(0, substr.length) == substr;
 	};
 
+	var keyCodeNames = ["[NUL]", "???", "???", "[Cancel]", "???", "???", "[Help]", "???",
+		"Backspace", "Tab", "???", "???", "[CLR]", "Enter", "Return", "???",
+		"Shift", "Control", "Alt", "Pause", "Caps Lock",
+		"KANA", "EISU", "JUNJA", "FINAL", "HANJA", "???",
+		"Escape", "[CNV]", "[NCNV]", "[ACPT]", "[MDCH]", "Space", "Page Up",
+		"Page Down", "End", "Home", "Left", "Up", "Right", "Down", "Select",
+		"Print", "Execute", "Print Screen", "Insert", "Delete", "???",
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+		":", ";", "<", "=", ">", "?", "@",
+		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+		"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+		"Windows", "???", "Menu", "???", "Sleep",
+		"Numpad 0", "Numpad 1", "Numpad 2", "Numpad 3", "Numpad 4",
+		"Numpad 5", "Numpad 6", "Numpad 7", "Numpad 8", "Numpad 9",
+		"Numpad *", "Numpad +", "???", "Numpad -", "Numpad .", "Numpad /",
+		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+		"F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19",
+		"F20", "F21", "F22", "F23", "F24",
+		"???", "???", "???", "???", "???", "???", "???", "???",
+		"Num Lock", "Scroll Lock",
+		"WIN_OEM_FJ_JISHO", "WIN_OEM_FJ_MASSHOU", "WIN_OEM_FJ_TOUROKU",
+		"WIN_OEM_FJ_LOYA", "WIN_OEM_FJ_ROYA",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"^", "!", "\"", "#", "$", "%", "&", "_", "(", ")", "*", "+", "|",
+		"-", "{", "}", "~",
+		"???", "???", "???", "???",
+		"Volume Mute", "Volume Down", "Volume Up",
+		"???", "???",
+		";", "=", ",", "-", ".", "/", "\\",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"???", "???", "???", "???", "???", "???",
+		"[", "\\", "]", "'", "???", "Meta", "AltGrave", "???", "Windows Help",
+		"WIN_ICO_00", "???", "WIN_ICO_CLEAR", "???", "???", "WIN_OEM_RESET",
+		"WIN_OEM_JUMP", "WIN_OEM_PA1", "WIN_OEM_PA2", "WIN_OEM_PA3",
+		"WIN_OEM_WSCTRL", "WIN_OEM_CUSEL", "WIN_OEM_ATTN", "WIN_OEM_FINISH",
+		"WIN_OEM_COPY", "WIN_OEM_AUTO", "WIN_OEM_ENLW", "WIN_OEM_BACKTAB",
+		"ATTN", "CRSEL", "EXSEL", "EREOF", "Play", "Zoom", "???", "PA1",
+		"WIN_OEM_CLEAR", ""];
+
 	/* Classes */
 
 	/**
@@ -273,18 +313,41 @@
 				var e = clickShortcutElements[i];
 				var shortcutData = e.dataset.clickShortcutKeys;
 				var shortcuts = shortcutData.split(",");
+				e.title += " [";
 				for (var j = 0; j < shortcuts.length; j++) {
-					this.shortcutKeyClicks[shortcuts[j].trim()] = e;
+					var shortcut = shortcuts[j];
+					this.shortcutKeyClicks[shortcut.trim()] = e;
+					var keyNameCode = "";
+					for (var h = shortcut.length; h >= 0; h--) {
+						var c = shortcut.charAt(h);
+						if (c >= '0' && c <= '9') {
+							keyNameCode = c + keyNameCode;
+						}
+					}
+					var shortcutString = shortcut
+						.replace("c", "Ctrl+")
+						.replace("a", "Alt+")
+						.replace("s", "Shift+")
+						.replace("m", "Meta+")
+						.replace(keyNameCode, keyCodeNames[parseInt(keyNameCode)])
+						;
+					e.title += shortcutString;
+					if (j >= shortcuts.length - 1) {
+						break;
+					} else {
+						e.title += ", ";
+					}
 				}
+				e.title += "]";
 			}
 		};
 
 		this.onKeyDown = function(e) {
 			var key = "" + e.keyCode;
-			if (e.ctrlKey) key = "c" + key;
-			if (e.altKey) key = "a" + key;
-			if (e.shiftKey) key = "s" + key;
 			if (e.metaKey) key = "m" + key;
+			if (e.shiftKey) key = "s" + key;
+			if (e.altKey) key = "a" + key;
+			if (e.ctrlKey) key = "c" + key;
 			console.log(e.keyCode, key);
 			if (key in this.shortcutKeyClicks) {
 				var ele = this.shortcutKeyClicks[key];
