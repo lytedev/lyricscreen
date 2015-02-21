@@ -15,9 +15,9 @@ from verse import Verse
 songs_dir = path.abspath(path.dirname(__file__) + "/Songs/")
 
 class Song(object):
-	def __init__(self):
+	def __init__(self, title = "New Song"):
 		self.file = ""
-		self.title = ""
+		self.title = title
 		self.verses = []
 		self.maps = []
 		self.currentVerse = -1
@@ -66,12 +66,12 @@ class Song(object):
 				pass
 			elif self.title != "" and l == "":
 				break
-			elif l[0] == "#" or (len(l) > 1 and l[0:2] == "//"):
+			elif l.startswith("#") or l.startswith("//"):
 				pass
 			elif l != "" and self.title == "":
 				self.title = l
 			elif self.title != "" and ":" in l:
-				m = Map.fromLine(line)
+				m = Map.fromLine(l)
 				if m.verses[0] != "Title":
 					m.verses.insert(0, "Title")
 				if m.verses[len(m.verses) - 1] != "Empty Verse":

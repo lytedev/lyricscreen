@@ -1718,7 +1718,7 @@ body {
   #song-verses::-webkit-scrollbar-corner {
     background: #000; }
 
-#nav-menu {
+#media-controls {
   z-index: 10;
   position: absolute;
   top: 60%;
@@ -1727,7 +1727,7 @@ body {
   right: 0;
   border-bottom: solid 1px #333;
   border-top: solid 1px #333; }
-  #nav-menu button {
+  #media-controls button {
     background: #222;
     padding: 0;
     color: #ccc;
@@ -1736,16 +1736,17 @@ body {
     width: 20%;
     height: 10vh;
     font-size: 5vh;
-    float: left; }
+    float: left;
+    transition: all 0.2s; }
     @media screen and (min-width: 1200px) {
-      #nav-menu button {
+      #media-controls button {
         width: 10%;
         height: 10vh; } }
-    #nav-menu button:hover {
+    #media-controls button:hover {
       background: #333;
       color: #fff; }
   @media screen and (min-width: 1200px) {
-    #nav-menu {
+    #media-controls {
       top: 70%; } }
 
 #debug-console {
@@ -1828,15 +1829,22 @@ body.just-controls #debug-console {
   display: none; }
 body.just-controls #song-verses {
   bottom: 20%; }
-body.just-controls #nav-menu {
+body.just-controls #media-controls {
   bottom: 0%;
   top: 80%; }
 @media screen and (min-width: 1200px) {
   body.just-controls #song-verses {
     bottom: 10%; }
-  body.just-controls #nav-menu {
+  body.just-controls #media-controls {
     bottom: 0%;
     top: 90%; } }
+
+#main-menu {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0; }
 
 
 /*# sourceMappingURL=maps/client.css.map */

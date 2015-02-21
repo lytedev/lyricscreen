@@ -8,12 +8,12 @@
 
 	<link rel="stylesheet" type="text/css" href="css/all.css" />
 </head>
-<body>
-	<div id="control-panel">
+<body class="just-controls">
+	<div id="verse-list">
 		<ul id="song-verses"></ul>
 	</div>
 
-	<div id="nav-menu">
+	<div id="media-controls">
 		<button data-click-shortcut-keys="c38,c37" title="Previous Song" class="message-button" data-message="previous song"><i class="fa fa-step-backward"></i></button>
 		<button data-click-shortcut-keys="38,37" title="Previous Verse" class="message-button" data-message="previous verse"><i class="fa fa-backward"></i></button>
 		<button data-click-shortcut-keys="70,80" title="Toggle Display Freeze" id="freeze-button" class="message-button" data-message="toggle frozen"><i class="fa fa-pause"></i></button>
@@ -24,6 +24,15 @@
 		<button data-click-shortcut-keys="77" title="Main Menu" id="main-menu-button"><i class="fa fa-bars"></i></button>
 		<button data-click-shortcut-keys="82" title="Reload Playlist" class="message-button" data-message="reload playlist"><i class="fa fa-refresh"></i></button>
 		<button data-click-shortcut-keys="ca40,ca39" title="Go to end of Playlist" class="message-button" data-message="finish playlist"><i class="fa fa-fast-forward"></i></button>
+	</div>
+
+	<div id="main-menu">
+		<ul>
+			<li>
+				<input type="checkbox" id="debug-mode-toggle" name="debug-mode-toggle">
+				<label for="debug-mode-toggle">Debug View</label>
+			</li>
+		</ul>
 	</div>
 
 	<ul id="debug-console"></ul>

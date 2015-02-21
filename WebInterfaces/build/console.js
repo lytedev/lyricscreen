@@ -103,6 +103,8 @@
 		this.socket = false;
 		this.state = new AdminState();
 
+		window.socketClient = this;
+
 		if (arguments.length >= 1) {
 			this.log = arguments[0];
 		}
@@ -306,7 +308,6 @@
 
 		this.bindClickShortcutKeys = function() {
 			var clickShortcutElements = document.querySelectorAll('[data-click-shortcut-keys]');
-			console.log(clickShortcutElements);
 
 			this.shortcutKeyClicks = {};
 			for (var i = 0; i < clickShortcutElements.length; i++) {
@@ -348,7 +349,6 @@
 			if (e.shiftKey) key = "s" + key;
 			if (e.altKey) key = "a" + key;
 			if (e.ctrlKey) key = "c" + key;
-			console.log(e.keyCode, key);
 			if (key in this.shortcutKeyClicks) {
 				var ele = this.shortcutKeyClicks[key];
 				var me = new MouseEvent('click', {

@@ -7,9 +7,10 @@ Simple websocket server implementation.
 
 """
 
-import sys, jsonpickle, asyncio, websockets, pprint, signal
+import sys, jsonpickle, asyncio, websockets, pprint, signal, utils
 
-from playlist import Playlist
+from playlist import Playlist, playlists_dir
+from song import Song, songs_dir
 
 class WebSocketServer(object):
 	def __init__(self, host = "0.0.0.0", port = 8417, playlist_name = None, loop = None):
@@ -66,11 +67,31 @@ class WebSocketServer(object):
 			# Go to a Verse
 			"goto verse": self.gotoVerse,
 
+			# Switch to the specified Song Map
+			"goto map": self.gotoMap,
+
 			# Go to a Song
 			"goto song": self.gotoSong,
 
 			# Kill the server
 			"kill": self.killServer,
+
+			# List available Playlists
+			"list playlist": self.listPlaylists,
+			"list playlists": self.listPlaylists,
+
+			# List available Songs
+			"list song": self.listSongs,
+			"list songs": self.listSongs,
+
+			# New Playlist
+			"new playlist": self.newPlaylist,
+
+			# New Song
+			"new song": self.newSong,
+
+			# Add Song to Playlist
+			"add song": self.addSong,
 
 			# Acknowledge/Pong
 			"syn": self.ackClient,
@@ -177,6 +198,9 @@ class WebSocketServer(object):
 		self.playlist.goToVerse(vid)
 		yield from self.updateAll()
 
+	def gotoMap(self, sock, msg):
+		pass
+
 	def gotoSong(self, sock, msg):
 		"""Message Handler: Jump to the specified Song in the current Playlist."""
 		try:
@@ -189,6 +213,28 @@ class WebSocketServer(object):
 	def killServer(self, sock, msg):
 		"""Message Handler: Force the server to stop excecution."""
 		sys.exit(0)
+
+	def listPlaylists(self, sock, msg):
+		"""Message Handler: Provide the client with a full list of existing Playlists."""
+		playlists = utils.directory_entries(playlists_dir, ".", ".txt")
+		yield from sock.send("playlists: " + jsonpickle.encode(playlists))
+
+	def listSongs(self, sock, msg):
+		"""Message Handler: Provide the client with a full list of existing Songs."""
+		songs = utils.directory_entries(songs_dir, ".", ".txt")
+		yield from sock.send("songs: " + jsonpickle.encode(songs))
+
+	def newPlaylist(self, sock, msg):
+		"""Message Handler: Start a new empty Playlist."""
+		pass
+
+	def newSong(self, sock, msg):
+		"""Message Handler: Start a new empty Song."""
+		pass
+
+	def addSong(self, sock, msg):
+		"""Message Handler: Add the Song with the given name to the current Playlist."""
+		pass
 
 	def ackClient(self, sock, msg):
 		"""Message Handler: Acknowledge the client."""
