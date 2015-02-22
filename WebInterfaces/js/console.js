@@ -520,7 +520,8 @@
 			return false;
 		};
 
-		this.toggleMainMenu = function(e, this) {
+		this.toggleMainMenu = function(e, that) {
+
 
 		};
 

@@ -25,7 +25,7 @@ if __name__ == "__main__":
 	websocket_server = WebSocketServer(loop=loop)
 	http_server = WebInterfaceServerManager()
 
-	websocket_server.listPlaylists(0, 0)
+	websocket_server.loadPlaylist("2015.02.22 - Feb 22nd 2015")
 
 	# Create server threads
 	websocket_server_thread = threading.Thread(target=websocket_server.start)
