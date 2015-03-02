@@ -1675,7 +1675,8 @@ body {
     cursor: pointer;
     border: solid 5px transparent;
     overflow: hidden;
-    position: relative; }
+    position: relative;
+    transition: all 0.1s; }
     #song-verses li .verse-name {
       position: absolute;
       top: 0;
@@ -1737,7 +1738,7 @@ body {
     height: 10vh;
     font-size: 5vh;
     float: left;
-    transition: all 0.2s; }
+    transition: all 0.1s; }
     @media screen and (min-width: 1200px) {
       #media-controls button {
         width: 10%;
@@ -1839,12 +1840,32 @@ body.just-controls #media-controls {
     bottom: 0%;
     top: 90%; } }
 
+input[type=checkbox] {
+  padding: 5px; }
+
+label {
+  position: relative;
+  top: -2px;
+  margin-left: 5px; }
+
 #main-menu {
-  display: block;
+  z-index: 100;
+  border-right: solid 1px #444;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0; }
+  bottom: 0;
+  background-color: #111;
+  padding: 20px; }
+  #main-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    #main-menu ul li {
+      margin: 0;
+      padding: 0;
+      list-style: none; }
 
 
 /*# sourceMappingURL=maps/client.css.map */

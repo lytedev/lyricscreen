@@ -1841,7 +1841,8 @@ body.just-controls #media-controls {
     top: 90%; } }
 
 input[type=checkbox] {
-  padding: 5px; }
+  padding: 5px;
+  padding-left: 0; }
 
 label {
   position: relative;
@@ -1856,16 +1857,17 @@ label {
   top: 0;
   left: 0;
   bottom: 0;
-  background-color: #111;
-  padding: 20px; }
+  background-color: #111; }
   #main-menu ul {
     margin: 0;
     padding: 0;
     list-style: none; }
     #main-menu ul li {
       margin: 0;
-      padding: 0;
+      padding: 20px 20px;
       list-style: none; }
+      #main-menu ul li:hover {
+        background: #222; }
 
 
 /*# sourceMappingURL=maps/client.css.map */

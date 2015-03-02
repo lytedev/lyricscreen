@@ -278,6 +278,7 @@ body.just-controls {
 
 input[type=checkbox] {
 	padding: 5px;
+	padding-left: 0;
 }
 
 label {
@@ -295,7 +296,6 @@ label {
 	left: 0;
 	bottom: 0;
 	background-color: #111;
-	padding: 20px;
 
 	ul {
 		margin: 0;
@@ -303,8 +303,12 @@ label {
 		list-style: none;
 		li {
 			margin: 0;
-			padding: 0;
+			padding: 20px 20px;
 			list-style: none;
+
+			&:hover {
+				background: #222;
+			}
 		}
 	}
 }

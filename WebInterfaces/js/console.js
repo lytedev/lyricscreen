@@ -293,6 +293,7 @@
 			this.blankButton = document.getElementById("blank-button");
 			this.debugModeToggle = document.getElementById("debug-mode-toggle");
 			this.mainMenuButton = document.getElementById("main-menu-button");
+			this.mainMenu = document.getElementById("main-menu");
 
 			var that = this;
 			window.onbeforeunload = function() {
@@ -494,6 +495,7 @@
 			};
 
 			this.mainMenuButton.onclick = function(e) {
+				console.log(e);
 				that.toggleMainMenu(e, this);
 			};
 		};
@@ -521,8 +523,13 @@
 		};
 
 		this.toggleMainMenu = function(e, that) {
-
-
+			console.log(this.mainMenu);
+			console.log(this.mainMenu.style.display);
+			if (this.mainMenu.style.display == "block") {
+				this.mainMenu.style.display = "none";
+			} else {
+				this.mainMenu.style.display = "block";
+			}
 		};
 
 		return this;
