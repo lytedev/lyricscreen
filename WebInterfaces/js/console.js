@@ -305,6 +305,7 @@
 			};
 
 			this.bindClickShortcutKeys();
+			this.duplicateLabelTitles(); 
 
 			this.client.connect();
 		};
@@ -343,6 +344,17 @@
 					}
 				}
 				e.title += "]";
+			}
+		};
+
+		// NOTE: Run AFTER bindClickShortcutKeys for best UX
+		this.duplicateLabelTitles = function() {
+			var labels = document.querySelectorAll('label');
+			for (var i = 0; i < labels.length; i++) {
+				var label = labels[i];
+				var target = label.getAttribute('for');
+				var targetElement = document.getElementById(target);
+				label.setAttribute('title', targetElement.getAttribute('title'));
 			}
 		};
 
@@ -526,8 +538,10 @@
 			console.log(this.mainMenu);
 			console.log(this.mainMenu.style.display);
 			if (this.mainMenu.style.display == "block") {
+				this.mainMenuButton.className = "";
 				this.mainMenu.style.display = "none";
 			} else {
+				this.mainMenuButton.className = "active";
 				this.mainMenu.style.display = "block";
 			}
 		};

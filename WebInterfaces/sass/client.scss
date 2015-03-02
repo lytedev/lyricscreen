@@ -287,6 +287,16 @@ label {
 	margin-left: 5px;
 }
 
+#main-menu-button {
+	&.active {
+		color: #66D9EF;
+
+		&:hover {
+			color: #66D9EF;
+		}
+	}
+}
+
 #main-menu {
 	z-index: 100;
 	border-right: solid 1px #444;

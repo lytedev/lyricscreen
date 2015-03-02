@@ -28,9 +28,34 @@
 
 	<div id="main-menu">
 		<ul>
+			<!-- 
+			# List available Playlists
+			"list playlist": self.listPlaylists,
+			"list playlists": self.listPlaylists,
+
+			# List available Songs
+			"list song": self.listSongs,
+			"list songs": self.listSongs,
+
+			# New Playlist
+			"new playlist": self.newPlaylist,
+
+			# New Song
+			"new song": self.newSong,
+
+			# Add Song to Playlist
+			"add song": self.addSong,
+
+			# Acknowledge/Pong
+			"syn": self.ackClient,
+			"ping": self.pongClient,
+			-->
 			<li>
-				<input type="checkbox" id="debug-mode-toggle" name="debug-mode-toggle">
-				<label for="debug-mode-toggle">Debug View</label>
+
+			</li>
+			<li>
+				<input title="Toggle Debug Mode" data-click-shortcut-keys="a68" type="checkbox" id="debug-mode-toggle" name="debug-mode-toggle">
+				<label for="debug-mode-toggle">Debug Mode</label>
 			</li>
 		</ul>
 	</div>
