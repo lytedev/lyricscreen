@@ -2,21 +2,33 @@
 
 A probably-overkill and powerful way of managing lyrics or verse displays for concerts or church services.
 
+**NOTE**: This project is under heavy development and is not recommended for mission-critical functions. 
+
 ## Requirements
 
 * Python >= 3.3
-* `asyncio` module (if Python < 3.4) `pip install asyncio`
-* `websockets` module `pip install websockets`
-* `jsonpickle` module `pip install jsonpickle`
+* `asyncio` module (if Python < 3.4, `pip install asyncio`)
+* `websockets` module (`pip install websockets`)
+* `jsonpickle` module (`pip install jsonpickle`)
+
+And for development of the web client, you'll want the following: 
+
+* `npm` **N**ode **P**ackage **M*anager (You'll need `node.js` installed)
+* `gulp` Streaming build system (`npm install -g gulp`)
+* `bower` Front-end package manager (`npm install -g bower`)
 
 ## Basic Usage
-
-Sorry for the barebones stuff here, this whole thing is under heavy development and is highly experimental.
 
 * Run `lyricscreen.py` (`python3 lyricscreen.py`).
 * Currently, this will start both the websocket server from the big brain of the application and the HTTP server hosting the default web client.
 * Point your browser at `localhost:8000/console` as specified by the httpserver's instructions for a management panel and master controls.
 * Point your browser at `localhost:8000/display` for a basic words display.
+
+## Development
+
+For web client development, your work is primarily done in the `WebInterface` directory. Run `npm install` to fetch the node modules we use before running `gulp` to build our app. 
+
+You can also use `gulp watch` to continually build as changes are made. If you use a LiveReload plugin, this also sends refresh messages on file changes for a reload. 
 
 ## Concerns
 

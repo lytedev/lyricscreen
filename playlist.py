@@ -15,8 +15,8 @@ from map import Map
 playlists_dir = path.abspath(path.dirname(__file__) + "/Playlists/")
 
 class Playlist(object):
-	def __init__(self):
-		self.name = "Playlist"
+	def __init__(self, name = "New Playlist"):
+		self.name = name
 		self.songsToLoad = []
 		self.songs = []
 		self.currentSong = -1

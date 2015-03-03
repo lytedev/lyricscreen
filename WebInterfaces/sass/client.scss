@@ -41,6 +41,7 @@ body {
 		border: solid 5px transparent;
 		overflow: hidden;
 		position: relative;
+		transition: all 0.1s;
 
 		.verse-name {
 			position: absolute;
@@ -106,7 +107,7 @@ body {
 	}
 }
 
-#nav-menu {
+#media-controls {
 	z-index: 10;
 	position: absolute;
 	top: 60%;
@@ -127,6 +128,7 @@ body {
 		height: 10vh;
 		font-size: 5vh;
 		float: left;
+		transition: all 0.1s;
 
 		@media screen and (min-width: 1200px) {
 			width: 10%;
@@ -257,7 +259,7 @@ body.just-controls {
 		bottom: 20%;
 	}
 
-	#nav-menu {
+	#media-controls {
 		bottom: 0%;
 		top: 80%;
 	}
@@ -267,9 +269,56 @@ body.just-controls {
 			bottom: 10%;
 		}
 
-		#nav-menu {
+		#media-controls {
 			bottom: 0%;
 			top: 90%;
+		}
+	}
+}
+
+input[type=checkbox] {
+	padding: 5px;
+	padding-left: 0;
+}
+
+label {
+	position: relative;
+	top: -2px;
+	margin-left: 5px;
+}
+
+#main-menu-button {
+	&.active {
+		color: #66D9EF;
+
+		&:hover {
+			color: #66D9EF;
+		}
+	}
+}
+
+#main-menu {
+	z-index: 100;
+	border-right: solid 1px #444;
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #111;
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li {
+			margin: 0;
+			padding: 20px 20px;
+			list-style: none;
+
+			&:hover {
+				background: #222;
+			}
 		}
 	}
 }

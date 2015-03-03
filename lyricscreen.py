@@ -9,12 +9,13 @@ Application entry point.
 
 """
 
-import optparse, sys, os, threading, signal, asyncio
+import optparse, sys, os, threading, signal, asyncio, time
 
 from queue import Queue
 from wsserver import WebSocketServer
 from httpserver import WebInterfaceServerManager
-from playlist import Playlist
+from playlist import Playlist, playlists_dir
+import utils
 
 if __name__ == "__main__":
 	# Get event loop for websocket server
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 	q.put(http_server_thread)
 
 	# Run async event loop
+	time.sleep(0.1)
 	loop.run_until_complete(websocket_server.sock)
 	loop.run_forever()
 

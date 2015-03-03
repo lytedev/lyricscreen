@@ -103,6 +103,8 @@
 		this.socket = false;
 		this.state = new AdminState();
 
+		window.socketClient = this;
+
 		if (arguments.length >= 1) {
 			this.log = arguments[0];
 		}
@@ -289,6 +291,9 @@
 			this.songVerses = document.getElementById("song-verses");
 			this.freezeButton = document.getElementById("freeze-button");
 			this.blankButton = document.getElementById("blank-button");
+			this.debugModeToggle = document.getElementById("debug-mode-toggle");
+			this.mainMenuButton = document.getElementById("main-menu-button");
+			this.mainMenu = document.getElementById("main-menu");
 
 			var that = this;
 			window.onbeforeunload = function() {
@@ -300,13 +305,13 @@
 			};
 
 			this.bindClickShortcutKeys();
+			this.duplicateLabelTitles(); 
 
 			this.client.connect();
 		};
 
 		this.bindClickShortcutKeys = function() {
 			var clickShortcutElements = document.querySelectorAll('[data-click-shortcut-keys]');
-			console.log(clickShortcutElements);
 
 			this.shortcutKeyClicks = {};
 			for (var i = 0; i < clickShortcutElements.length; i++) {
@@ -342,13 +347,23 @@
 			}
 		};
 
+		// NOTE: Run AFTER bindClickShortcutKeys for best UX
+		this.duplicateLabelTitles = function() {
+			var labels = document.querySelectorAll('label');
+			for (var i = 0; i < labels.length; i++) {
+				var label = labels[i];
+				var target = label.getAttribute('for');
+				var targetElement = document.getElementById(target);
+				label.setAttribute('title', targetElement.getAttribute('title'));
+			}
+		};
+
 		this.onKeyDown = function(e) {
 			var key = "" + e.keyCode;
 			if (e.metaKey) key = "m" + key;
 			if (e.shiftKey) key = "s" + key;
 			if (e.altKey) key = "a" + key;
 			if (e.ctrlKey) key = "c" + key;
-			console.log(e.keyCode, key);
 			if (key in this.shortcutKeyClicks) {
 				var ele = this.shortcutKeyClicks[key];
 				var me = new MouseEvent('click', {
@@ -486,9 +501,26 @@
 			for (var i = 0; i < messageButtons.length; i++) {
 				messageButtons[i].onclick = function(e) { that.messageButtonCallback(e, this); };
 			}
+
+			this.debugModeToggle.onclick = function(e) {
+				that.toggleDebugMode(e, this);
+			};
+
+			this.mainMenuButton.onclick = function(e) {
+				console.log(e);
+				that.toggleMainMenu(e, this);
+			};
 		};
 
 		/* Interface Element Callbacks */
+
+		this.toggleDebugMode = function(e, that) {
+			if (that.checked) {
+				document.body.className = "";
+			} else {
+				document.body.className = "just-controls";
+			}
+		};
 
 		this.jumpToVerseCallback = function(e, that) {
 			this.client.send("goto verse " + that.dataset.verse);
@@ -500,6 +532,18 @@
 			this.client.send(that.dataset.message);
 			e.preventDefault();
 			return false;
+		};
+
+		this.toggleMainMenu = function(e, that) {
+			console.log(this.mainMenu);
+			console.log(this.mainMenu.style.display);
+			if (this.mainMenu.style.display == "block") {
+				this.mainMenuButton.className = "";
+				this.mainMenu.style.display = "none";
+			} else {
+				this.mainMenuButton.className = "active";
+				this.mainMenu.style.display = "block";
+			}
 		};
 
 		return this;

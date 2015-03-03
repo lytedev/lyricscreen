@@ -67,9 +67,9 @@ gulp.task('build', ['build-styles'], function() {
     del(buildDir, { force: true }, function() {
         gulp.src([cssBuildDir, jsBuildDir])
             .pipe(gulp.dest(buildDir))
-            .pipe(rev())
+            // .pipe(rev())
             .pipe(gulp.dest(buildDir))
-            .pipe(rev.manifest())
+            // .pipe(rev.manifest())
             .pipe(gulp.dest(buildDir))
     });
 
