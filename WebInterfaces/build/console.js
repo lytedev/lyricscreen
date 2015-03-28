@@ -305,7 +305,6 @@
 			};
 
 			this.bindClickShortcutKeys();
-			this.bindMenuItems();
 			this.duplicateLabelTitles(); 
 
 			this.client.connect();
@@ -345,26 +344,6 @@
 					}
 				}
 				e.title += "]";
-			}
-		};
-
-		this.bindMenuItems = function() {
-			var menuItems = this.mainMenu.querySelectorAll("ul li");
-			for (var i = 0; i < menuItems.length; i++) {
-				var menuItem = menuItems[i];
-				console.log(menuItem);
-				menuItem.onClick = function() {
-					console.log(this);
-					var ele = this.childNodes[0];
-					var me = new MouseEvent('click', {
-						'view': window,
-						'bubbles': true,
-						'cancelable': true,
-					});
-					var result = ele.dispatchEvent(me);
-					e.preventDefault();
-					return false;
-				}
 			}
 		};
 
@@ -528,6 +507,7 @@
 			};
 
 			this.mainMenuButton.onclick = function(e) {
+				console.log(e);
 				that.toggleMainMenu(e, this);
 			};
 		};
@@ -555,6 +535,8 @@
 		};
 
 		this.toggleMainMenu = function(e, that) {
+			console.log(this.mainMenu);
+			console.log(this.mainMenu.style.display);
 			if (this.mainMenu.style.display == "block") {
 				this.mainMenuButton.className = "";
 				this.mainMenu.style.display = "none";

@@ -57,3 +57,4 @@ class Map(object):
 	def finish(self):
 		self.currentVerse = len(self.verses) - 1
 		return self.getCurrentVerseName()
+

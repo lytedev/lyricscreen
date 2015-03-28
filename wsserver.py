@@ -84,6 +84,10 @@ class WebSocketServer(object):
 			"list song": self.listSongs,
 			"list songs": self.listSongs,
 
+			# List Map(s) for Song
+			"list map": self.listMaps,
+			"list maps": self.listMaps,
+
 			# New Playlist
 			"new playlist": self.newPlaylist,
 
@@ -92,6 +96,9 @@ class WebSocketServer(object):
 
 			# Add Song to Playlist
 			"add song": self.addSong,
+
+			# Add Map to Song
+			"add map": self.addMap,
 
 			# Acknowledge/Pong
 			"syn": self.ackClient,
@@ -224,17 +231,20 @@ class WebSocketServer(object):
 		songs = utils.directory_entries(songs_dir, ".", ".txt")
 		yield from sock.send("songs: " + jsonpickle.encode(songs))
 
+	def listMaps(self, sock, msg):
+		maps = maps
+
 	def newPlaylist(self, sock, msg):
 		"""Message Handler: Start a new empty Playlist."""
-		pass
+		self.output("Implementation needed")
 
 	def newSong(self, sock, msg):
 		"""Message Handler: Start a new empty Song."""
-		pass
+		self.output("Implementation needed")
 
 	def addSong(self, sock, msg):
 		"""Message Handler: Add the Song with the given name to the current Playlist."""
-		pass
+		self.output("Implementation needed")
 
 	def ackClient(self, sock, msg):
 		"""Message Handler: Acknowledge the client."""
