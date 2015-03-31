@@ -80,7 +80,7 @@
             errorText();
             if (sock.dontReconnect === true) { 
             } else {
-                setTimeout(function() { connect(host, port); }, 500);
+                setTimeout(function() { connect(host, port); }, 5000);
             }
         };
     }
