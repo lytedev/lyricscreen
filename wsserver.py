@@ -246,6 +246,10 @@ class WebSocketServer(object):
 		"""Message Handler: Add the Song with the given name to the current Playlist."""
 		self.output("Implementation needed")
 
+	def addMap(self, sock, msg):
+		"""Message Handler: Add the Map with the given name and optional verses to the current Song."""
+		self.output("Implementation needed")
+
 	def ackClient(self, sock, msg):
 		"""Message Handler: Acknowledge the client."""
 		yield from sock.send("ack")
