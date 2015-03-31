@@ -504,12 +504,12 @@ class WebSocketServer(object):
 def usage():
 	"""Present command line documentation"""
 	print("Usage: python wsserver.py [port] [host_address]")
-	print("  port			The port to listen on for connections. Default: 8000")
+	print("  port			The port to listen on for connections. Default: 8417")
 	print("  host_address	The address to listen on connections. Default: 0.0.0.0")
 
 if __name__ == "__main__":
-	port = 8000
-	addr = ""
+	port = 8417
+	addr = "0.0.0.0"
 	if len(sys.argv) > 1:
 		try:
 			port = int(sys.argv[1])

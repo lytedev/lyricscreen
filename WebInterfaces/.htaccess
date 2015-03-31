@@ -1,7 +1,5 @@
-<IfModule mod_rewrite.c>
-    RewriteRule ^(.*)$ display.html [L]
+RewriteEngine on
 
-    #RewriteCond %{REQUEST_FILENAME} !-d
-    #RewriteCond %{REQUEST_FILENAME} !-f
-    #RewriteRule ^(.*)$ index.php?q=%{REQUEST_URI} [L]
-</IfModule>
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?q=%{REQUEST_URI} [L]

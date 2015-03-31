@@ -4,10 +4,10 @@
 // routing!
 
 if (!isset($_GET['q'])) {
-  $_GET['q'] = 'display';
+  $_GET['q'] = 'kill_me';
 }
 
-$_GET['q'] = strtolower($_GET['q']);
+$_GET['q'] = trim(strtolower($_GET['q']), " \t\n\r\0\x0B/");
 
 if ($_GET['q'] == "display") {
   include('display.html');
