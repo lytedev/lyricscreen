@@ -1,5 +1,31 @@
-%h1
-  LyricScreen
-%p#desc
-  Welcome to LyricScreen
+%nav.primary
+  #logo(ng-controller="siteTitle")
+    = "{{ siteTitle }}"
+
+#container
+  %p.lead(ng-controller="siteTitle")
+    = "Welcome to {{ siteTitle }}"
+    %i.fa.fa-camera-retro
+
+  %p
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut nisl
+    facilisis, viverra ipsum ac, interdum nisi. Aenean placerat aliquet lectus
+    quis scelerisque. Fusce efficitur purus vel efficitur aliquam. Sed iaculis
+    ante sed sem vehicula bibendum. Donec sed ex interdum, elementum libero in,
+    facilisis lorem. Quisque mauris nunc, condimentum et mauris eget, auctor
+    egestas mi. Morbi at nisi non lacus semper pulvinar at non nibh. Quisque
+    iaculis cursus erat quis commodo. In hac habitasse platea dictumst.
+
+  %p
+    Morbi lobortis malesuada est, sit amet commodo metus gravida non. Aliquam
+    lobortis consectetur dolor at tempor. Integer ornare dui nisl, eget
+    porttitor elit vulputate sed. Cras ut tristique nibh. Donec eget suscipit
+    nunc. Aliquam venenatis velit eget nunc faucibus vestibulum. Cras sit amet
+    ante a risus ultricies dictum. Quisque gravida nibh ac nulla vestibulum,
+    eget commodo risus eleifend.
+
+%footer.primary
+  %p.gray
+    by
+    %a(href="https://lytedev.io") lytedev
 

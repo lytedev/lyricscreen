@@ -28,3 +28,10 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+# Vendor front-end files
+public/vendor
+
+# Compiled front-end files
+public/css/*.css
+public/js/*.js

@@ -1,18 +1,16 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400)
+@import '../vendor/normalize.styl/normalize'
 
-* 
-  font-smoothing: antialiased !important;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004)
+*, *:before, *:after
+  -webkit-box-sizing: border-box
+     -moz-box-sizing: border-box
+          box-sizing: border-box
 
-body
-  padding: 50px
-  font: 20px "Lato", "Lucida Grande", Helvetica, Arial, sans-serif
+@import url('http://fonts.googleapis.com/css?family=Lato:300,400')
 
-a
-  color: #00B7FF
+@import 'variables'
+@import '../vendor/font-awesome-stylus/stylus/index'
 
-h1
-  font-size: 48pt
+@import 'typography'
+@import 'branding'
+@import 'layout'
 
-h1, h2, h3, h4, h5, h6
-  font-weight: 300

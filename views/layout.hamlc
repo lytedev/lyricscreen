@@ -1,9 +1,10 @@
 !!!
-%html
+%html(ng-app="root")
   %head
-    %title= @title
+    %title(ng-controller="siteTitle")= "{{ siteTitle }}"
     %link(rel='stylesheet', href='/css/style.css')
   %body
     != @body
+  %script(src='/vendor/angular/angular.min.js')
   %script(src='/js/app.js')
 

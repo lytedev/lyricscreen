@@ -1,20 +1,17 @@
 #!/usr/bin/env coffee
 
-require('coffee-script')
+require 'coffee-script'
 
-app = require('../app')
+app = require '../app'
 debug = require('debug')('lyricscreen:server')
-http = require('http')
+http = require 'http'
 
 normalizePort = (val) ->
-  port = parseInt(val, 10)
-
+  port = parseInt val, 10
   if isNaN port
     return val
-
   if port >= 0
     return port
-
   false
 
 onError = (error) ->
@@ -25,10 +22,10 @@ onError = (error) ->
 
   switch error.code
     when 'EACCES'
-      console.error(bind + ' requires elevated privileges')
+      console.error bind + ' requires elevated privileges'
       process.exit 1
     when 'EADDRINUSE'
-      console.error(bind + ' is already in use')
+      console.error bind + ' is already in use'
       process.exit 1
     else
       throw error
@@ -36,12 +33,12 @@ onError = (error) ->
 onListening = () ->
   addr = server.address()
   bind = typeof addr == 'string' ? 'pipe ' + addr : 'port ' + addr.port
-  debug('Listening on ' + bind)
+  debug 'Listening on ' + bind
 
-port = normalizePort(process.env.PORT || '3000')
+port = normalizePort process.env.PORT || '3000'
 app.set('port', port)
 
-server = http.createServer(app)
+server = http.createServer app
 
 server.listen port
 server.on('error', onError)

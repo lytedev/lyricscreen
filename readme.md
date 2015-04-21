@@ -7,10 +7,10 @@ A powerful and fast lyrics management and display app.
 * [NodeJS][node]
 * [CoffeeScript][coffeescript]
 
-You can [install NodeJS from their site] and you can install CoffeeScript with
+You can [install NodeJS from their site][node] and you can install CoffeeScript with
 Node with the command `npm install -g coffee-script`.
 
-Run `npm install` to get the project's dependencies.
+Run `npm install` to get the project's dependencies and `bower install` to get the frontend dependencies.
 
 You can start everything up with `npm start` after everything's ready!
 
