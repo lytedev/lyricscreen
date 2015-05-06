@@ -12,7 +12,7 @@ from os import path
 from map import Map
 from verse import Verse
 
-songs_dir = path.abspath(path.dirname(__file__) + "/Songs/")
+songs_dir = path.abspath(path.dirname(__file__) + "/../data/songs/")
 
 class Song(object):
 	def __init__(self, title = "New Song"):

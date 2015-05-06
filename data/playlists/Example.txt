@@ -1,0 +1,13 @@
+Example Playlist
+# That's a long title! Again, the pound symbol denotes comments. Useful!
+
+# All playlists filenames should end in ".txt" - this may change, but for now,
+# this is what the program expects.
+
+# You should copy this file and rename it "Default.txt"
+# The Default.txt Playlist file is loaded by default if it exists and is a nice
+# quick way to be up and running.
+
+# List your songs file names here - exclude the ".txt"
+Example Song
+

@@ -1,4 +1,4 @@
-Test Song Title
+Example Song Title
 Alternate Map: Chorus, Chorus, Chorus, Test Verse 2
 # This song should have at least one example of every feature of the Song file format.
 # Oh, and the pound symbol denotes a comment and should be ignored by the parser.

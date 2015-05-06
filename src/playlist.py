@@ -12,7 +12,7 @@ from song import Song
 from os import path
 from map import Map
 
-playlists_dir = path.abspath(path.dirname(__file__) + "/Playlists/")
+playlists_dir = path.abspath(path.dirname(__file__) + "/../data/playlists/")
 
 class Playlist(object):
 	def __init__(self, name = "New Playlist"):

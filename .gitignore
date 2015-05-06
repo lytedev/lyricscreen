@@ -1,5 +1,5 @@
-WebInterfaces/node_modules/
-WebInterfaces/bower_components/
+src/__pycache__/
 __pycache__/
+
 npm-debug.log
-*.sublime-workspace
+
