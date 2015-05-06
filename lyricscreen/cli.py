@@ -21,7 +21,22 @@ parser.add_argument("CONFIG", help="the .json file to load config variables from
 def main():
     args = parser.parse_args()
 
+    if args.default_config:
+        settings = Settings('')
+        print(settings.settings_json())
+        sys.exit(0)
+
+    if args.create_config:
+        settings = Settings('')
+        settings.save(default_settings_file)
+        print("Created config file at %s" % settings.file)
+        sys.exit(0)
+
     settings = Settings(args.CONFIG)
+
+    if args.show_config:
+        print(settings.settings_json())
+        sys.exit(0)
 
     # Get event loop for websocket server
     loop = asyncio.get_event_loop()
