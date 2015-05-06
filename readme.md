@@ -1,5 +1,8 @@
 # LyricScreen
 
+NOTE: Undergoing a huge refactor - nobody knows how inaccurate this file is
+right now.
+
 A probably-overkill and powerful way of managing lyrics or verse displays for concerts or church services.
 
 **NOTE**: This project is under heavy development and is not recommended for mission-critical functions. 
