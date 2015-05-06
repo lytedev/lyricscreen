@@ -1,0 +1,6 @@
+include readme.md
+recursive-include docs *
+recursive-include http *
+prune http/node_modules
+prune http/bower_components
+

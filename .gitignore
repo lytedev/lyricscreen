@@ -3,3 +3,5 @@ __pycache__/
 
 npm-debug.log
 
+build
+dist
