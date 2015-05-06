@@ -28,6 +28,8 @@ class Settings(dict):
             "websocket_host": "0.0.0.0",
             "http_port": 8000,
             "http_host": "0.0.0.0",
+            # TODO: Default playlist in default config?
+            # TODO: Default admin password
         }
 
     def __getattr__(self, a):
