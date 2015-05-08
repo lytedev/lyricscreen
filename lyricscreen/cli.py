@@ -19,13 +19,16 @@ parser.add_argument("--create-config", help="create the default config file", ac
 parser.add_argument("CONFIG", help="the .json file to load config variables from", nargs="?", default=default_settings_file)
 
 def main():
+    # Handle some cli flags
     args = parser.parse_args()
 
+    # Show default config contents
     if args.default_config:
         settings = Settings('')
         print(settings.settings_json())
         sys.exit(0)
 
+    # Create default config
     if args.create_config:
         settings = Settings('')
         settings.save(default_settings_file)
@@ -34,6 +37,7 @@ def main():
 
     settings = Settings(args.CONFIG)
 
+    # Show current config settings
     if args.show_config:
         print(settings.settings_json())
         sys.exit(0)
