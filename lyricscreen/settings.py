@@ -68,3 +68,4 @@ class SettingsEncoder(json.JSONEncoder):
 class SettingsDecoder(json.JSONDecoder):
     def default(self, s):
         return super(SettingsDecoder, self).default(s)
+

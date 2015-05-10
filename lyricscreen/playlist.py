@@ -178,3 +178,4 @@ class Playlist(object):
 
     def __str__(self):
         return '<Playlist Object {Name: '+self.name+'}>'
+
