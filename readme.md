@@ -1,7 +1,7 @@
 # LyricScreen
 
 NOTE: Undergoing a huge refactor - nobody knows how inaccurate this file is
-right now.
+right now. IT'S VERY LIKELY THAT NOTHING WORKS!
 
 A probably-overkill and powerful way of managing lyrics or verse displays for concerts or church services.
 
@@ -40,13 +40,11 @@ You can also use `gulp watch` to continually build as changes are made. If you u
 
 ## TODO
 
-* Some sort of config file/system and/or command line arguments?
-	* Specifies hosting info (IP, port)
-	* Playlist to load on startup
 * Authentication info/system for console connections?
   * Idea: on-run, prompt or generate an admin password, require initial auth from "console" connections. Should be fine enough for short term?
 * Better UX for default web admin client
 * More complex, optional song formatting options for fancier slides (background images? text-align? Google fonts?)
 * Playlist creation/saving/modification/loading/listing/viewing
 * Song creation/saving/modification/loading/listing/viewing
-* Always: prettier, better organized code (conform to Python code standards and have properly formatted docstrings)
+* Always: prettier, better organized code (conform to Python code standards and have properly formatted docstrings... or docstrings *at all*)
+* YAML config files?
