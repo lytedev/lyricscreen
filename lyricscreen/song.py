@@ -12,10 +12,11 @@ from os import path
 
 from .map import Map
 from .verse import Verse
-
-songs_dir = "data/songs/"
+from .settings import settings
 
 class Song(object):
+    default_dir = path.join(settings.data_dir, settings.songs_dir)
+
     def __init__(self, title = "New Song"):
         self.file = ""
         self.title = title
@@ -27,7 +28,7 @@ class Song(object):
     @staticmethod
     def load(f):
         s = Song()
-        raw_path = songs_dir+"/"+f+".txt"
+        raw_path = Song.default_dir+"/"+f+".txt"
         if path.exists(raw_path):
             s.file = path.abspath(raw_path)
         else:

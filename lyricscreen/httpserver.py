@@ -4,7 +4,7 @@ from io import BytesIO
 from os import path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-from .settings import Settings
+from .settings import settings
 
 local_web_root = "/http"
 web_root = path.abspath(path.dirname(__file__) + "/" + local_web_root)
@@ -169,8 +169,12 @@ class WebClientRequestHandler(BaseHTTPRequestHandler):
         })
 
     """Simple request handler for our default web interface"""
-    def __init__(self, server_address, RequestHandlerClass, b):
-        super(WebClientRequestHandler, self).__init__(server_address, RequestHandlerClass, b)
+    def __init__(self, server_address, RequestHandlerClass, server):
+        super(WebClientRequestHandler, self).__init__(server_address, RequestHandlerClass, server)
+
+    def log_message(self, format, *args):
+        if settings.verbose:
+            super(WebClientRequestHandler, self).log_message(format, *args)
 
     def do_GET(self):
         """Handle HTTP GET requests"""
@@ -190,9 +194,8 @@ class WebClientRequestHandler(BaseHTTPRequestHandler):
 
 class WebClientServer(object):
     """Simple HTTP server (manager?)"""
-    def __init__(self, settings):
+    def __init__(self):
         super(WebClientServer, self).__init__()
-        self.settings = settings
         self.port = settings.http_port
         self.address = settings.http_host
 
@@ -202,16 +205,17 @@ class WebClientServer(object):
         if addr.strip() == "":
             addr = "0.0.0.0"
         self.httpd = HTTPServer(server_info, WebClientRequestHandler)
-        print("Started HTTP server on {1}:{0}".format(self.port, addr))
-        print("    Visit http://localhost:{0}/console in your browser".format(self.port))
+        print("Started web client (http) server on {1}:{0}".format(self.port, addr))
+        if settings.verbose:
+            print("    Visit http://localhost:{0}/console in your browser if it doesn't open automatically".format(self.port))
         self.httpd.serve_forever()
 
 def is_valid_hostname(hostname):
     """Validate a hostname"""
-    """
-        Credit: @tim-pietzcker of Stack Overflow
-        http://stackoverflow.com/questions/2532053/validate-a-hostname-string
-    """
+
+    """ Credit: @tim-pietzcker of Stack Overflow
+        http://stackoverflow.com/questions/2532053/validate-a-hostname-string """
+
     if len(hostname) > 255:
         return False
     if hostname[-1] == ".":

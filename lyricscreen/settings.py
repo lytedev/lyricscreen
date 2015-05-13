@@ -12,6 +12,8 @@ from pprint import pprint
 
 default_settings_file = "lyricscreen_config.json"
 
+global settings
+
 class Settings(dict):
     def __init__(self, file=None):
         self.defaults()
@@ -25,9 +27,14 @@ class Settings(dict):
     def defaults(self):
         self.cfg = {
             "websocket_port": 8417,
-            "websocket_host": "0.0.0.0",
+            "websocket_host": "127.0.0.1",
             "http_port": 8000,
-            "http_host": "0.0.0.0",
+            "http_host": "127.0.0.1",
+            "verbose": False,
+            "data_dir": "./data",
+            "songs_dir": "songs",
+            "playlists_dir": "playlists",
+            "web_client": True,
             # TODO: Default playlist in default config?
             # TODO: Default admin password
         }
@@ -52,12 +59,14 @@ class Settings(dict):
         if file:
             self.file = file
         if os.path.isfile(self.file):
-            print("Error: Loading settings file %s" % self.file)
             self.cfg = json.loads(open(self.file, 'r').read(), cls=SettingsDecoder)
         else:
-            print("Error: Failed to load settings file %s" % self.file)
             if self.file == default_settings_file:
-                print("    You can create the default config with `lyricscreen --create-config`")
+                settings = Settings('')
+                settings.save(default_settings_file)
+                print("Created config file at %s" % settings.file)
+            else:
+                print("Error: Failed to load settings file %s" % self.file)
 
 class SettingsEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -69,3 +78,4 @@ class SettingsDecoder(json.JSONDecoder):
     def default(self, s):
         return super(SettingsDecoder, self).default(s)
 
+settings = Settings()

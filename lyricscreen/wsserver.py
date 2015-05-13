@@ -9,13 +9,13 @@ Simple websocket server implementation.
 
 import sys, asyncio, websockets, pprint, signal, jsonpickle
 
-from .playlist import Playlist, playlists_dir
-from .song import Song, songs_dir
+from .playlist import Playlist
+from .song import Song
 from .utils import directory_entries
-from .settings import Settings
+from .settings import settings
 
 class WebSocketServer(object):
-    def __init__(self, settings, loop = None):
+    def __init__(self, loop = None):
         """Initialization for a Playlist-managing websocket server"""
         # Hosting information
         self.host = settings.websocket_host
@@ -113,7 +113,7 @@ class WebSocketServer(object):
 
     def sendState(self, sock, msg):
         """Message Handler: Send the current Playlist state to the given socket"""
-        print("Sending state...")
+        self.output("Sending state...")
         yield from sock.send("state: " + jsonpickle.encode(self.playlist))
 
     def nextVerse(self, sock, msg):
@@ -223,12 +223,12 @@ class WebSocketServer(object):
 
     def listPlaylists(self, sock, msg):
         """Message Handler: Provide the client with a full list of existing Playlists."""
-        playlists = directory_entries(playlists_dir, ".", ".txt")
+        playlists = directory_entries(Playlist.default_dir, ".", ".txt")
         yield from sock.send("playlists: " + jsonpickle.encode(playlists))
 
     def listSongs(self, sock, msg):
         """Message Handler: Provide the client with a full list of existing Songs."""
-        songs = directory_entries(songs_dir, ".", ".txt")
+        songs = directory_entries(Song.default_dir, ".", ".txt")
         yield from sock.send("songs: " + jsonpickle.encode(songs))
 
     def newPlaylist(self, sock, msg):
@@ -256,7 +256,8 @@ class WebSocketServer(object):
         self.playlist = Playlist.load(p)
 
         if self.playlist == False:
-            print("Error: Could not load {0} playlist".format(p))
+            if settings.verbose:
+                print("Error: Could not load {0} playlist".format(p))
             return False
 
         # Print a quick summary of the playlist
@@ -274,7 +275,8 @@ class WebSocketServer(object):
 
     def start(self):
         """Start the server listening and connection-accepting loop."""
-        print("Server Starting...")
+        if settings.verbose:
+            print("Server Starting...")
         self.sock = websockets.serve(self.connection, self.host, self.port)
 
         our_loop = False
@@ -287,7 +289,8 @@ class WebSocketServer(object):
         if our_loop:
             self.loop.run_until_complete(self.sock)
 
-        print("Ready for connections at {0}:{1}".format(self.host, self.port))
+        if settings.verbose:
+            print("Ready for connections at {0}:{1}".format(self.host, self.port))
 
         if our_loop:
             self.loop.run_forever()
@@ -299,7 +302,8 @@ class WebSocketServer(object):
     def stop(self, message = ""):
         if message.strip() != "":
             message = " - " + message
-        print("Stopping WebSocketServer{0}".format(message))
+        if settings.verbose:
+            print("Stopping WebSocketServer{0}".format(message))
         self.loop.close()
 
     @asyncio.coroutine
@@ -345,7 +349,8 @@ class WebSocketServer(object):
     def output(self, s):
         """Print the string to the console and send the message to all
         sockets."""
-        print(s)
+        if settings.verbose:
+            print(s)
         yield from self.sendToAll("console: {0}".format(s))
 
     def displayConnection(self, sock, path):

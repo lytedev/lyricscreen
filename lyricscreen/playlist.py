@@ -12,10 +12,11 @@ from os import path
 
 from .song import Song
 from .map import Map
-
-playlists_dir = "data/playlists/"
+from .settings import settings
 
 class Playlist(object):
+    default_dir = path.join(settings.data_dir, settings.playlists_dir)
+
     def __init__(self, name = "New Playlist"):
         self.name = name
         self.songsToLoad = []
@@ -35,8 +36,8 @@ class Playlist(object):
 
     @staticmethod
     def load(f = "Default"):
-        p = Playlist()
-        raw_path = path.abspath(playlists_dir + "/" + f + ".txt")
+        p = Playlist("Loaded Playlist")
+        raw_path = path.abspath(Playlist.default_dir + "/" + f + ".txt")
         if path.exists(raw_path):
             p.file = f
         else:
@@ -45,7 +46,7 @@ class Playlist(object):
         return p.reload()
 
     def reload(self):
-        filePath = playlists_dir + "/" + self.file + ".txt"
+        filePath = Playlist.default_dir + "/" + self.file + ".txt"
         if not path.exists(path.abspath(filePath)):
             print("Warning: Playlist file doesn't exist {0}".format(path.abspath(filePath)))
             return False

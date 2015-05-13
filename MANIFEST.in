@@ -1,6 +1,0 @@
-include readme.md
-graft docs
-graft http
-prune http/node_modules
-prune http/bower_components
-

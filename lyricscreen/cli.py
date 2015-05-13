@@ -4,8 +4,9 @@ from queue import Queue
 
 from .wsserver import WebSocketServer
 from .httpserver import WebClientServer
-from .playlist import Playlist, playlists_dir
-from .settings import Settings, default_settings_file
+from .song import Song
+from .playlist import Playlist
+from .settings import Settings, default_settings_file, settings
 
 import lyricscreen
 
@@ -16,6 +17,7 @@ parser.add_argument("-vv", "--verbose", help="show all available program output"
 parser.add_argument("--default-config", help="display the default config file", action="store_true")
 parser.add_argument("--show-config", help="print the values of the given or default config file", action="store_true")
 parser.add_argument("--create-config", help="create the default config file", action="store_true")
+parser.add_argument("--copy-web-client", help="create the default config file", action="store_true")
 parser.add_argument("CONFIG", help="the .json file to load config variables from", nargs="?", default=default_settings_file)
 
 def main():
@@ -42,12 +44,17 @@ def main():
         print(settings.settings_json())
         sys.exit(0)
 
+    if args.verbose:
+        settings.verbose = True
+        print("Command line arguments:")
+        print("    ", args)
+
     # Get event loop for websocket server
     loop = asyncio.get_event_loop()
 
     # Create server objects
-    websocket_server = WebSocketServer(settings, loop=loop)
-    http_server = WebClientServer(settings)
+    websocket_server = WebSocketServer(loop=loop)
+    http_server = WebClientServer()
 
     # Create server threads
     websocket_server_thread = threading.Thread(target=websocket_server.start)
@@ -58,6 +65,12 @@ def main():
     # Start threads
     websocket_server_thread.start()
     http_server_thread.start()
+
+    # Open browser to console page (with login info?)
+    import webbrowser
+    if settings.verbose:
+        print("Opening browser...")
+    webbrowser.open("http://localhost:" + str(http_server.port) + "/console")
 
     # Create thread queue
     q = Queue()

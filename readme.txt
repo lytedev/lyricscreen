@@ -1,44 +1,61 @@
 LyricScreen
 ===========
 
-NOTE: Undergoing a huge refactor - nobody knows how inaccurate this file
-is right now. IT'S VERY LIKELY THAT NOTHING WORKS!
-
 A probably-overkill and powerful way of managing lyrics or verse
 displays for concerts or church services.
 
 **NOTE**: This project is under heavy development and is not recommended
 for mission-critical functions.
 
-Requirements
+Installation
 ------------
 
--  Python >= 3.3
--  ``asyncio`` module (if Python < 3.4, ``pip install asyncio``)
--  ``websockets`` module (``pip install websockets``)
--  ``jsonpickle`` module (``pip install jsonpickle``)
+``pip``
+~~~~~~~
 
-And for development of the web client, you'll want the following:
+You can get lyricscreen super easily through PyPI! You can check out the
+`package page <https://pypi.python.org/pypi/lyricscreen>`__ or use
+```pip`` <https://pip.pypa.io/en/stable/>`__ as follows:
+
+.. code:: bash
+
+    pip install lyricscreen
+
+Git
+~~~
+
+-  Clone this repo
+   (``git clone https://github.com/lytedev/lyricscreen``)
+-  Run the install script (``make install``)
+
+Windows Installer
+~~~~~~~~~~~~~~~~~
+
+**TODO**: Coming soon!
+
+Basic Usage
+-----------
+
+Command Line
+~~~~~~~~~~~~
+
+If you installed lyricscreen through ``pip``, as long as your ``PATH``
+is properly configured, you should be able to just run ``lyricscreen``
+from your terminal. lyricscreen should automatically fire up and open a
+browser page with access to the web console. It's that simple!
+
+Windows Installation
+~~~~~~~~~~~~~~~~~~~~
+
+**TODO**: Windows installation usage
+
+Development
+-----------
 
 -  ``npm`` **N**\ ode **P**\ ackage \*\*M\*anager (You'll need
    ``node.js`` installed)
 -  ``gulp`` Streaming build system (``npm install -g gulp``)
 -  ``bower`` Front-end package manager (``npm install -g bower``)
-
-Basic Usage
------------
-
--  Run ``lyricscreen.py`` (``python3 lyricscreen.py``).
--  Currently, this will start both the websocket server from the big
-   brain of the application and the HTTP server hosting the default web
-   client.
--  Point your browser at ``localhost:8000/console`` as specified by the
-   httpserver's instructions for a management panel and master controls.
--  Point your browser at ``localhost:8000/display`` for a basic words
-   display.
-
-Development
------------
 
 For web client development, your work is primarily done in the
 ``WebInterface`` directory. Run ``npm install`` to fetch the node
@@ -72,5 +89,7 @@ TODO
 -  Playlist creation/saving/modification/loading/listing/viewing
 -  Song creation/saving/modification/loading/listing/viewing
 -  Always: prettier, better organized code (conform to Python code
-   standards and have properly formatted docstrings)
--  YAML config files?
+   standards and have properly formatted docstrings... or docstrings *at
+   all*)
+-  YAML config files as an option?
+-  Nice introduction page for users

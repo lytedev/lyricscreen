@@ -1,5 +1,7 @@
 src/__pycache__/
 __pycache__/
+*.egg-info
+lyricscreen_config.json
 
 npm-debug.log
 

@@ -1,4 +1,4 @@
-__version__ = "0.5.7"
+__version__ = "0.5.14"
 
 from .httpserver import WebClientServer, WebClientRequestHandler
 from .wsserver import WebSocketServer
