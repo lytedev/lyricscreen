@@ -67,7 +67,7 @@ setup(
             'http/sass/fontawesome/*.*',
         ]},
 
-        requires=[
+        install_requires=[
             "asyncio",
             "websockets",
             "jsonpickle"

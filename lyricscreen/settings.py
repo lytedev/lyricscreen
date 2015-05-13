@@ -26,6 +26,7 @@ class Settings(dict):
 
     def defaults(self):
         self.cfg = {
+            "default_playlist": "Default",
             "websocket_port": 8417,
             "websocket_host": "127.0.0.1",
             "http_port": 8000,

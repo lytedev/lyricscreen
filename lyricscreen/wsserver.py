@@ -255,6 +255,8 @@ class WebSocketServer(object):
         """Load the given Playlist."""
         self.playlist = Playlist.load(p)
 
+        if self.playlist == False and p
+
         if self.playlist == False:
             if settings.verbose:
                 print("Error: Could not load {0} playlist".format(p))

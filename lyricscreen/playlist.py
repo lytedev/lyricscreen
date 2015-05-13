@@ -36,6 +36,9 @@ class Playlist(object):
 
     @staticmethod
     def load(f = "Default"):
+        f = f.replace("..", "")
+        if f.endswith(".txt"):
+            f = f[:-4]
         p = Playlist("Loaded Playlist")
         raw_path = path.abspath(Playlist.default_dir + "/" + f + ".txt")
         if path.exists(raw_path):

@@ -10,8 +10,8 @@ for mission-critical functions.
 Installation
 ------------
 
-``pip``
-~~~~~~~
+pip
+~~~
 
 You can get lyricscreen super easily through PyPI! You can check out the
 `package page <https://pypi.python.org/pypi/lyricscreen>`__ or use
@@ -52,14 +52,23 @@ Windows Installation
 Development
 -----------
 
--  ``npm`` **N**\ ode **P**\ ackage \*\*M\*anager (You'll need
+Backend
+~~~~~~~
+
+The module is contained in the ``lyricscreen`` directory.
+
+Web Client
+~~~~~~~~~~
+
+The web client is found in the ``lyricscreen/http`` directory, but
+you'll need to do a bit of setup to contribute properly. It runs on
+``lyricscreen/httpserver.py``, though it's capable of running through
+other HTTP servers such as Apache or nginx.
+
+-  ``npm`` **N**\ ode **P**\ ackage **M**\ anager (You'll need
    ``node.js`` installed)
 -  ``gulp`` Streaming build system (``npm install -g gulp``)
 -  ``bower`` Front-end package manager (``npm install -g bower``)
-
-For web client development, your work is primarily done in the
-``WebInterface`` directory. Run ``npm install`` to fetch the node
-modules we use before running ``gulp`` to build our app.
 
 You can also use ``gulp watch`` to continually build as changes are
 made. If you use a LiveReload plugin, this also sends refresh messages
