@@ -7,6 +7,10 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from .settings import settings
 
 local_web_root = "/http"
+if isinstance(settings.web_client, bool):
+    pass
+else:
+    local_web_root = settings.web_client
 web_root = path.abspath(path.dirname(__file__) + "/" + local_web_root)
 
 class WebClientRequestHandler(BaseHTTPRequestHandler):

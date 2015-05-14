@@ -5,7 +5,8 @@ A probably-overkill and powerful way of managing lyrics or verse
 displays for concerts or church services.
 
 **NOTE**: This project is under heavy development and is not recommended
-for mission-critical functions.
+for mission-critical functions. There isn't even a changelog at this
+point since stuff is changing all the time, ok?!
 
 Installation
 ------------
@@ -13,7 +14,7 @@ Installation
 pip
 ~~~
 
-You can get lyricscreen super easily through PyPI! You can check out the
+You can get lyricscreen easily through PyPI! You can check out the
 `package page <https://pypi.python.org/pypi/lyricscreen>`__ or use
 ```pip`` <https://pip.pypa.io/en/stable/>`__ as follows:
 
@@ -101,4 +102,4 @@ TODO
    standards and have properly formatted docstrings... or docstrings *at
    all*)
 -  YAML config files as an option?
--  Nice introduction page for users
+-  Nice introduction page for users on web client

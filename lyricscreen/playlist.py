@@ -17,7 +17,12 @@ from .settings import settings
 class Playlist(object):
     default_dir = path.join(settings.data_dir, settings.playlists_dir)
 
-    def __init__(self, name = "New Playlist"):
+    default_playlist_file = """Default Playlist
+
+Default Song
+"""
+
+    def __init__(self, name = "Default"):
         self.name = name
         self.songsToLoad = []
         self.songs = []
@@ -36,12 +41,18 @@ class Playlist(object):
 
     @staticmethod
     def load(f = "Default"):
+        f = f.replace("//", "")
         f = f.replace("..", "")
+        f = f.lstrip("/")
         if f.endswith(".txt"):
             f = f[:-4]
         p = Playlist("Loaded Playlist")
         raw_path = path.abspath(Playlist.default_dir + "/" + f + ".txt")
         if path.exists(raw_path):
+            p.file = f
+        elif f == "Default":
+            fh = open(path.abspath(raw_path), 'w')
+            fh.write(Playlist.default_playlist_file)
             p.file = f
         else:
             print("Warning: Playlist file doesn't exist {0}".format(path.abspath(raw_path)))

@@ -7,10 +7,13 @@ Application user settings manager.
 
 """
 
-import json, os
+import json, os, appdirs
 from pprint import pprint
 
-default_settings_file = "lyricscreen_config.json"
+default_settings_dir = appdirs.user_config_dir("lyricscreen", "lytedev")
+if not os.path.exists(default_settings_dir):
+    os.makedirs(default_settings_dir)
+default_settings_file = os.path.join(default_settings_dir, "lyricscreen_config.json")
 
 global settings
 
@@ -32,7 +35,7 @@ class Settings(dict):
             "http_port": 8000,
             "http_host": "127.0.0.1",
             "verbose": False,
-            "data_dir": "./data",
+            "data_dir": os.path.join(default_settings_dir, "data"),
             "songs_dir": "songs",
             "playlists_dir": "playlists",
             "web_client": True,
@@ -63,9 +66,12 @@ class Settings(dict):
             self.cfg = json.loads(open(self.file, 'r').read(), cls=SettingsDecoder)
         else:
             if self.file == default_settings_file:
-                settings = Settings('')
-                settings.save(default_settings_file)
-                print("Created config file at %s" % settings.file)
+                # Create the default config file
+                # settings = Settings('')
+                # settings.save(default_settings_file)
+                # print("Created config file at %s" % settings.file)
+                # Buuut actually we wanna just do nothing
+                pass
             else:
                 print("Error: Failed to load settings file %s" % self.file)
 

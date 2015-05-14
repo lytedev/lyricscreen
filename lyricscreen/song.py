@@ -17,7 +17,12 @@ from .settings import settings
 class Song(object):
     default_dir = path.join(settings.data_dir, settings.songs_dir)
 
-    def __init__(self, title = "New Song"):
+    default_song_file = """Default Song
+
+Default Verse
+"""
+
+    def __init__(self, title = "Default Song"):
         self.file = ""
         self.title = title
         self.verses = []
@@ -26,10 +31,14 @@ class Song(object):
         self.currentMap = -1
 
     @staticmethod
-    def load(f):
+    def load(f = "Default Song"):
         s = Song()
         raw_path = Song.default_dir+"/"+f+".txt"
         if path.exists(raw_path):
+            s.file = path.abspath(raw_path)
+        elif f == "Default Song":
+            fh = open(path.abspath(raw_path), 'w')
+            fh.write(Song.default_song_file)
             s.file = path.abspath(raw_path)
         else:
             print("Warning: Song file doesn't exist {0}".format(path.abspath(raw_path)))

@@ -17,7 +17,7 @@ parser.add_argument("-vv", "--verbose", help="show all available program output"
 parser.add_argument("--default-config", help="display the default config file", action="store_true")
 parser.add_argument("--show-config", help="print the values of the given or default config file", action="store_true")
 parser.add_argument("--create-config", help="create the default config file", action="store_true")
-parser.add_argument("--copy-web-client", help="create the default config file", action="store_true")
+parser.add_argument("--copy-web-client", help="copy the web client files to the specified location", nargs="?", default="./lyricscreen_web_client")
 parser.add_argument("CONFIG", help="the .json file to load config variables from", nargs="?", default=default_settings_file)
 
 def main():
@@ -29,6 +29,12 @@ def main():
         settings = Settings('')
         print(settings.settings_json())
         sys.exit(0)
+
+    if args.copy_web_client:
+        settings = Settings('')
+        raise NotImplemented("Copying the web client files is not yet implemented.")
+        sys.exit(1)
+        # TODO: Implement copying of web client
 
     # Create default config
     if args.create_config:
@@ -48,6 +54,17 @@ def main():
         settings.verbose = True
         print("Command line arguments:")
         print("    ", args)
+
+    if not os.path.isdir(settings.data_dir):
+        os.makedirs(settings.data_dir)
+
+    songs_dir = os.path.join(settings.data_dir, settings.songs_dir)
+    if not os.path.isdir(songs_dir):
+        os.makedirs(songs_dir)
+
+    playlists_dir = os.path.join(settings.data_dir, settings.playlists_dir)
+    if not os.path.isdir(playlists_dir):
+        os.makedirs(playlists_dir)
 
     # Get event loop for websocket server
     loop = asyncio.get_event_loop()

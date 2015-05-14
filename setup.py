@@ -68,9 +68,10 @@ setup(
         ]},
 
         install_requires=[
+            "appdirs",
             "asyncio",
             "websockets",
-            "jsonpickle"
+            "jsonpickle",
         ],
 
         entry_points={

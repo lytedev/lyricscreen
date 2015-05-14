@@ -253,9 +253,14 @@ class WebSocketServer(object):
 
     def loadPlaylist(self, p = "Default"):
         """Load the given Playlist."""
+        if p.endswith(".txt"):
+            p = p[:-4]
+
         self.playlist = Playlist.load(p)
 
-        if self.playlist == False and p
+        if self.playlist == False and p == "Default":
+            # TODO: Create default Playlist
+            self.playlist = Playlist.load(p)
 
         if self.playlist == False:
             if settings.verbose:
