@@ -317,7 +317,7 @@ class WebSocketServer(object):
     def connection(self, sock, path):
         """Handle a socket connection."""
         # Identify ourselves (not required, just nice, I guess?)
-        yield from sock.send("lyricscreen server 0.2.0")
+        yield from sock.send("lyricscreen server " + lyricscreen.__version__)
 
         # Handle our connection paths
         if path.startswith("/display"):
