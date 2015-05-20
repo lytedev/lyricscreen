@@ -27,7 +27,7 @@ class WebClientRequestHandler(BaseHTTPRequestHandler):
 
     """
 
-    server_version = "LyricscreenHTTP/" + lyricscreen.__version__
+    server_version = "lyricscreenHTTP/" + lyricscreen.__version__
 
     def send_head(self):
         """Common code for GET and HEAD commands.

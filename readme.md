@@ -1,4 +1,4 @@
-# LyricScreen
+# lyricscreen
 
 A probably-overkill and powerful way of managing lyrics or verse displays for
 concerts or church services.
