@@ -1,0 +1,14 @@
+!!!
+%head
+  %title 
+    = "lyricscreen"
+  %link{rel: 'stylesheet', type: 'text/css', href: './styles/app.css'}
+%body
+  .sans-serif
+    = "Sans Serif Is Cool"
+  %p 
+    = "Hello, electron!"
+  %pre
+    = "#import 'test';"
+  %span.fa.fa-cog
+

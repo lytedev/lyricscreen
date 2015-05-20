@@ -1,0 +1,17 @@
+{
+  "name": "lyricscreen",
+  "version": "0.7.0",
+  "main": "./src/backend/entry-point.js",
+  "repository": "https://github.com/lytedev/lyricscreen",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "coffee-script": "^1.9.2",
+    "gulp": "^3.8.11",
+    "gulp-coffee": "^2.3.1",
+    "gulp-electron": "0.0.3",
+    "gulp-haml-coffee": "0.0.6",
+    "gulp-mocha": "^2.0.1",
+    "gulp-shell": "^0.4.1",
+    "gulp-stylus": "^2.0.2"
+  }
+}
