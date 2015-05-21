@@ -1,9 +1,9 @@
-gulp = require 'gulp'
-hamlc = require 'gulp-haml-coffee'
-stylus = require 'gulp-stylus'
-coffee = require 'gulp-coffee'
+gulp     = require 'gulp'
+hamlc    = require 'gulp-haml-coffee'
+stylus   = require 'gulp-stylus'
+coffee   = require 'gulp-coffee'
 electron = require 'gulp-electron'
-shell = require 'gulp-shell'
+shell    = require 'gulp-shell'
 
 mocha = require 'gulp-mocha'
 
