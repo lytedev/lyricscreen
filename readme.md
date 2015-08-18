@@ -37,7 +37,7 @@ This is separated into 4 main components:
 
 * `lyricscreen`: The core logic surrounding the app.
 * `http`: The server for the web client.
-* `webcosket`: The server for receiving commands for accessing core
+* `websocket`: The server for receiving commands for accessing core
     functionality.
 * `windows`: The logic for the various "native" windows.
 
