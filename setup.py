@@ -58,6 +58,7 @@ setup(
 
     packages=["lyricscreen"],
     package_data={'lyricscreen': [
+        'readme.*',
         'http/*.*',
         'http/build/*.*',
         'http/sass/*.*',
