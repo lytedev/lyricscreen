@@ -14,7 +14,7 @@ import lyricscreen
 
 parser = argparse.ArgumentParser(description="A lyrics management and display web app and server")
 
-parser.add_argument("-v", "--version", action="version", version="%(prog)s v" + lyricscreen.__version__)
+parser.add_argument("-v", "--version", action="version", version="LyricScreen v" + lyricscreen.__version__)
 parser.add_argument("-vv", "--verbose", help="show all available program output", action="store_true")
 parser.add_argument("--default-config", help="display the default config file", action="store_true")
 parser.add_argument("--show-config", help="print the values of the given or default config file", action="store_true")

@@ -158,14 +158,12 @@ class WebSocketServer(object):
 
     def restartPlaylist(self, sock, msg):
         """Message Handler: Jump to the very beginning of the Playlist."""
-        yield from self.output("Restarting Playlist.")
         if self.checkPlaylist()[0]:
             self.playlist.restart()
         yield from self.updateAll()
 
     def finishPlaylist(self, sock, msg):
         """Message Handler: Jump to the very beginning of the Playlist."""
-        yield from self.output("Restarting Playlist.")
         if self.checkPlaylist()[0]:
             self.playlist.finish()
         yield from self.updateAll()
@@ -317,7 +315,7 @@ class WebSocketServer(object):
     def connection(self, sock, path):
         """Handle a socket connection."""
         # Identify ourselves (not required, just nice, I guess?)
-        yield from sock.send("lyricscreen server " + lyricscreen.__version__)
+        yield from sock.send("LyricScreen server " + lyricscreen.__version__)
 
         # Handle our connection paths
         if path.startswith("/display"):

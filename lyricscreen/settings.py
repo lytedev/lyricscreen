@@ -31,9 +31,9 @@ class Settings(dict):
         self.cfg = {
             "default_playlist": "Default",
             "websocket_port": 8417,
-            "websocket_host": "127.0.0.1",
+            "websocket_host": "0.0.0.0",
             "http_port": 8000,
-            "http_host": "127.0.0.1",
+            "http_host": "0.0.0.0",
             "verbose": False,
             "data_dir": os.path.join(default_settings_dir, "data"),
             "songs_dir": "songs",

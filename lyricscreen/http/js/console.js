@@ -182,7 +182,7 @@
 				["console:", "consoleMessage"],
 				["slide:", "displayMessage"],
 				["state:", "stateMessage"],
-				["lyricscreen server", "handshakeMessage"],
+				["LyricScreen server", "handshakeMessage"],
 			];
 
 			// Iterate the map
@@ -360,18 +360,15 @@
 		};
 
     this.bindMainMenuItems = function() {
-      console.log("Binding menu items");
       var mainMenuListItems = this.mainMenu.children[0].children;
       for (var i = 0; i < mainMenuListItems.length; i++) {
-        console.log(mainMenuListItems[i]);
         mainMenuListItems[i].addEventListener("click", function(e) {
-          console.log("Main Menu list item clicked!");
           for (var j = 0; j < this.children.length; j++) {
-            console.log(this.children[j]);
-            console.log(this.children[j].tagName);
             if (this.children[j].tagName == "A" || this.children[j].tagName == "INPUT") {
-              this.children[j].click();
-              break;
+              if (this == e.target) {
+                this.children[j].click();
+                break;
+              }
             }
           }
         });
