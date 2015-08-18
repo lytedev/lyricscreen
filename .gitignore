@@ -1,5 +1,11 @@
-WebInterfaces/node_modules/
-WebInterfaces/bower_components/
+src/__pycache__/
 __pycache__/
+*.egg-info
+lyricscreen_config.json
+
 npm-debug.log
-*.sublime-workspace
+
+build
+dist
+data
+

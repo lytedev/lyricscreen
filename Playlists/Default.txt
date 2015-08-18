@@ -1,6 +1,0 @@
-Initial Default Example Playlist
-# That's a long title! Again, pound symbol denotes comments. Useful!
-
-# List your songs file names here - exclude the ".txt"
-Test Song
-
