@@ -85,7 +85,7 @@ It's highly recommended to symlink the development directory's web client to the
 directory LyricScreen uses by default by running this:
 
 ```
-ln -s $PWD/lyricscreen/http $HOME/.config/lyricscreen/web_client
+ln -s "$PWD/lyricscreen/http" "$HOME/.config/lyricscreen/web_client"
 ```
 
 ## Concerns
