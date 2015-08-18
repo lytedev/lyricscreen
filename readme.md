@@ -12,7 +12,7 @@ stuff is changing all the time, ok?!
 ### pip
 
 You can get LyricScreen easily through PyPI! You can check out the [package
-page][lyricscreen_pypi] or use [`pip`][pip] as follows:
+page][lyricscreen_pypi] or use [pip][pip] as follows:
 
 ```bash
 pip install lyricscreen

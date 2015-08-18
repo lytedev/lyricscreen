@@ -16,7 +16,7 @@ pip
 
 You can get LyricScreen easily through PyPI! You can check out the
 `package page <https://pypi.python.org/pypi/lyricscreen>`__ or use
-```pip`` <https://pip.pypa.io/en/stable/>`__ as follows:
+`pip <https://pip.pypa.io/en/stable/>`__ as follows:
 
 .. code:: bash
 
