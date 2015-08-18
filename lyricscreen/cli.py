@@ -1,11 +1,13 @@
-import optparse, sys, os, threading, signal, asyncio, time, argparse
+import sys
+import os
+import threading
+# import signal
+import asyncio
+import time
+import argparse
 
 from queue import Queue
 
-from .wsserver import WebSocketServer
-from .httpserver import WebClientServer
-from .song import Song
-from .playlist import Playlist
 from .settings import Settings, default_settings_file, settings
 
 import lyricscreen
@@ -17,7 +19,8 @@ parser.add_argument("-vv", "--verbose", help="show all available program output"
 parser.add_argument("--default-config", help="display the default config file", action="store_true")
 parser.add_argument("--show-config", help="print the values of the given or default config file", action="store_true")
 parser.add_argument("--create-config", help="create the default config file", action="store_true")
-parser.add_argument("--copy-web-client", help="copy the web client files to the specified location", nargs="?", default="./lyricscreen_web_client")
+# parser.add_argument("--copy-web-client", help="copy the web client files to the specified location", nargs="?", default="./lyricscreen_web_client")
+parser.add_argument("--suppress-browser-window", help="prevent the browser window from opening on startup", action="store_true")
 parser.add_argument("CONFIG", help="the .json file to load config variables from", nargs="?", default=default_settings_file)
 
 def main():
@@ -30,11 +33,19 @@ def main():
         print(settings.settings_json())
         sys.exit(0)
 
-    if args.copy_web_client:
-        settings = Settings('')
-        raise NotImplemented("Copying the web client files is not yet implemented.")
-        sys.exit(1)
-        # TODO: Implement copying of web client
+    from .wsserver import WebSocketServer
+    from .httpserver import WebClientServer, web_root
+
+    if not os.path.isfile(os.path.join(web_root, "console.html")):
+        print("No web client detected in current web_client_dir - symlinking default client")
+        import shutil
+        default_web_client_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "http"))
+        print(default_web_client_dir)
+        print(web_root)
+        if os.path.isdir(web_root):
+          print("The web client directory exists ({}), but without a console.html file - we moved it it to {} so we could copy the default web client there.".format(web_root, web_root + "_saved"))
+          shutil.move(web_root, web_root + "_saved")
+        os.symlink(default_web_client_dir, os.path.abspath(web_root), True)
 
     # Create default config
     if args.create_config:
@@ -66,6 +77,9 @@ def main():
     if not os.path.isdir(playlists_dir):
         os.makedirs(playlists_dir)
 
+    print("Data Directory: {}".format(settings.data_dir))
+    print("Web Client Directory: {}".format(web_root))
+
     # Get event loop for websocket server
     loop = asyncio.get_event_loop()
 
@@ -84,10 +98,12 @@ def main():
     http_server_thread.start()
 
     # Open browser to console page (with login info?)
-    import webbrowser
-    if settings.verbose:
-        print("Opening browser...")
-    webbrowser.open("http://localhost:" + str(http_server.port) + "/console")
+    if not args.suppress_browser_window:
+        import webbrowser
+        if settings.verbose:
+            print("Opening browser...")
+        url = "http://localhost:" + str(http_server.port) + "/console"
+        webbrowser.open(url)
 
     # Create thread queue
     q = Queue()

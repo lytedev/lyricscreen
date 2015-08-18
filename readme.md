@@ -1,4 +1,4 @@
-# lyricscreen
+# LyricScreen
 
 A probably-overkill and powerful way of managing lyrics or verse displays for
 concerts or church services.
@@ -11,7 +11,7 @@ stuff is changing all the time, ok?!
 
 ### pip
 
-You can get lyricscreen easily through PyPI! You can check out the [package
+You can get LyricScreen easily through PyPI! You can check out the [package
 page][lyricscreen_pypi] or use [`pip`][pip] as follows:
 
 ```bash
@@ -19,6 +19,13 @@ pip install lyricscreen
 ```
 
 ### Git
+
+You'll need the following dependencies:
+
+* Pandoc (`pacaur -S pandoc-static`)
+* `pypandoc` (`pip install pypandoc`)
+
+To build from source:
 
 * Clone this repo (`git clone https://github.com/lytedev/lyricscreen`)
 * Run the install script (`make install`)
@@ -31,9 +38,9 @@ pip install lyricscreen
 
 ### Command Line
 
-If you installed lyricscreen through `pip`, as long as your `PATH` is properly
+If you installed LyricScreen through `pip`, as long as your `PATH` is properly
 configured, you should be able to just run `lyricscreen` from your terminal.
-lyricscreen should automatically fire up and open a browser page with access
+LyricScreen should automatically fire up and open a browser page with access
 to the web console. It's that simple!
 
 ### Windows Installation
@@ -73,6 +80,13 @@ gulp
 You can also use `gulp watch` to continually build as changes are made. If you
 use a LiveReload plugin, this also sends refresh messages on file changes for
 a reload.
+
+It's highly recommended to symlink the development directory's web client to the
+directory LyricScreen uses by default by running this:
+
+```
+ln -s $PWD/lyricscreen/http $HOME/.config/lyricscreen/web_client
+```
 
 ## Concerns
 

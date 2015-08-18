@@ -99,7 +99,7 @@
 	var AdminWebSocketClient = function() {
 		this.log = console.log.bind(console);
 		this.defaultPort = 8417;
-		this.expectedServerVersion = "0.2.0";
+		this.expectedServerVersion = "0.6.0";
 		this.socket = false;
 		this.state = new AdminState();
 
@@ -306,6 +306,7 @@
 
 			this.bindClickShortcutKeys();
 			this.duplicateLabelTitles(); 
+      this.bindMainMenuItems();
 
 			this.client.connect();
 		};
@@ -357,6 +358,25 @@
 				label.setAttribute('title', targetElement.getAttribute('title'));
 			}
 		};
+
+    this.bindMainMenuItems = function() {
+      console.log("Binding menu items");
+      var mainMenuListItems = this.mainMenu.children[0].children;
+      for (var i = 0; i < mainMenuListItems.length; i++) {
+        console.log(mainMenuListItems[i]);
+        mainMenuListItems[i].addEventListener("click", function(e) {
+          console.log("Main Menu list item clicked!");
+          for (var j = 0; j < this.children.length; j++) {
+            console.log(this.children[j]);
+            console.log(this.children[j].tagName);
+            if (this.children[j].tagName == "A" || this.children[j].tagName == "INPUT") {
+              this.children[j].click();
+              break;
+            }
+          }
+        });
+      }
+    };
 
 		this.onKeyDown = function(e) {
 			var key = "" + e.keyCode;
@@ -507,7 +527,6 @@
 			};
 
 			this.mainMenuButton.onclick = function(e) {
-				console.log(e);
 				that.toggleMainMenu(e, this);
 			};
 		};
@@ -535,8 +554,6 @@
 		};
 
 		this.toggleMainMenu = function(e, that) {
-			console.log(this.mainMenu);
-			console.log(this.mainMenu.style.display);
 			if (this.mainMenu.style.display == "block") {
 				this.mainMenuButton.className = "";
 				this.mainMenu.style.display = "none";

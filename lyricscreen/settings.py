@@ -39,6 +39,7 @@ class Settings(dict):
             "songs_dir": "songs",
             "playlists_dir": "playlists",
             "web_client": True,
+            "web_client_dir": os.path.join(default_settings_dir, "web_client"),
             # TODO: Default playlist in default config?
             # TODO: Default admin password
         }

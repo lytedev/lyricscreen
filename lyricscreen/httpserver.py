@@ -4,14 +4,14 @@ from io import BytesIO
 from os import path
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-from .settings import settings
+from .settings import settings, default_settings_dir
 
-local_web_root = "/http"
-if isinstance(settings.web_client, bool):
+local_web_root = os.path.join(default_settings_dir, "web_client")
+if isinstance(settings.web_client_dir, bool):
     pass
 else:
-    local_web_root = settings.web_client
-web_root = path.abspath(path.dirname(__file__) + "/" + local_web_root)
+    local_web_root = settings.web_client_dir
+web_root = path.abspath(local_web_root)
 
 class WebClientRequestHandler(BaseHTTPRequestHandler):
 

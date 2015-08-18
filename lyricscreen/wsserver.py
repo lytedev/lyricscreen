@@ -7,7 +7,7 @@ Simple websocket server implementation.
 
 """
 
-import sys, asyncio, websockets, pprint, signal, jsonpickle
+import lyricscreen, sys, asyncio, websockets, pprint, signal, jsonpickle
 
 from .playlist import Playlist
 from .song import Song
