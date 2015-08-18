@@ -12,7 +12,7 @@ with open('lyricscreen/__init__.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
-with open('readme.txt') as f:
+with open('README.rst') as f:
     long_description = f.read()
 
 setup(
@@ -59,6 +59,7 @@ setup(
     packages=["lyricscreen"],
     package_data={'lyricscreen': [
         'readme.*',
+        'README.*',
         'http/*.*',
         'http/build/*.*',
         'http/sass/*.*',

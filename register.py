@@ -10,7 +10,7 @@ except ImportError:
     print("error: pypandoc module not found, could not convert Markdown to RST")
     sys.exit(1)
 
-f = open('readme.txt', 'w+')
+f = open('README.rst', 'w+')
 f.write(read_md('readme.md'))
 f.close()
 
