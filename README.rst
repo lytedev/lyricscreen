@@ -25,11 +25,6 @@ You can get LyricScreen easily through PyPI! You can check out the
 Git
 ~~~
 
-You'll need the following dependencies:
-
--  Pandoc (``pacaur -S pandoc-static``)
--  ``pypandoc`` (``pip install pypandoc``)
-
 To build from source:
 
 -  Clone this repo
