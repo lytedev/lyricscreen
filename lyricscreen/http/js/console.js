@@ -99,7 +99,7 @@
 	var AdminWebSocketClient = function() {
 		this.log = console.log.bind(console);
 		this.defaultPort = 8417;
-		this.expectedServerVersion = "0.6.0";
+		this.expectedServerVersion = "0.6.7";
 		this.socket = false;
 		this.state = new AdminState();
 
