@@ -6,19 +6,13 @@ import re
 from setuptools import setup
 
 # Load our readme as the long_description
-try:
-    with open('readme.txt') as f:
-        long_description = f.read()
-except IOError as e:
-    print("Failed to open readme.txt for long_description")
-
 # Get our version information
 _version_re = re.compile(r'__version__\s*=\s*(.*)')
 with open('lyricscreen/__init__.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
-with open('readme.txt', 'r') as f:
+with open('readme.txt') as f:
     long_description = f.read()
 
 setup(
