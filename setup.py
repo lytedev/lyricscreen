@@ -1,22 +1,16 @@
 #!/usr/bin/env python3
 
 import ast
-import sys
 import re
 
 from setuptools import setup
 
-try:
-    from pypandoc import convert
-    read_md = lambda f: convert(f, 'rst')
-except ImportError:
-    print("warning: pypandoc module not found, could not convert Markdown to \
-            RST")
-    sys.exit(1)
-    read_md = lambda f: open(f, 'r').read()
-
 # Load our readme as the long_description
-long_description = read_md('readme.md')
+try:
+    with open('readme.txt') as f:
+        long_description = f.read()
+except IOError as e:
+    print("Failed to open readme.txt for long_description")
 
 # Get our version information
 _version_re = re.compile(r'__version__\s*=\s*(.*)')

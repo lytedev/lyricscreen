@@ -6,7 +6,7 @@ install: build
 	python3 $(shell ls -td dist/lyricscreen*/ | head -1)setup.py install
 
 publish:
-	./setup.py register
+	./register.py
 	./setup.py sdist upload
 	- pip uninstall lyricscreen
 	pip install --no-cache-dir lyricscreen
