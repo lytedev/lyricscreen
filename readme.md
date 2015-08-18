@@ -20,11 +20,6 @@ pip install lyricscreen
 
 ### Git
 
-You'll need the following dependencies:
-
-* Pandoc (`pacaur -S pandoc-static`)
-* `pypandoc` (`pip install pypandoc`)
-
 To build from source:
 
 * Clone this repo (`git clone https://github.com/lytedev/lyricscreen`)
