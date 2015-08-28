@@ -3,6 +3,8 @@
 A probably-overkill and powerful way of managing lyrics or verse displays for
 concerts or church services.
 
+![Glamour shot][glamour_shot]
+
 **NOTE**: This project is under heavy development and is not recommended for
 mission-critical functions. There isn't even a changelog at this point since
 stuff is changing all the time, ok?!
@@ -110,4 +112,5 @@ ln -s "$PWD/lyricscreen/http" "$HOME/.config/lyricscreen/web_client"
 
 [lyricscreen_pypi]: https://pypi.python.org/pypi/lyricscreen
 [pip]: https://pip.pypa.io/en/stable/
+[glamour_shot]: https://raw.githubusercontent.com/lytedev/lyricscreen/dev/docs/screenshots/Laptop-Mobile-screenshot-render.png
 
