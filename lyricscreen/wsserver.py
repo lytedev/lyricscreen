@@ -294,8 +294,7 @@ class WebSocketServer(object):
         if our_loop:
             self.loop.run_until_complete(self.sock)
 
-        if settings.verbose:
-            print("Ready for connections at {0}:{1}".format(self.host, self.port))
+        print("Ready for WebSocket connections at {0}:{1}".format(self.host, self.port))
 
         if our_loop:
             self.loop.run_forever()
