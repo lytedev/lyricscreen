@@ -6,15 +6,23 @@ A powerful and fast lyrics management and display app.
 
 * [NodeJS][node]
 * [CoffeeScript][coffeescript]
+* [Bower][bower]
+* [Gulp][gulp]
 
-You can [install NodeJS from their site][node] and you can install CoffeeScript with
-Node with the command `npm install -g coffee-script`.
+```bash
+npm install -g coffee-script gulp bower
+npm install
+bower install
+```
 
-Run `npm install` to get the project's dependencies and `bower install` to get the frontend dependencies.
+## Running
 
-You can start everything up with `npm start` after everything's ready!
-
+```bash
+gulp watch-serve
+```
 
 
 [node]: https://nodejs.org
 [coffeescript]: http://coffeescript.org
+[bower]: http://bower.io
+[gulp]: http://gulpjs.com

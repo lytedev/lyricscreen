@@ -30,7 +30,7 @@ node_modules
 npm-debug.log
 
 # Vendor front-end files
-public/vendor
+bower_components
 
 # Compiled front-end files
 public/css/*.css
