@@ -37,8 +37,8 @@ Default Verse
         if path.exists(raw_path):
             s.file = path.abspath(raw_path)
         elif f == "Default Song":
-            fh = open(path.abspath(raw_path), 'w')
-            fh.write(Song.default_song_file)
+            with open(path.abspath(raw_path), 'w') as fh:
+                fh.write(Song.default_song_file)
             s.file = path.abspath(raw_path)
         else:
             print("Warning: Song file doesn't exist {0}".format(path.abspath(raw_path)))
@@ -50,13 +50,13 @@ Default Verse
             return False
 
         self.verses = []
-        f = open(self.file, encoding="utf-8")
-        if not f:
-            print("Warning: Failed to open Song file {0}".format(self.file))
-            return False
-        self.loadVerses(self.loadHeader(f))
-        self.verses.insert(0, Verse("Title", self.title))
-        self.addVerse("Empty Slide")
+        with open(self.file, encoding="utf-8") as f:
+            if not f:
+                print("Warning: Failed to open Song file {0}".format(self.file))
+                return False
+            self.loadVerses(self.loadHeader(f))
+            self.verses.insert(0, Verse("Title", self.title))
+            self.addVerse("Empty Slide")
 
         return self
 

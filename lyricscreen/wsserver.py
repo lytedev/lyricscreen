@@ -309,6 +309,7 @@ class WebSocketServer(object):
         if settings.verbose:
             print("Stopping WebSocketServer{0}".format(message))
         self.loop.close()
+        yield from self.sock.close()
 
     @asyncio.coroutine
     def connection(self, sock, path):

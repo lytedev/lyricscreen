@@ -23,6 +23,9 @@ parser.add_argument("--create-config", help="create the default config file", ac
 parser.add_argument("--suppress-browser-window", help="prevent the browser window from opening on startup", action="store_true")
 parser.add_argument("CONFIG", help="the .json file to load config variables from", nargs="?", default=default_settings_file)
 
+post_settings_loaded_callbacks = []
+post_startup_callbacks = []
+
 def main():
     # Handle some cli flags
     args = parser.parse_args()
@@ -66,6 +69,10 @@ def main():
         print("Command line arguments:")
         print("    ", args)
 
+    # TODO: post_settings_loaded callback?
+    for cb in post_settings_loaded_callbacks:
+        cb(settings, args)
+
     if not os.path.isdir(settings.data_dir):
         os.makedirs(settings.data_dir)
 
@@ -105,10 +112,25 @@ def main():
         url = "http://localhost:" + str(http_server.port) + "/console"
         webbrowser.open(url)
 
+    # hook them callbacs
+    def run_post_startup_callbacks():
+        while not loop.is_running():
+            print("Waiting for loop to be start")
+            time.sleep(0.1)
+
+        print("----------- Inside callback thread!")
+        for cb in post_startup_callbacks:
+            cb(settings, args, websocket_server, http_server, loop)
+
+    callback_thread = threading.Thread(target=run_post_startup_callbacks)
+    callback_thread.daemon = True
+    callback_thread.start()
+
     # Create thread queue
     q = Queue()
 
     # Put threads in queue
+    q.put(callback_thread)
     q.put(websocket_server_thread)
     q.put(http_server_thread)
 
@@ -117,6 +139,10 @@ def main():
     loop.run_until_complete(websocket_server.sock)
     loop.run_forever()
 
+
     # Halt program until threads have run
-    q.join()
+    try:
+      q.join()
+    except KeyboardInterrupt:
+      print("Received KeyboardInterrupt. Exiting...")
 

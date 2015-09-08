@@ -51,8 +51,8 @@ Default Song
         if path.exists(raw_path):
             p.file = f
         elif f == "Default":
-            fh = open(path.abspath(raw_path), 'w')
-            fh.write(Playlist.default_playlist_file)
+            with open(path.abspath(raw_path), 'w') as fh:
+                fh.write(Playlist.default_playlist_file)
             p.file = f
         else:
             print("Warning: Playlist file doesn't exist {0}".format(path.abspath(raw_path)))
@@ -64,11 +64,12 @@ Default Song
         if not path.exists(path.abspath(filePath)):
             print("Warning: Playlist file doesn't exist {0}".format(path.abspath(filePath)))
             return False
-        f = open(path.abspath(filePath))
-        if not f:
-            print("Error: Failed to open Playlist file {0}".format(self.file))
-            return False
-        self.loadSongs(self.loadHeader(f))
+        with open(path.abspath(filePath)) as f:
+            if not f:
+                print("Error: Failed to open Playlist file {0}".format(self.file))
+                return False
+            self.loadSongs(self.loadHeader(f))
+
         return self
 
     def loadHeader(self, f):
