@@ -36,5 +36,3 @@ public/vendor
 public/css/*.css
 public/js/*.js
 
-# Stuff that could carry over branches
-__pycache__
