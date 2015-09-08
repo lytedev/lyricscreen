@@ -64,8 +64,11 @@ describe 'Default playlist object', ->
     assert.equal playlist.goto_song(3).title, "Another Title", "jump to the fourth song"
     assert.equal playlist.get_current_song().title, "Another Title", "current song is now the second added song (last in playlist)"
 
-  it 'lets us remove the first song, fixing our @current_song_id', ->
+  it 'lets us remove the first song, fixing our @current_song_id back 1', ->
+    assert.equal playlist.get_current_song_id(), 3
     assert.ok playlist.remove_song(0), "removes the first song"
+    assert.equal playlist.get_current_song_id(), 2
+    assert.equal playlist.songs.length, 3, "playlist length is 3"
     assert.equal playlist.get_current_song().title, "Another Title", "current song is now the second added song (last in playlist)"
 
 describe 'Default song', ->
@@ -84,5 +87,7 @@ describe 'Default song', ->
       assert.equal song.verses["@blank"], ""
 
   it 'has one map', ->
-    assert.equal song.maps.length, 1
+    assert.equal Object.keys(song.maps).length, 1
+
+
 

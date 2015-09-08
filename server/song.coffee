@@ -7,62 +7,49 @@ class Song
       "Verse 1": "Verse 1"
       "@blank": ""
     }
-    @maps = [
-      new Map()
-    ]
+
+    @maps = {
+      "@default": new Map()
+    }
 
     @set_title title
 
-    @current_map = @maps.length - 1
+    @current_map_key = @maps.length - 1
 
   set_title: (title = "Default Song") ->
     @title = title.toString()
     @verses["@title"] = @title
 
-  check_verse_id: (n) ->
-    return False if @verses.length < 1
-    n < @verses.length and n > -1
+  # map navigation
+  goto_map: (k = @current_map_key) ->
+    if k in @maps
+      @current_map_key = k
+      @get_current_map()
+    else
+      false
 
-  clamp_verse_id: (n) ->
-    return @current_verse_id = -1 if @verses.length < 1
-    Math.max(0, Math.min(n, @verses.length))
+  # map retrieval
+  get_map: (k = @current_map_key) ->
+    return false if k not in @maps
+    @maps[k]
 
-  clamp_current_verse_id: (n) ->
-    @current_verse_id = @clamp_verse_id n
+  get_current_map: ->
+    @get_map()
 
-  goto_verse: (n) ->
-    @clamp_current_verse_id n
-    @get_current_verse()
+  # map removal
+  remove_current_map: () ->
+    @remove_map()
 
-  next_verse: ->
-    @goto_verse(@current_verse_id + 1)
-    @get_current_verse()
+  remove_map: (k = @current_map_key) ->
+    return false if k not in @maps
+    map = @maps[k]
+    delete @maps[k]
+    map
 
-  previous_verse: ->
-    @goto_verse(@current_verse_id - 1)
-    @get_current_verse()
-
-  get_verse: (n) ->
-    n = @clamp_verse_id n
-    return False if n == -1
-    @verses[n]
-
-  get_current_verse: ->
-    @get_verse @current_verse_id
-
-  remove_current_verse: () ->
-    @remove_verse @current_verse_id
-
-  remove_verse: (n) ->
-    @current_verse_id = -1 if @verses.length == 1
-    @verses.splice n, 1 if @check_verse_id n
-
-  add_verse: (n = @verses.length - 1, verse = new verse()) ->
-    @current_verse_id = 0 if @current_verse_id = -1
-    n = @clamp_verse_id n
-    @verses.splice n, 0, verse
-    verse
-
+  # map adding
+  add_map: (k, map = new map()) ->
+    return false if k in @maps
+    @maps[k] = map
 
 module.exports = {
   Song: Song
