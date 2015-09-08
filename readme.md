@@ -20,16 +20,36 @@ page][lyricscreen_pypi] or use [pip][pip] as follows:
 pip install lyricscreen
 ```
 
+**NOTE**: Windows Users: When you run `lyricscreen` for the first time, it
+will try to symlink the `web_client` which will fail unless you run it in an
+elevated command prompt or as Administrator. So, when you run it for the first
+time (per user), you will need to do so from a command prompt running as
+Administrator.
+
 ### Git
 
 To build from source:
 
 * Clone this repo (`git clone https://github.com/lytedev/lyricscreen`)
-* Run the install script (`make install`)
+* Move into the directory (`cd lyricscreen`)
+* Run the install script
+  * `make install` for the *nix folks (I hope)
+  * Windows users will have to run the following command (you'll need the
+    proper PATH setup to run Python from your command prompt!) `python
+    setup.py bdist_msi` and then run the newly built
+    `dist/lyricscreen-X.X.X.win32.msi` to install the program.
+
+**NOTE**: Windows Users: When you run `lyricscreen` for the first time, it
+will try to symlink the `web_client` which will fail unless you run it in an
+elevated command prompt or as Administrator. So, when you run it for the first
+time (per user), you will need to do so from a command prompt running as
+Administrator.
 
 ### Windows Installer
 
-**TODO**: Coming soon!
+**TODO**: Coming soon! I need to implement building this via wine on Linux
+and make it happen on PyPi updates. For now, refer to installation via Git
+instructions on how to build a Windows installer.
 
 ## Basic Usage
 
@@ -40,9 +60,22 @@ configured, you should be able to just run `lyricscreen` from your terminal.
 LyricScreen should automatically fire up and open a browser page with access
 to the web console. It's that simple!
 
+`lyricscreen --help` will show all the command line flags and options.
+
 ### Windows Installation
 
-**TODO**: Windows installation usage
+**TODO**: Windows installation usage. For now, you'll have to have Python
+scripts and such setup in your PATH and follow the Command line usage.
+
+## Configuration
+
+Generate the default config with `lyricscreen --create-config`. It will tell
+you the location of the generated default config file. Open the file in your
+favorite text editor and modify the values to suit your needs.
+
+The command line binary accepts an argument pointing to your preferred config
+file if you require multiple configurations and switch between them
+frequently.
 
 ## Development
 
