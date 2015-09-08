@@ -1,11 +1,9 @@
-src/__pycache__/
-__pycache__/
-*.egg-info
-lyricscreen_config.json
+*__pycache__/
 
-npm-debug.log
+*.egg-info
+
+*.log
 
 build
 dist
-data
 

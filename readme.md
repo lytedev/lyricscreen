@@ -112,5 +112,5 @@ ln -s "$PWD/lyricscreen/http" "$HOME/.config/lyricscreen/web_client"
 
 [lyricscreen_pypi]: https://pypi.python.org/pypi/lyricscreen
 [pip]: https://pip.pypa.io/en/stable/
-[glamour_shot]: https://raw.githubusercontent.com/lytedev/lyricscreen/dev/docs/screenshots/Laptop-Mobile-screenshot-render.png
+[glamour_shot]: https://raw.githubusercontent.com/lytedev/lyricscreen/pr_assets/screenshots/Laptop-Mobile-screenshot-render.png
 
