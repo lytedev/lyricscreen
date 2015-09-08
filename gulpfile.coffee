@@ -6,14 +6,14 @@ reload  = require 'gulp-livereload'
 
 fork    = require('child_process').fork
 
-clientBuildDir = './public/'
+clientBuildDir = './client/build/'
 cfg =
-  templateSrc: './public/**/*.hamlc'
+  templateSrc: './client/src/templates/**/*.hamlc'
   templateDest: clientBuildDir
-  styleSrc: './public/**/*.styl'
-  styleDest: clientBuildDir
-  scriptSrc: './public/**/*.coffee'
-  scriptDest: clientBuildDir
+  styleSrc: './client/src/stylus/**/*.styl'
+  styleDest: clientBuildDir + "css/"
+  scriptSrc: './client/src/coffeescripts/**/*.coffee'
+  scriptDest: clientBuildDir + "js/"
   # imgSrc: './public/img/**/*.*'
   # imgDest: clientBuildDir + 'img/'
   fontSrc: [
@@ -21,7 +21,7 @@ cfg =
     'bower_components/lato/font/**/*'
   ]
   fontDest: clientBuildDir + 'fonts/'
-  testSrc: './tests/**/*.coffee'
+  testSrc: './test/**/*.coffee'
 
 gulp.task 'build-templates', ->
   gulp.src cfg.templateSrc
@@ -78,6 +78,8 @@ gulp.task 'test', ->
 
 gulp.task 'default', ['build', 'test']
 
-gulp.task 'serve', ['watch'], (cb) ->
-  fork 'app', ''
+gulp.task 'serve', (cb) ->
+  fork 'server/app.coffee', ''
+
+gulp.task 'watch-serve', ['watch', 'serve']
 
