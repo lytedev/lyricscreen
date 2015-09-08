@@ -37,7 +37,7 @@ To build from source:
   * Windows users will have to run the following command (you'll need the
     proper PATH setup to run Python from your command prompt!) `python
     setup.py bdist_msi` and then run the newly built
-    `lyricscreen-X.X.X.win32.msi` to install the program.
+    `dist/lyricscreen-X.X.X.win32.msi` to install the program.
 
 **NOTE**: Windows Users: When you run `lyricscreen` for the first time, it
 will try to symlink the `web_client` which will fail unless you run it in an
