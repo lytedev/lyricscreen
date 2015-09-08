@@ -1,11 +1,44 @@
-path = require 'path'
 express = require 'express'
+ws = require 'express-ws'
 http = require 'http'
+path = require 'path'
 
 app = express()
 
+default_port = 8000
+
+port = default_port
+
 http_server = http.createServer app
+websocket = ws app
 
-http_server.listen 8000
+# host the client files
+app.use express.static path.normalize path.join __dirname, "../client/build"
 
-app.use express.static path.normalize path.join __dirname, "../public/build"
+Playlist = require('./playlist').Playlist
+playlist = new Playlist()
+console.log playlist
+console.log playlist.songs[0].verses
+
+# websocket endpoints
+app.ws '/admin', (ws, req) ->
+  ws.on 'message', (msg) ->
+    console.log msg
+
+  console.log 'socket', req.testing
+
+app.ws '/moderator', (ws, req) ->
+  ws.on 'message', (msg) ->
+    console.log msg
+
+  console.log 'socket', req.testing
+
+app.ws '/display', (ws, req) ->
+  ws.on 'message', (msg) ->
+    console.log msg
+
+  console.log 'socket', req.testing
+
+# start listening
+app.listen port
+

@@ -1,0 +1,13 @@
+!!!
+%html{ng-app: "root"}
+  %head
+    %title LyricScreen
+    %meta{charset: "utf-8"}
+
+    %link{rel: "stylesheet", type: "css", href: "/css/style.css"}
+
+  %body
+    #container
+
+    %script{src: "/js/angular.min.js"}
+    %script{src: "/js/client.js"}

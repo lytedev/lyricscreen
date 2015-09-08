@@ -6,3 +6,7 @@ angular.module "siteTitle", []
     $scope.siteTitle = siteTitle
   ]
 
+host = window.location.host
+connectionString = host
+sock = new WebSocket "ws://" + connectionString
+
