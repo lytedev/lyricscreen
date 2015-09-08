@@ -1,13 +1,8 @@
 # LyricScreen
 
-A powerful and fast lyrics management and display app.
+A powerful and fast lyrics management and display app built on [NodeJS][node].
 
 ## Setup
-
-* [NodeJS][node]
-* [CoffeeScript][coffeescript]
-* [Bower][bower]
-* [Gulp][gulp]
 
 ```bash
 npm install -g coffee-script gulp bower
