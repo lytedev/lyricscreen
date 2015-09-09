@@ -5,7 +5,7 @@ path = require 'path'
 
 app = express()
 
-default_port = 8000
+default_port = 3000
 
 port = default_port
 
@@ -17,8 +17,6 @@ app.use express.static path.normalize path.join __dirname, "../client/build"
 
 Playlist = require('./playlist').Playlist
 playlist = new Playlist()
-console.log playlist
-console.log playlist.songs[0].verses
 
 # websocket endpoints
 app.ws '/admin', (ws, req) ->

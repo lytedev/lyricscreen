@@ -89,5 +89,3 @@ describe 'Default song', ->
   it 'has one map', ->
     assert.equal Object.keys(song.maps).length, 1
 
-
-
