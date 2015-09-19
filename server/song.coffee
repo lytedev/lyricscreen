@@ -2,54 +2,70 @@ Map = require('./map').Map
 
 class Song
   constructor: (title) ->
+    defaultMapKey = "@default"
+
     @verses = {
       "@title": "@title"
       "Verse 1": "Verse 1"
       "@blank": ""
     }
 
-    @maps = {
-      "@default": new Map()
-    }
+    @maps = {}
+    @addMap defaultMapKey
 
-    @set_title title
+    @setTitle title
 
-    @current_map_key = @maps.length - 1
+    @currentMapKey = defaultMapKey
 
-  set_title: (title = "Default Song") ->
+  setTitle: (title = "Default Song") ->
     @title = title.toString()
     @verses["@title"] = @title
 
   # map navigation
-  goto_map: (k = @current_map_key) ->
-    if k in @maps
-      @current_map_key = k
-      @get_current_map()
+  gotoMap: (k = @currentMapKey) ->
+    if not @maps[k]?
+      @currentMapKey = k
+      @getCurrentMap()
     else
       false
 
   # map retrieval
-  get_map: (k = @current_map_key) ->
-    return false if k not in @maps
+  getMap: (k = @currentMapKey) ->
+    if not @maps[k]?
+      return false
     @maps[k]
 
-  get_current_map: ->
-    @get_map()
+  getCurrentMap: ->
+    @getMap()
 
   # map removal
-  remove_current_map: () ->
-    @remove_map()
+  removeCurrentMap: () ->
+    @removeMap()
 
-  remove_map: (k = @current_map_key) ->
-    return false if k not in @maps
+  removeMap: (k = @currentMapKey) ->
+    if not @maps[k]?
+      return false
     map = @maps[k]
     delete @maps[k]
     map
 
   # map adding
-  add_map: (k, map = new map()) ->
-    return false if k in @maps
+  addMap: (k, map = new Map()) ->
+    if @maps[k]?
+      return false
     @maps[k] = map
+
+  # verse mapping
+  getCurrentMappedVerses: ->
+    map = @getCurrentMap()
+    if map == false
+      return false
+    a = []
+    for v in map.verses
+      a.push
+        name: v
+        content: @verses[v]
+    return a
 
 module.exports = {
   Song: Song

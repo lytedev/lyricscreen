@@ -2,71 +2,99 @@ Song = require('./song').Song
 
 class Playlist
   constructor: (title) ->
-    @set_title title
+    @setTitle title
     @songs = [
       new Song()
     ]
 
-    @current_song_id = 0
+    @currentSongId = 0
 
-  set_title: (new_title = "Default Playlist") ->
-    @title = new_title.toString()
+  setTitle: (newTitle = "Default Playlist") ->
+    @title = newTitle.toString()
 
   # song id management
-  check_song_id: (n = @current_song_id) ->
+  checkSongId: (n = @currentSongId) ->
     return false if @songs.length < 1
     n < @songs.length and n > -1
 
-  get_current_song_id: ->
-    @clamp_current_song_id()
+  getCurrentSongId: ->
+    @clampCurrentSongId()
 
   # clamps
-  clamp_song_id: (n = @current_song_id, max = @songs.length - 1) ->
-    return @current_song_id = -1 if @songs.length < 1
+  clampSongId: (n = @currentSongId, max = @songs.length - 1) ->
+    return @currentSongId = -1 if @songs.length < 1
     Math.max(0, Math.min(n, max))
 
-  clamp_current_song_id: (n = @current_song_id) ->
-    @current_song_id = @clamp_song_id n
+  clampCurrentSongId: (n = @currentSongId) ->
+    @currentSongId = @clampSongId n
 
   # song navigation
-  goto_song: (n = @current_song_id) ->
-    @clamp_current_song_id n
-    @get_current_song()
+  gotoSong: (n = @currentSongId) ->
+    @clampCurrentSongId n
+    @getCurrentSong()
 
-  next_song: ->
-    @goto_song(@current_song_id + 1)
-    @get_current_song()
+  nextSong: ->
+    @gotoSong(@currentSongId + 1)
+    @getCurrentSong()
 
-  previous_song: ->
-    @goto_song(@current_song_id - 1)
-    @get_current_song()
+  previousSong: ->
+    @gotoSong(@currentSongId - 1)
+    @getCurrentSong()
 
   # song retrieval
-  get_song: (n = @current_song_id) ->
-    n = @clamp_song_id n
+  getSong: (n = @currentSongId) ->
+    n = @clampSongId n
     return false if n == -1
     @songs[n]
 
-  get_current_song: ->
-    @get_song @current_song_id
+  getCurrentSong: ->
+    @getSong @currentSongId
 
   # song removal
-  remove_current_song: () ->
-    @remove_song @current_song_id
+  removeCurrentSong: () ->
+    @removeSong @currentSongId
 
-  remove_song: (n = @current_song_id) ->
-    return false if not @check_song_id n
-    @current_song_id = -1 if @songs.length == 1
+  removeSong: (n = @currentSongId) ->
+    return false if not @checkSongId n
+    @currentSongId = -1 if @songs.length == 1
     song = @songs.splice n, 1
-    @clamp_current_song_id()
+    @clampCurrentSongId()
     song
 
   # song adding
-  add_song: (n = @songs.length - 1, song = new Song()) ->
-    n = @clamp_song_id n, @songs.length
+  addSong: (n = @songs.length - 1, song = new Song()) ->
+    n = @clampSongId n, @songs.length
     @songs.splice n, 0, song
-    @clamp_current_song_id()
+    @clampCurrentSongId()
     song
+
+  # navigation
+  nextVerse: ->
+    song = @getCurrentSong()
+    if not song
+      return false
+    map = song.getCurrentMap()
+    if not map
+      return false
+
+    if map.currentVerseId >= (map.verses.length - 1)
+      @nextSong()
+    else
+      map.nextVerse()
+
+  previousVerse: ->
+    song = @getCurrentSong()
+    if not song
+      return false
+    map = song.getCurrentMap()
+    if not map
+      return false
+
+    if map.currentVerseId <= 0
+      @previousSong()
+    else
+      map.previousVerse()
+
 
 module.exports = {
   Playlist: Playlist

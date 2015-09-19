@@ -4,20 +4,45 @@ stylus  = require 'gulp-stylus'
 hamlc   = require 'gulp-haml-coffee'
 reload  = require 'gulp-livereload'
 mocha   = require 'gulp-mocha'
+fs      = require 'fs'
 
 fork    = require('child_process').fork
 
+packageDetails = JSON.parse fs.readFileSync 'package.json', 'utf8'
+templateContext = {
+  title: packageDetails.name
+  version: packageDetails.version
+}
+
+console.log "Task Runner for", packageDetails.name, "version", packageDetails.version
+
 clientBuildDir = './client/build/'
 cfg =
-  templateSrc: './client/src/templates/**/*.hamlc'
+  templateSrc: [
+    './client/src/templates/index.hamlc'
+  ]
+  templateWatch: [
+    './client/src/templates/**/*.hamlc'
+  ]
   templateDest: clientBuildDir
-  styleSrc: './client/src/stylus/**/*.styl'
+  styleSrc: [
+    './client/src/stylus/style.styl'
+  ]
+  styleWatch: [
+    './client/src/stylus/**/*.styl'
+  ]
   styleDest: clientBuildDir + "css/"
   vendorScriptSrc: [
+    './bower_components/angular-websocket/angular-websocket.min.js'
     './bower_components/angular/angular.min.js'
   ]
   vendorScriptDest: clientBuildDir + "js/"
-  scriptSrc: './client/src/coffeescripts/**/*.coffee'
+  scriptSrc: [
+    './client/src/coffeescripts/client.coffee'
+  ]
+  scriptWatch: [
+    './client/src/coffeescripts/**/*.coffee'
+  ]
   scriptDest: clientBuildDir + "js/"
   # imgSrc: './public/img/**/*.*'
   # imgDest: clientBuildDir + 'img/'
@@ -26,17 +51,19 @@ cfg =
     'bower_components/lato/font/**/*'
   ]
   fontDest: clientBuildDir + 'fonts/'
-  testSrc: './test/**/*.coffee'
+  testSrc: [
+    './test/**/*.coffee'
+  ]
   serverSrc: './server/**/*.coffee'
 
 gulp.task 'build-templates', ->
   gulp.src cfg.templateSrc
-    .pipe hamlc()
+    .pipe hamlc locals: templateContext
     .pipe gulp.dest cfg.templateDest
     .pipe reload()
 
 gulp.task 'watch-templates', ->
-  gulp.watch cfg.templateSrc, ['build-templates']
+  gulp.watch cfg.templateWatch, ['build-templates']
 
 gulp.task 'build-styles', ->
   gulp.src cfg.styleSrc
@@ -45,7 +72,7 @@ gulp.task 'build-styles', ->
     .pipe reload()
 
 gulp.task 'watch-styles', ->
-  gulp.watch cfg.styleSrc, ['build-styles']
+  gulp.watch cfg.styleWatch, ['build-styles']
 
 gulp.task 'build-scripts', ->
   gulp.src cfg.vendorScriptSrc
@@ -60,7 +87,7 @@ gulp.task 'watch-tests', ->
   gulp.watch [cfg.testSrc, cfg.serverSrc], ['test']
 
 gulp.task 'watch-scripts', ->
-  gulp.watch cfg.scriptSrc, ['build-scripts']
+  gulp.watch cfg.scriptWatch, ['build-scripts']
 
 # gulp.task 'build-images', ->
 #   gulp.src cfg.imgSrc

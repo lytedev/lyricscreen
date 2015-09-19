@@ -1,13 +1,13 @@
 !!!
-%html{ng-app: "root"}
+%html{ng-app: "LyricScreen" }
   %head
-    %title LyricScreen
-    %meta{charset: "utf-8"}
+    +include './client/src/templates/partials/header.hamlc'
 
-    %link{rel: "stylesheet", type: "css", href: "/css/style.css"}
+  %body{ng-controller: "LyricScreenCtrl"}
+    +include './client/src/templates/partials/main-menu.hamlc'
+    +include './client/src/templates/partials/slide-grid.hamlc'
+    +include './client/src/templates/partials/message-console.hamlc'
+    +include './client/src/templates/partials/display-preview.hamlc'
 
-  %body
-    #container
+    +include './client/src/templates/partials/footer.hamlc'
 
-    %script{src: "/js/angular.min.js"}
-    %script{src: "/js/client.js"}

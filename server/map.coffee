@@ -2,11 +2,27 @@ class Map
   constructor: () ->
     @title = "Default Map"
     @verses = [
-      "Default Verse"
+      "@title"
+      "Verse 1"
       "@blank"
     ]
 
-    @current_verse = 0
+    @currentVerseId = 0
+
+  clampVerseId: (n = @currentVerseId, max = @verses.length - 1) ->
+    return -1 if @verses.length < 1
+    Math.max(0, Math.min(n, max))
+
+  clampCurrentVerseId: ->
+    @currentVerseId = @clampVerseId()
+
+  nextVerse: ->
+    @currentVerseId++
+    @clampCurrentVerseId()
+
+  previousVerse: ->
+    @currentVerseId--
+    @clampCurrentVerseId()
 
 module.exports = {
   Map: Map
