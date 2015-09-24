@@ -6,16 +6,9 @@
   %li Song ID: {{ getCurrentSongId() }}
 
 %ul
-  -# %li{ng-repeat: "(key, val) in stateData"}
-  -#   .slide
-  -#     %strong.slide-title {{ key }}
-  -#     %pre.slide-content><
-  -#       %code><
-  -#         {{ val }}
+  %li.slide{ng-repeat: "slide in slides track by $index", ng-class: "{active: slide.active}"}
+    .slide-title {{ slide.title }}
+    .slide-content><
+      {{ slide.contents }}
 
-  %li{ng-repeat: "(key, val) in state"}
-    .slide
-      %strong.slide-title {{ key }}
-      .slide-content><
-        {{ val }}
-
+{{ getCurrentMap() }}
