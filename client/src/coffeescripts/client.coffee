@@ -58,6 +58,13 @@ angular.module("LyricScreen.services").service "LyricScreenService", ($q) ->
   service = {}
   listener = $q.defer()
   messageIds = []
+  lastMessageId = 0
+
+  generateMessageId = ->
+    mid = lastMessageId++
+    if lastMessageId > 1000000
+      lastMessageId = 0
+    return mid
 
   socket = {}
 
@@ -65,12 +72,9 @@ angular.module("LyricScreen.services").service "LyricScreenService", ($q) ->
     listener.promise
 
   service.send = (msg) ->
-    # TODO: Better ID generation
-    messageId = Math.floor Math.random() * 1000000
-    msg.message_id = messageId
+    msg.message_id = generateMessageId()
     socket.send JSON.stringify msg
     messageIds.push messageId
-    # stuff
 
   getMessage = (data) ->
     try
@@ -85,8 +89,6 @@ angular.module("LyricScreen.services").service "LyricScreenService", ($q) ->
       if message.message_id in messageIds
         out.self = true
         messageIds.splice messageIds.indexOf message.message_id, 1
-    # socket.addEventListener "message", (msg) ->
-    #   listener.notify getMessage msg.data
     return out
 
   startListener = ->
