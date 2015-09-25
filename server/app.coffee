@@ -18,6 +18,8 @@ app.use express.static path.normalize path.join __dirname, "../client/build"
 
 Playlist = require('./playlist').Playlist
 state =
+  frozen: false
+  blank: false
   playlists:
     default: new Playlist()
   currentPlaylistKey: 'default'
