@@ -1,5 +1,10 @@
-html, body 
+*, *::before, *::after
+  box-sizing: border-box
+
+html, body
   height: 100%
+  background: #111
+  color: #fff
 
 nav.primary
   #logo
@@ -9,6 +14,126 @@ nav.primary
 #container
   padding: 20px
   margin-bottom: -48px
+
+#display
+  position: absolute
+  width: 100%
+  height: 100%
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  justify-content: center
+  font-size: 10vh
+  font-weight: 300
+
+#control-panel
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
+  top: 80%
+
+  @media screen and (min-width: $desktop-breakpoint)
+    top: 90%
+
+  display: flex
+  flex-wrap: wrap
+
+  .control-panel-button
+    width: 20%
+    height: 50%
+    display: flex
+    justify-content: center
+    align-items: center
+
+    @media screen and (min-width: $desktop-breakpoint)
+      width: 10%
+      height: 100%
+
+    a
+      width: 100%
+      height: 100%
+      background: rgba(255, 255, 255, 0.1)
+      font-size: 3rem
+      padding: 10px
+      color: #fff
+      display: flex
+      justify-content: center
+      align-items: center
+      text-shadow: 0px 1px 2px #000
+      transition: background-color 0.2s ease
+
+      @media screen and (max-width: $mobile-breakpoint)
+        font-size: 2rem
+
+      &:hover
+        background: rgba(255, 255, 255, 0.2)
+
+#slide-grid
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 20%
+
+  @media screen and (min-width: $desktop-breakpoint)
+    bottom: 10%
+
+  overflow-y: auto
+  margin: 0
+  padding: 5px
+  list-style: none
+  display: flex
+  flex-wrap: wrap
+  flex-direction: row
+  align-items: flex-start
+  align-content: flex-start
+  justify-content: center
+
+  .slide
+    cursor: pointer
+    position: relative
+    display: inline-block
+    background: black
+    border-radius: 3px
+    transition: border-color 0.2s ease
+
+    border: solid 3px transparent
+
+    margin: 5px
+    width: 320px
+    height: 180px
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+    &:hover
+      border-color: rgba(255, 255, 255, 0.3)
+
+    &.active:hover
+      border-color: rgba(255, 255, 255, 0.5)
+
+    &.active
+      border-color: rgba(255, 255, 255, 0.15)
+
+    .slide-title
+      color: rgba(255, 255, 255, 0.5)
+      font-family: monospace
+      font-size: 0.6rem
+      position: absolute
+      top: 5px
+      left: 5px
+
+    .slide-content
+      font-size: 18px
+
+    @media screen and (max-width: $mobile-breakpoint)
+      width: 160px
+      height: 90px
+
+      .slide-content
+        font-size: 9px
 
 footer.primary
   padding: 20px

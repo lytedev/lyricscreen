@@ -50,6 +50,18 @@ class Playlist
   getCurrentSong: ->
     @getSong @currentSongId
 
+  # verse retrieval
+  getCurrentVerseContent: ->
+    s = @getSong()
+    return '' if not s? or !s
+    m = s.getCurrentMap()
+    return '' if not m? or !m
+    cv = m.getCurrentVerse()
+    return '' if not cv? or !cv
+    if cv of s.verses
+      return s.verses[cv]
+    return ''
+
   # song removal
   removeCurrentSong: () ->
     @removeSong @currentSongId
@@ -62,7 +74,7 @@ class Playlist
     song
 
   # song adding
-  addSong: (n = @songs.length - 1, song = new Song()) ->
+  addSong: (song = new Song(), n = @songs.length) ->
     n = @clampSongId n, @songs.length
     @songs.splice n, 0, song
     @clampCurrentSongId()
@@ -81,6 +93,15 @@ class Playlist
       @nextSong()
     else
       map.nextVerse()
+
+  jumpToVerse: (n) ->
+    song = @getCurrentSong()
+    if not song
+      return false
+    map = song.getCurrentMap()
+    if not map
+      return false
+    map.jumpToVerse(n)
 
   previousVerse: ->
     song = @getCurrentSong()

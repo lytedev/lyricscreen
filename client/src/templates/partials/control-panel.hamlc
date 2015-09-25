@@ -1,0 +1,32 @@
+#control-panel><
+  .control-panel-button><
+    %a{href: "", ng-click: "previousSong()"}
+      %i.fa.fa-step-backward
+  .control-panel-button><
+    %a{href: "", ng-click: "previousVerse()"}
+      %i.fa.fa-backward
+  .control-panel-button><
+    %a{href: "", ng-click: "toggleBlank()"}
+      %i.fa{ng-class: "{'fa-pause': state.blank, 'fa-play': !state.blank}"}
+  .control-panel-button><
+    %a{href: "", ng-click: "nextVerse()"}
+      %i.fa.fa-forward
+  .control-panel-button><
+    %a{href: "", ng-click: "nextSong()"}
+      %i.fa.fa-step-forward
+
+  .control-panel-button><
+    %a{href: "", ng-click: "jumpToPlaylistBeginning()"}
+      %i.fa.fa-fast-backward
+  .control-panel-button><
+    %a{href: "", ng-click: "toggleFrozen()"}
+      %i.fa{ng-class: "{'fa-toggle-on': state.frozen, 'fa-toggle-off': !state.frozen}"}
+  .control-panel-button><
+    %a{href: "", ng-click: "toggleMenu()"}
+      %i.fa.fa-bars{ng-class: "{'active': mainMenuShowing}"}
+  .control-panel-button><
+    %a{href: "", ng-click: "reloadPlaylist()"}
+      %i.fa.fa-forward
+  .control-panel-button><
+    %a{href: "", ng-click: "jumpToPlaylistEnd()"}
+      %i.fa.fa-fast-forward

@@ -31,10 +31,10 @@ describe 'Default playlist object', ->
     song1 = new Song
     song2 = new Song "Another Title"
 
-    assert.ok playlist.addSong(0, song1), "added song is truthy"
+    assert.ok playlist.addSong(song1, 0), "added song is truthy"
     assert.ok playlist.getCurrentSong(), "newly added song is set as current"
     assert.equal playlist.getCurrentSong().title, "Default Song", "song added first is current"
-    assert.ok playlist.addSong(1, song2), "added song is truthy"
+    assert.ok playlist.addSong(song2, 1), "added song is truthy"
     assert.equal playlist.getCurrentSong().title, "Default Song", "song added first is still current"
     assert.equal playlist.songs.length, 2, "playlist length is 2"
 
@@ -45,14 +45,14 @@ describe 'Default playlist object', ->
 
   it 'lets us add a song in the middle (at the @currentSongId)', ->
     song1 = new Song "Middle Song"
-    assert.ok playlist.addSong(1, song1), "added song is truthy"
+    assert.ok playlist.addSong(song1, 1), "added song is truthy"
     assert.equal playlist.songs.length, 3, "playlist length is 3"
     assert.ok playlist.getCurrentSong(), "newly added song is set as current since it was inserted at the @currentSongId"
     assert.equal playlist.getCurrentSong().title, "Middle Song", "newly added song is current since it was inserted at the @currentSongId"
 
   it 'lets us add a song to the beginning (which will push all songs down)', ->
     song2 = new Song "New First Song"
-    assert.ok playlist.addSong(0, song2), "added song is truthy"
+    assert.ok playlist.addSong(song2, 0), "added song is truthy"
     assert.equal playlist.songs.length, 4, "playlist length is 4"
     assert.equal playlist.getCurrentSong().title, "Default Song", "current song is now the very first song since the newly added song pushed the rest down"
 

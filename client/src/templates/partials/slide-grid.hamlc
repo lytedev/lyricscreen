@@ -1,21 +1,14 @@
-<input type="button" ng-click="previousVerse()" value="Previous Slide">
-<input type="button" ng-click="nextVerse()" value="Next Slide">
-
-#counter
-  %li Verse ID: {{ getCurrentVerseId() }}
-  %li Song ID: {{ getCurrentSongId() }}
-
-%ul
-  -# %li{ng-repeat: "(key, val) in stateData"}
-  -#   .slide
-  -#     %strong.slide-title {{ key }}
-  -#     %pre.slide-content><
-  -#       %code><
-  -#         {{ val }}
-
-  %li{ng-repeat: "(key, val) in state"}
-    .slide
-      %strong.slide-title {{ key }}
-      .slide-content><
-        {{ val }}
+%ul#slide-grid
+  %li.slide{ng-click: "previousSong()", ng-show: "getCurrentSongId() > 0"}
+    .slide-title
+    .slide-content
+      Go to previous song
+  %li.slide{ng-repeat: "slide in slides track by $index", ng-class: "{active: slide.active}", ng-click: "jumpToVerse(slide.mapVerseId)"}
+    .slide-title {{ slide.title }}
+    .slide-content><
+      {{ slide.contents }}
+  %li.slide{ng-click: "nextSong()", ng-show: "getCurrentSongId() < getLastSongId()"}
+    .slide-title
+    .slide-content
+      Go to next song
 

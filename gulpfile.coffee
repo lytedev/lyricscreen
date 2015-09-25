@@ -19,6 +19,7 @@ console.log "Task Runner for", packageDetails.name, "version", packageDetails.ve
 clientBuildDir = './client/build/'
 cfg =
   templateSrc: [
+    './client/src/templates/display.hamlc'
     './client/src/templates/index.hamlc'
   ]
   templateWatch: [

@@ -20,9 +20,18 @@ class Map
     @currentVerseId++
     @clampCurrentVerseId()
 
+  jumpToVerse: (n) ->
+    @currentVerseId = n
+    @clampCurrentVerseId()
+
   previousVerse: ->
     @currentVerseId--
     @clampCurrentVerseId()
+
+  getCurrentVerse: ->
+    return false if @verses.length < 1
+    @clampCurrentVerseId()
+    return @verses[@currentVerseId]
 
 module.exports = {
   Map: Map

@@ -2,27 +2,41 @@ express = require 'express'
 ws = require 'express-ws'
 http = require 'http'
 path = require 'path'
+fs = require 'fs'
 
 app = express()
 
 default_port = 3000
 
 port = default_port
+clientSourceDir = "../client/build"
 
 http_server = http.createServer app
 websocket = ws app
 
-
+# allow really hackish friendly urls
+app.use (req, res, next) ->
+  if req.path.indexOf('.') == -1
+    file = clientSourceDir.substring(1) + req.path + '.html'
+    fs.exists file, (exists) ->
+      if exists
+        req.url += '.html'
+      next()
+  else
+    next()
 # host the client files
-app.use express.static path.normalize path.join __dirname, "../client/build"
+app.use express.static path.normalize path.join __dirname, clientSourceDir
 
+Song = require('./song').Song
 Playlist = require('./playlist').Playlist
 state =
+  frozen: false
+  blank: false
   playlists:
     default: new Playlist()
   currentPlaylistKey: 'default'
 
-state.playlists.default.addSong()
+state.playlists.default.addSong(new Song("Song 2"))
 
 wsSendObject = (ws, type, obj, addedData) ->
   time = new Date()
@@ -47,19 +61,64 @@ app.ws '/admin', (ws, req) ->
       if data.message_id?
         addedData.message_id = data.message_id
 
+      if data.type == "get display"
+        wsSendObject ws, "display", state.playlists[state.currentPlaylistKey].getCurrentVerseContent()
+
       if data.type == "get state"
-        return wsSendObject ws, "state", state, addedData
+        wsSendObject ws, "state", state
 
       if data.type == "previous verse"
         state.playlists[state.currentPlaylistKey].previousVerse()
-        return wsSendObject ws, "state", state, addedData
+        broadcastState()
 
       if data.type == "next verse"
         state.playlists[state.currentPlaylistKey].nextVerse()
-        return wsSendObject ws, "state", state, addedData
+        broadcastState()
+
+      if data.type == "previous song"
+        state.playlists[state.currentPlaylistKey].previousSong()
+        broadcastState()
+
+      if data.type == "next song"
+        state.playlists[state.currentPlaylistKey].nextSong()
+        broadcastState()
+
+      if data.type == "toggle frozen"
+        state.frozen = !state.frozen
+        broadcastState()
+
+      if data.type == "toggle blank"
+        state.blank = !state.blank
+        broadcastState()
+
+      if data.type == "toggle blank"
+        state.blank = !state.blank
+        broadcastState()
+
+      if data.type == "jump to verse"
+        state.playlists[state.currentPlaylistKey].jumpToVerse(data.verse)
+        broadcastState()
 
     catch e
       console.log "Bad WebSocket Message:", msg, e
+
+  broadcastState = ->
+    for c in websocket.getWss('/admin').clients
+      wsSendObject c, "state", state
+    broadcastDisplay()
+
+  broadcastDisplay = ->
+    return false if state.frozen
+    if state.blank
+      for c in websocket.getWss('/admin').clients
+        wsSendObject c, "display", display: ""
+      for c in websocket.getWss('/display').clients
+        wsSendObject c, "display", display: ""
+      return ''
+    for c in websocket.getWss('/admin').clients
+      wsSendObject c, "display", state.playlists[state.currentPlaylistKey].getCurrentVerseContent()
+    for c in websocket.getWss('/display').clients
+      wsSendObject c, "display", state.playlists[state.currentPlaylistKey].getCurrentVerseContent()
 
   console.log "Connected Admin Clients:", websocket.getWss('/admin').clients.length
 
@@ -73,7 +132,7 @@ app.ws '/display', (ws, req) ->
   ws.on 'message', (msg) ->
     console.log msg
 
-  console.log 'Connection: display socket'
+#   console.log 'Connection: display socket'
 
 console.log "Started listening on 0.0.0.0:" + port
 

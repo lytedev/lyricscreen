@@ -1,0 +1,12 @@
+!!!
+%html{ng-app: "LyricScreen"}
+  %head
+    +include './client/src/templates/partials/header.hamlc'
+
+  %body{ng-controller: "LyricScreenCtrl"}
+    +include './client/src/templates/partials/display.hamlc'
+
+    %script{src: "/js/client.js"}
+
+    +include './client/src/templates/partials/footer.hamlc'
+
