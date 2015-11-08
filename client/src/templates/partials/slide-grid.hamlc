@@ -4,6 +4,7 @@
     .slide-content
       Go to previous song
   %li.slide{ng-repeat: "slide in slides track by $index", ng-class: "{active: slide.active}", ng-click: "jumpToVerse(slide.mapVerseId)"}
+    .slide-background
     .slide-title {{ slide.title }}
     .slide-content><
       {{ slide.contents }}

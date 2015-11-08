@@ -1,16 +1,71 @@
+
+
+# should match the number in layout.styl for display.switching and #next-display.switching transition
+slideSwitchTime = 300
+
+# this array is for properly displaying shortcuts in user-readable strings
+keyCodeNames = ["[NUL]", "???", "???", "[Cancel]", "???", "???", "[Help]", "???",
+		"Backspace", "Tab", "???", "???", "[CLR]", "Enter", "Return", "???",
+		"Shift", "Control", "Alt", "Pause", "Caps Lock",
+		"KANA", "EISU", "JUNJA", "FINAL", "HANJA", "???",
+		"Escape", "[CNV]", "[NCNV]", "[ACPT]", "[MDCH]", "Space", "Page Up",
+		"Page Down", "End", "Home", "Left", "Up", "Right", "Down", "Select",
+		"Print", "Execute", "Print Screen", "Insert", "Delete", "???",
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+		":", ";", "<", "=", ">", "?", "@",
+		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+		"O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+		"Windows", "???", "Menu", "???", "Sleep",
+		"Numpad 0", "Numpad 1", "Numpad 2", "Numpad 3", "Numpad 4",
+		"Numpad 5", "Numpad 6", "Numpad 7", "Numpad 8", "Numpad 9",
+		"Numpad *", "Numpad +", "???", "Numpad -", "Numpad .", "Numpad /",
+		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+		"F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19",
+		"F20", "F21", "F22", "F23", "F24",
+		"???", "???", "???", "???", "???", "???", "???", "???",
+		"Num Lock", "Scroll Lock",
+		"WIN_OEM_FJ_JISHO", "WIN_OEM_FJ_MASSHOU", "WIN_OEM_FJ_TOUROKU",
+		"WIN_OEM_FJ_LOYA", "WIN_OEM_FJ_ROYA",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"^", "!", "\"", "#", "$", "%", "&", "_", "(", ")", "*", "+", "|",
+		"-", "{", "}", "~",
+		"???", "???", "???", "???",
+		"Volume Mute", "Volume Down", "Volume Up",
+		"???", "???",
+		";", "=", ",", "-", ".", "/", "\\",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"???", "???", "???", "???", "???", "???", "???", "???", "???", "???",
+		"???", "???", "???", "???", "???", "???",
+		"[", "\\", "]", "'", "???", "Meta", "AltGrave", "???", "Windows Help",
+		"WIN_ICO_00", "???", "WIN_ICO_CLEAR", "???", "???", "WIN_OEM_RESET",
+		"WIN_OEM_JUMP", "WIN_OEM_PA1", "WIN_OEM_PA2", "WIN_OEM_PA3",
+		"WIN_OEM_WSCTRL", "WIN_OEM_CUSEL", "WIN_OEM_ATTN", "WIN_OEM_FINISH",
+		"WIN_OEM_COPY", "WIN_OEM_AUTO", "WIN_OEM_ENLW", "WIN_OEM_BACKTAB",
+		"ATTN", "CRSEL", "EXSEL", "EREOF", "Play", "Zoom", "???", "PA1",
+		"WIN_OEM_CLEAR", ""]
+
+# angular modules
 angular.module "LyricScreen", [
   "LyricScreen.controllers",
   "LyricScreen.services"
 ]
 
-
 angular.module "LyricScreen.controllers", []
 angular.module "LyricScreen.services", []
 
 
+# controller
 angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope, $timeout, LyricScreenService) ->
   $scope.display = ''
+  $scope.nextDisplay = ''
 
+  # handle slide transitions on display text changes
+  $scope.$watch 'nextDisplay', ->
+    $timeout ->
+      $scope.display = $scope.nextDisplay
+    , slideSwitchTime
+
+  # message received handler
   LyricScreenService.addMessageHandler (msg) ->
     if msg.type == "state"
       $scope.setState msg.data
@@ -19,8 +74,9 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
       $scope.setState {}
 
     if msg.type == "display"
-      $scope.display = msg.data
+      $scope.nextDisplay = msg.data
 
+  # callbacks for controls
   $scope.nextSong = ->
     LyricScreenService.send type: "next song"
 
@@ -108,7 +164,49 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
       i++
     return slides
 
+  # keyboard shortcuts
+  keyboardShortcuts = {}
+  do ->
+    console.log "Getting keyboard shortcuts..."
+    shortcutElements = document.querySelectorAll '[data-click-keyboard-shortcut]'
+    for el in shortcutElements
+      shortcutData = el.dataset.clickKeyboardShortcut
+      if shortcutData.trim() == "" then continue
+      shortcuts = shortcutData.split ","
 
+      for s in shortcuts
+        keyboardShortcuts["key-" + s.trim().toString()] = el
+
+      # TODO: Display keyboard shortcuts
+      # el.title += " ["
+
+  keydown = (e) ->
+    key = "" + e.keyCode
+    if e.metaKey then key = "m" + key
+    if e.shiftKey then key = "s" + key
+    if e.altKey then key = "a" + key
+    if e.ctrlKey then key = "c" + key
+    key = "key-" + key
+    if key of keyboardShortcuts
+      el = keyboardShortcuts[key]
+      click = new MouseEvent 'click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true,
+      }
+      r = el.dispatchEvent click
+      console.log key, el, click, r
+      e.preventDefault()
+      return false
+
+    console.log e, key
+
+  console.log keyboardShortcuts
+
+  window.addEventListener "keydown", keydown, true
+
+
+# service
 angular.module("LyricScreen.services").service "LyricScreenService", ($q, $rootScope) ->
   Service = {}
   Service.messageHandlers = []

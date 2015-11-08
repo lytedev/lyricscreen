@@ -1,2 +1,8 @@
-#display
+#display-background
+
+#display{ng-class: "{'switching': display != nextDisplay}", }
   {{ display }}
+
+#next-display{ng-class: "{'switching': display != nextDisplay}"}
+  {{ nextDisplay }}
+
