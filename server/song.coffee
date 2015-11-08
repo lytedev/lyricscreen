@@ -106,7 +106,7 @@ class Song
       @addMap mapKey, new Map(mapKey, mapData)
 
     # parse remaining data as verses and default map
-    gvid = 0
+    gvid = 1
     defaultMapData = ["@title"]
     for v in data
       verseData = v.trim().replace(/\#.*/g, '').trim().split(/\n/) # delete all comments
