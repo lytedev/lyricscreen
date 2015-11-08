@@ -98,6 +98,9 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   $scope.toggleBlank = ->
     LyricScreenService.send type: "toggle blank"
 
+  $scope.reloadPlaylist = ->
+    LyricScreenService.send type: "reload current playlist"
+
   $scope.setState = (data) ->
     return false if not data? or !data
     if Object.keys(data).length == 0

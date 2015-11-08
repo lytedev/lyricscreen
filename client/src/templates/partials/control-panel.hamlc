@@ -8,7 +8,7 @@
       %i.fa.fa-backward
 
   .control-panel-button><
-    %a{href: "", ng-click: "toggleBlank()", title: "{{ state.blank ? 'Unblank all displays' : 'Make all displays blank'}}", data-click-keyboard-shortcut: ""}
+    %a{href: "", ng-click: "toggleBlank()", title: "{{ state.blank ? 'Unblank all displays' : 'Make all displays blank'}}", data-click-keyboard-shortcut: "32"}
       %i.fa{ng-class: "{'fa-pause': !state.blank, 'fa-play': state.blank}"}
 
   .control-panel-button><
@@ -24,7 +24,7 @@
       %i.fa.fa-fast-backward
 
   .control-panel-button><
-    %a{href: "", ng-click: "toggleFrozen()", title: "{{ state.frozen ? 'Unfreeze displays' : 'Freeze displays' }}", data-click-keyboard-shortcut: ""}
+    %a{href: "", ng-click: "toggleFrozen()", title: "{{ state.frozen ? 'Unfreeze displays' : 'Freeze displays' }}", data-click-keyboard-shortcut: "70"}
       %i.fa{ng-class: "{'fa-toggle-off': state.frozen, 'fa-toggle-on': !state.frozen}"}
 
   .control-panel-button><
@@ -33,7 +33,7 @@
 
   .control-panel-button><
     %a{href: "", ng-click: "reloadPlaylist()", data-click-keyboard-shortcut: ""}
-      %i.fa.fa-forward
+      %i.fa.fa-refresh
 
   .control-panel-button><
     %a{href: "", ng-click: "jumpToPlaylistEnd()", data-click-keyboard-shortcut: "cs39,cs40"}

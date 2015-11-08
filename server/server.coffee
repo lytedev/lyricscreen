@@ -103,6 +103,12 @@ app.ws '/admin', (ws, req) ->
         state.playlists[state.currentPlaylistKey].jumpToVerse(data.verse)
         broadcastState()
 
+      if data.type == "reload current playlist"
+        state.playlists.default = new Playlist().loadFromFile(defaultPlaylistFile)
+        broadcastState()
+
+
+
     catch e
       console.log "Bad WebSocket Message:", msg, e
 

@@ -1,8 +1,9 @@
-Default Playlist from File # this is a comment in the title
+Default Playlist
 
-Default Test Song 1
-Default Test Song 2
+Always
+The Stand
+Apostles Creed
+The Wonderful Cross
+Come Thou Fount
+Always
 
-Default Test Song 1
-
-# comments! notice we can have the same song queue'd multiple times
