@@ -82,12 +82,11 @@ class Song
 
     # load file, split off header
     contents = fs.readFileSync f, 'utf8'
-    contents = contents.replace(/\r?\n\r?[\r?\n\r?]+/, '\n\n').trim() # condense extra extra new lines
-    contents = contents.replace(/\#.*/g, '').trim() # delete all comments
+    contents = contents.replace(/\r?\n\r?[\r?\n\r?]+/g, "\n\n").trim() # condense extra extra new lines
     data = contents.split /\r?\n\r?\r?\n\r?/
 
     # parse header
-    header = data.splice(0, 1)[0]
+    header = data.splice(0, 1)[0].replace(/\#.*/g, '').trim() # delete all comments
     headerData = header.split /\n/
 
     # make sure header contains data
@@ -110,7 +109,7 @@ class Song
     gvid = 0
     defaultMapData = ["@title"]
     for v in data
-      verseData = v.trim().split /\n/
+      verseData = v.trim().replace(/\#.*/g, '').trim().split(/\n/) # delete all comments
 
       index = verseData[0].indexOf ':'
       index2 = verseData[0].indexOf '('
@@ -121,18 +120,22 @@ class Song
         verseContent = verseData.splice(1).join("\n")
         defaultMapData.push verseTitle
         @verses[verseTitle] = verseContent
-        continue
       else if index2 != -1 and index3 != -1
-        ssd = 1
+        verseTitle = verseData[0].substring(index2 + 1, index3)
+        defaultMapData.push verseTitle
       else
         verseTitle = "Generated Verse " + gvid
         defaultMapData.push verseTitle
         @verses[verseTitle] = verseData.join "\n"
         gvid++
 
-    defaultMapData.push "@blank"
-    @addMap "@default", defaultMapData
 
+    defaultMapData.push "@blank"
+    @addMap "@default", new Map("@default", defaultMapData)
+
+    console.log JSON.stringify defaultMapData
+
+    console.log JSON.stringify(this, null, "  ")
 
     this
 

@@ -46,6 +46,7 @@ class Map
     return false if @verses.length < 1
     cvid = @clampCurrentVerseId()
     while @isRepeatVerse cvid
+      console.log "0---------------------------------------------------------------------------------------0 Repeat?"
       cvid--
     return @verses[cvid]
 

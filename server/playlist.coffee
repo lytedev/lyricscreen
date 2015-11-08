@@ -127,6 +127,7 @@ class Playlist
     # load file, split off header
     contents = fs.readFileSync f, 'utf8'
     contents = contents.replace(/\#.*/g, '').trim()
+    contents = contents.replace(/\r?\n\r?[\r?\n\r?]+/g, "\n\n").trim() # condense extra extra new lines
     data = contents.split /\r?\n\r?\r?\n\r?/
 
     # make sure we have content and a header

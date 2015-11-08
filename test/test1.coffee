@@ -89,6 +89,7 @@ describe 'Playlist loaded from file', ->
 
   it 'loads the correct songs as specified in the playlist file', ->
     assert.equal playlist.getCurrentSong().title, "Default Test Song 1"
+    assert.equal Object.keys(playlist.getCurrentSong().verses).length, 4
     playlist.nextSong()
     assert.equal playlist.getCurrentSong().title, "Default Test Song 2"
     playlist.nextSong()

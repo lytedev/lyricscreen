@@ -146,12 +146,15 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
 
   $scope.getCurrentSlides = ->
     s = $scope.getCurrentSong()
+    console.log s
     return false if not s? or !s
     m = $scope.getCurrentSongMap()
+    console.log m
     return false if not m? or !m
     slides = []
     i = 0
     for v in m.verses
+      console.log v
       verseData =
         "title": v
         "contents": ""
@@ -159,7 +162,6 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
         "active": i == m.currentVerseId
       if v of s.verses
         verseData.contents = s.verses[v]
-      else
       slides.push verseData
       i++
     return slides
@@ -167,7 +169,6 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   # keyboard shortcuts
   keyboardShortcuts = {}
   do ->
-    console.log "Getting keyboard shortcuts..."
     shortcutElements = document.querySelectorAll '[data-click-keyboard-shortcut]'
     for el in shortcutElements
       shortcutData = el.dataset.clickKeyboardShortcut
@@ -195,13 +196,8 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
         'cancelable': true,
       }
       r = el.dispatchEvent click
-      console.log key, el, click, r
       e.preventDefault()
       return false
-
-    console.log e, key
-
-  console.log keyboardShortcuts
 
   window.addEventListener "keydown", keydown, true
 

@@ -10,9 +10,14 @@ Second Verse:
 This is the second test verse
 In the second test song
 
-# This is a comment and should not be rendered
-
-
-
-
 (Repeat)
+
+
+
+
+
+# This is a comment and should not be rendered, but will cause a blank slide
+
+
+
+

@@ -38,13 +38,13 @@ state =
     default: new Playlist()
   currentPlaylistKey: 'default'
 
+state.playlists.default.addSong(new Song("Song 2"))
+
 defaultPlaylistFile = path.join(playlistDir, "default.txt")
 console.log defaultPlaylistFile
 if fs.existsSync(defaultPlaylistFile)
   console.log "Loading default playlist..."
   state.playlists.default = new Playlist().loadFromFile(defaultPlaylistFile)
-  console.log JSON.stringify state.playlists.default, null, "  "
-state.playlists.default.addSong(new Song("Song 2"))
 
 wsSendObject = (ws, type, obj, addedData) ->
   time = new Date()
