@@ -4,9 +4,9 @@ assert = chai.assert
 Playlist = require("../server/playlist").Playlist
 Song = require("../server/song").Song
 
-playlist = new Playlist()
-
 describe 'Default playlist object', ->
+  playlist = new Playlist()
+
   it 'has one song', ->
     assert.equal playlist.songs.length, 1, "1 song in playlist"
 
@@ -70,6 +70,44 @@ describe 'Default playlist object', ->
     assert.equal playlist.getCurrentSongId(), 2
     assert.equal playlist.songs.length, 3, "playlist length is 3"
     assert.equal playlist.getCurrentSong().title, "Another Title", "current song is now the second added song (last in playlist)"
+
+  it 'lets us remove all the songs, becoming an empty playlist', ->
+    assert.ok playlist.removeSong(0), "removes the first song"
+    assert.ok playlist.removeSong(0), "removes the first song"
+    assert.ok playlist.removeSong(0), "removes the first song"
+    assert.equal playlist.songs.length, 0, "playlist length is 0"
+
+describe 'Playlist loaded from file', ->
+  playlist = new Playlist().loadFromFile "./data/playlists/test.txt"
+  song = playlist.getCurrentSong()
+
+  it 'can load header data', ->
+    assert.equal playlist.title, "Default Playlist from File"
+
+  it 'has the right number of songs', ->
+    assert.equal playlist.songs.length, 3
+
+  it 'loads the correct songs as specified in the playlist file', ->
+    assert.equal playlist.getCurrentSong().title, "Default Test Song 1"
+    playlist.nextSong()
+    assert.equal playlist.getCurrentSong().title, "Default Test Song 2"
+    playlist.nextSong()
+    assert.equal playlist.getCurrentSong().title, "Default Test Song 1"
+
+  it 'loads alternate maps for the songs', ->
+    assert.equal Object.keys(playlist.getCurrentSong().maps).length, 2
+    playlist.getCurrentSong().gotoMap "Alternate Mapping"
+    assert.equal playlist.getCurrentSong().getCurrentMap().title, "Alternate Mapping"
+
+  it 'handles repeat and missing map keys', ->
+    song = playlist.getCurrentSong()
+    verses = song.getCurrentMappedVerses()
+    assert.equal verses[5].name, "Empty because this key doesn't exist"
+    assert.equal verses[5].content, ""
+    assert.equal verses[0].name, "Second Verse"
+    assert.equal verses[0].content, "This is the second test verse\nIn the second test song"
+    assert.equal verses[2].name, "Repeat"
+    assert.equal verses[2].content, "This is the first test verse\nIn the first test song"
 
 describe 'Default song', ->
   song = new Song()

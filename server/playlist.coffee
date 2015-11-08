@@ -1,4 +1,9 @@
+path = require 'path'
+fs = require 'fs'
 Song = require('./song').Song
+songDir = require('./song').songDir
+
+playlistDir = "./data/playlists/"
 
 class Playlist
   constructor: (title) ->
@@ -116,8 +121,43 @@ class Playlist
     else
       map.previousVerse()
 
+  loadFromFile: (f) ->
+    @songs = []
+
+    # load file, split off header
+    contents = fs.readFileSync f, 'utf8'
+    contents = contents.replace(/\#.*/g, '').trim()
+    data = contents.split /\r?\n\r?\r?\n\r?/
+
+    # make sure we have content and a header
+    if data.length < 2
+      console.log "Failed to load playlist file " + f + " (could not parse header/contents)"
+      return false
+
+    # parse header
+    header = data[0]
+    headerData = header.split /\n/
+
+    # make sure header contains data
+    if headerData.length < 1
+      console.log "Failed to load playlist file " + f + " (could not parse playlist title from header)"
+
+    # set title
+    @setTitle headerData[0].trim()
+
+    # parse contents for songs
+    data.splice 0, 1
+    data = data.join("\n").trim().split("\n")
+    for l in data
+      if l.trim() != ""
+        @addSong new Song().loadFromFile(path.join(songDir, l + ".txt"))
+
+    this
+
+
 
 module.exports = {
   Playlist: Playlist
+  playlistDir: playlistDir
 }
 

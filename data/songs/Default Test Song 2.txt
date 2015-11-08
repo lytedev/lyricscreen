@@ -1,0 +1,19 @@
+Default Test Song 2
+# see comments at work? we can rebind the default map!
+@default: Verse 1, Chorus, Repeat, Verse 1, Repeat, Chorus
+
+
+
+Chorus:
+This verse re-uses this chorus!
+
+(Chorus)
+
+
+(Chorus)
+
+(Repeat)
+
+
+Verse 1:
+United we stand!

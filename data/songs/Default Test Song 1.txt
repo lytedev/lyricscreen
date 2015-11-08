@@ -1,0 +1,18 @@
+Default Test Song 1
+Alternate Mapping: Second Verse, Verse 1, Repeat, Repeat, Second Verse, Empty because this key doesn't exist
+
+Verse 1:
+This is the first test verse
+In the first test song
+
+
+Second Verse:
+This is the second test verse
+In the second test song
+
+# This is a comment and should not be rendered
+
+
+
+
+(Repeat)

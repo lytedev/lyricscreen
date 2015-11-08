@@ -30,6 +30,7 @@ app.use express.static path.normalize path.join __dirname, clientSourceDir
 
 Song = require('./song').Song
 Playlist = require('./playlist').Playlist
+playlistDir = require('./playlist').playlistDir
 state =
   frozen: false
   blank: false
@@ -37,6 +38,12 @@ state =
     default: new Playlist()
   currentPlaylistKey: 'default'
 
+defaultPlaylistFile = path.join(playlistDir, "default.txt")
+console.log defaultPlaylistFile
+if fs.existsSync(defaultPlaylistFile)
+  console.log "Loading default playlist..."
+  state.playlists.default = new Playlist().loadFromFile(defaultPlaylistFile)
+  console.log JSON.stringify state.playlists.default, null, "  "
 state.playlists.default.addSong(new Song("Song 2"))
 
 wsSendObject = (ws, type, obj, addedData) ->

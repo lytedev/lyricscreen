@@ -1,0 +1,8 @@
+Default Playlist from File # this is a comment in the title
+
+Default Test Song 1
+Default Test Song 2
+
+Default Test Song 1
+
+# comments! notice we can have the same song queue'd multiple times
