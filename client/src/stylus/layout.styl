@@ -55,14 +55,14 @@ nav.primary
   text-shadow: 0px 0.01em 1px #000, 0px 0.01em 0.1em #000, 0px 0px 0.2em #000
 
 #display.switching
-  transition: opacity 0.3s ease // this should match the number in client.coffee
+  transition: opacity 1s ease // this should match the number in client.coffee
   opacity: 0
 
 #next-display
   opacity: 0
 
   &.switching
-    transition: opacity 0.3s ease // this should match the number in client.coffee
+    transition: opacity 1s ease // this should match the number in client.coffee
     opacity: 1
 
 
@@ -173,20 +173,22 @@ nav.primary
       opacity: 1
       background-size: cover
       background-position: center
+      background-image: url('https://i.ytimg.com/vi/efkdks8GRz0/maxresdefault.jpg')
 
     .slide-title
-      color: rgba(255, 255, 255, 0.5)
+      opacity: 0.5
+      color: #fff
       font-family: monospace
       font-size: 0.6rem
       text-shadow: 0px 1px 1px #000
       position: absolute
-      top: 5px
+      top: 0px
       left: 5px
       z-index: 110
 
     .slide-content
       font-size: 18px
-      text-shadow: 0px 1.8px 1px #000
+      text-shadow: 0px 0.01em 1px #000, 0px 0.01em 0.1em #000, 0px 0px 0.2em #000
       z-index: 100
 
     @media screen and (max-width: $mobile-breakpoint)

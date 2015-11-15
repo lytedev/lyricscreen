@@ -4,15 +4,15 @@
       %i.fa.fa-step-backward
 
   .control-panel-button><
-    %a{href: "", ng-click: "previousVerse()", data-click-keyboard-shortcut: "37,38"}
+    %a{href: "", ng-click: "previousVerse()", data-click-keyboard-shortcut: "37,38,33"}
       %i.fa.fa-backward
 
   .control-panel-button><
-    %a{href: "", ng-click: "toggleBlank()", title: "{{ state.blank ? 'Unblank all displays' : 'Make all displays blank'}}", data-click-keyboard-shortcut: "32"}
+    %a{href: "", ng-click: "toggleBlank()", title: "{{ state.blank ? 'Unblank all displays' : 'Make all displays blank'}}", data-click-keyboard-shortcut: "32,116,27"}
       %i.fa{ng-class: "{'fa-pause': !state.blank, 'fa-play': state.blank}"}
 
   .control-panel-button><
-    %a{href: "", ng-click: "nextVerse()", data-click-keyboard-shortcut: "39,40"}
+    %a{href: "", ng-click: "nextVerse()", data-click-keyboard-shortcut: "39,40,34"}
       %i.fa.fa-forward
 
   .control-panel-button><
@@ -24,7 +24,7 @@
       %i.fa.fa-fast-backward
 
   .control-panel-button><
-    %a{href: "", ng-click: "toggleFrozen()", title: "{{ state.frozen ? 'Unfreeze displays' : 'Freeze displays' }}", data-click-keyboard-shortcut: "70"}
+    %a{href: "", ng-click: "toggleFrozen()", title: "{{ state.frozen ? 'Unfreeze displays' : 'Freeze displays' }}", data-click-keyboard-shortcut: "70,190"}
       %i.fa{ng-class: "{'fa-toggle-off': state.frozen, 'fa-toggle-on': !state.frozen}"}
 
   .control-panel-button><

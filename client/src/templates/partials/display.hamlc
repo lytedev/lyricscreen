@@ -1,4 +1,4 @@
-#display-background{style: ""}
+#display-background{style: "background-image: url('https://i.ytimg.com/vi/efkdks8GRz0/maxresdefault.jpg');"}
 
 #display{ng-class: "{'switching': display != nextDisplay}"}><
   {{ display }}

@@ -1,7 +1,7 @@
 
 
 # should match the number in layout.styl for display.switching and #next-display.switching transition
-slideSwitchTime = 300
+slideSwitchTime = 1000
 
 # this array is for properly displaying shortcuts in user-readable strings
 keyCodeNames = ["[NUL]", "???", "???", "[Cancel]", "???", "???", "[Help]", "???",
@@ -186,6 +186,7 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
 
   keydown = (e) ->
     key = "" + e.keyCode
+    # console.log e, e.keyCode
     if e.metaKey then key = "m" + key
     if e.shiftKey then key = "s" + key
     if e.altKey then key = "a" + key
