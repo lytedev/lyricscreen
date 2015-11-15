@@ -30,7 +30,6 @@ gulp watch-serve
 * Slide metadata format (backgrounds, transition times, etc.)
 * Reference song/map combinations in playlist file
 * Fix gitignore to include example data files (songs/playlists/backgrounds/configs)
-* Reload of playlist should try to recover song/verse position
 
 
 [node]: https://nodejs.org

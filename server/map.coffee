@@ -30,6 +30,7 @@ class Map
   jumpToVerse: (n) ->
     @currentVerseId = n
     @clampCurrentVerseId()
+  gotoVerse: @jumpToVerse
 
   previousVerse: ->
     @currentVerseId--

@@ -32,7 +32,7 @@
       %i.fa.fa-bars{ng-class: "{'active': mainMenuShowing}"}
 
   .control-panel-button><
-    %a{href: "", ng-click: "reloadPlaylist()", data-click-keyboard-shortcut: ""}
+    %a{href: "", ng-click: "reloadPlaylist()", data-click-keyboard-shortcut: "81"}
       %i.fa.fa-refresh
 
   .control-panel-button><

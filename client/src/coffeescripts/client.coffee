@@ -59,6 +59,9 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   $scope.display = ''
   $scope.nextDisplay = ''
 
+  $scope.showNextPrevSlides = false
+  $scope.showBackgroundsInGrid = false
+
   # handle slide transitions on display text changes
   $scope.$watch 'nextDisplay', ->
     $timeout ->
