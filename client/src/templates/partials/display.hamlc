@@ -1,7 +1,9 @@
-#display-background
+#display-background{style: ""}
 
 #display{ng-class: "{'switching': display != nextDisplay}"}><
   {{ display }}
+
+#next-display-background
 
 #next-display{ng-class: "{'switching': display != nextDisplay}"}><
   {{ nextDisplay }}
