@@ -1,4 +1,4 @@
-#display-background{style: "background-image: url('https://i.ytimg.com/vi/efkdks8GRz0/maxresdefault.jpg');"}
+#display-background{style: "background-image: url('http://theartmad.com/wp-content/uploads/2015/02/Geometric-Wallpaper-7.jpg');"}
 
 #display{ng-class: "{'switching': display != nextDisplay}"}><
   {{ display }}

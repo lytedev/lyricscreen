@@ -1,3 +1,6 @@
+$control-panel-desktop-height = 7rem
+$control-panel-mobile-height = 7rem
+
 *, *::before, *::after
   box-sizing: border-box
 
@@ -50,7 +53,7 @@ nav.primary
   flex-wrap: wrap
   align-items: center
   justify-content: center
-  font-size: 10vh
+  font-size: 94px
   font-weight: 300
   text-shadow: 0px 0.01em 1px #000, 0px 0.01em 0.1em #000, 0px 0px 0.2em #000
 
@@ -71,10 +74,10 @@ nav.primary
   bottom: 0
   left: 0
   right: 0
-  top: 75%
+  height: $control-panel-mobile-height
 
   @media screen and (min-width: $desktop-breakpoint)
-    top: 86%
+    height: $control-panel-desktop-height
 
   display: flex
   flex-wrap: wrap
@@ -114,7 +117,7 @@ nav.primary
   top: 0
   left: 0
   right: 0
-  bottom: 25%
+  bottom: $control-panel-mobile-height
 
   &::-webkit-scrollbar-corner
     background: #000
@@ -131,7 +134,7 @@ nav.primary
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75)
 
   @media screen and (min-width: $desktop-breakpoint)
-    bottom: 14%
+    bottom: $control-panel-desktop-height
 
   overflow-y: auto
   margin: 0
@@ -187,7 +190,7 @@ nav.primary
       opacity: 1
       background-size: cover
       background-position: center
-      background-image: url('https://i.ytimg.com/vi/efkdks8GRz0/maxresdefault.jpg')
+      background-image: url('http://theartmad.com/wp-content/uploads/2015/02/Geometric-Wallpaper-7.jpg')
 
     .slide-title
       opacity: 0.5
