@@ -1,5 +1,6 @@
 $control-panel-desktop-height = 7rem
 $control-panel-mobile-height = 7rem
+$slide-delay = 0.5s
 
 *, *::before, *::after
   box-sizing: border-box
@@ -39,7 +40,7 @@ nav.primary
 #display
   background-color: transparent
   line-height: 1.1em
-  white-space: pre
+  white-space: pre-wrap
   z-index: 100
   position: absolute
   top: 0
@@ -53,19 +54,19 @@ nav.primary
   flex-wrap: wrap
   align-items: center
   justify-content: center
-  font-size: 94px
+  font-size: 72px
   font-weight: 300
   text-shadow: 0px 0.01em 1px #000, 0px 0.01em 0.1em #000, 0px 0px 0.2em #000
 
 #display.switching
-  transition: opacity 1s ease // this should match the number in client.coffee
+  transition: opacity $slide-delay ease // this should match the number in client.coffee
   opacity: 0
 
 #next-display
   opacity: 0
 
   &.switching
-    transition: opacity 1s ease // this should match the number in client.coffee
+    transition: opacity $slide-delay ease // this should match the number in client.coffee
     opacity: 1
 
 
@@ -74,10 +75,7 @@ nav.primary
   bottom: 0
   left: 0
   right: 0
-  height: $control-panel-mobile-height
-
-  @media screen and (min-width: $desktop-breakpoint)
-    height: $control-panel-desktop-height
+  z-index: 1000
 
   display: flex
   flex-wrap: wrap
@@ -96,7 +94,7 @@ nav.primary
     a
       width: 100%
       height: 100%
-      background: rgba(255, 255, 255, 0.1)
+      background: #222
       font-size: 3rem
       padding: 10px
       color: #fff
@@ -117,7 +115,19 @@ nav.primary
   top: 0
   left: 0
   right: 0
-  bottom: $control-panel-mobile-height
+  bottom: 0
+
+  overflow-y: auto
+  margin: 0
+  padding: 5px
+  list-style: none
+  display: flex
+  flex-wrap: wrap
+  flex-direction: row
+  align-items: flex-start
+  align-content: flex-start
+  justify-content: center
+  padding-bottom: 300px
 
   &::-webkit-scrollbar-corner
     background: #000
@@ -133,24 +143,10 @@ nav.primary
     border-radius: 1ex
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75)
 
-  @media screen and (min-width: $desktop-breakpoint)
-    bottom: $control-panel-desktop-height
-
-  overflow-y: auto
-  margin: 0
-  padding: 5px
-  list-style: none
-  display: flex
-  flex-wrap: wrap
-  flex-direction: row
-  align-items: flex-start
-  align-content: flex-start
-  justify-content: center
-
   .slide
     line-height: 1.2em
     text-align: center
-    white-space: pre
+    white-space: pre-wrap
     cursor: pointer
     position: relative
     display: inline-block
@@ -190,7 +186,7 @@ nav.primary
       opacity: 1
       background-size: cover
       background-position: center
-      background-image: url('http://theartmad.com/wp-content/uploads/2015/02/Geometric-Wallpaper-7.jpg')
+      // background-image: url('http://theartmad.com/wp-content/uploads/2015/02/Geometric-Wallpaper-7.jpg')
 
     .slide-title
       opacity: 0.5

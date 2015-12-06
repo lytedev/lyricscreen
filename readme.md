@@ -13,7 +13,7 @@ bower install
 ## Running
 
 ```bash
-gulp watch-serve
+npm start
 ```
 
 ## Todo

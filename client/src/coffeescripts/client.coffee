@@ -1,7 +1,7 @@
 
 
 # should match the number in layout.styl for display.switching and #next-display.switching transition
-slideSwitchTime = 1000
+slideSwitchTime = 500
 
 # this array is for properly displaying shortcuts in user-readable strings
 keyCodeNames = ["[NUL]", "???", "???", "[Cancel]", "???", "???", "[Help]", "???",
