@@ -107,7 +107,7 @@ gulp.task 'watch-fonts', ->
   gulp.watch cfg.fontSrc, ['build-fonts']
 
 gulp.task 'livereload', ->
-  reload.listen()
+  reload.listen({quiet: true})
 
 gulp.task 'build', ['build-templates', 'build-styles', 'build-scripts', 'build-fonts'] # , 'build-images']
 
