@@ -3,11 +3,10 @@ ul#slide-grid
     .slide-title
     .slide-content
       Go to previous song
-  li.slide(ng-repeat="slide in slides track by $index" ng-class="{active=slide.active}" ng-click="jumpToVerse(slide.mapVerseId)")
+  li.slide(ng-repeat="slide in slides track by $index" ng-class="{'active': slide.active, 'frozen': state.frozen && slide.mapVerseId == state.frozenIndex[3] && state.playlists[state.currentPlaylistKey].songs[state.playlists[state.currentPlaylistKey].currentSongId].currentMapKey == state.frozenIndex[2] && state.playlists[state.currentPlaylistKey].currentSongId == state.frozenIndex[1] && state.currentPlaylistKey == state.frozenIndex[0] }" ng-click="jumpToVerse(slide.mapVerseId)")
     .slide-background(ng-show="showBackgroundsInGrid")
     .slide-title {{ slide.title }}
-    .slide-content
-      {{ slide.contents }}
+    .slide-content {{ slide.contents }}
   li.slide(ng-click="nextSong()" ng-show="getCurrentSongId() < getLastSongId() && showNextPrevSlides")
     .slide-title
     .slide-content

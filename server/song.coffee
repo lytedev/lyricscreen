@@ -14,6 +14,7 @@ class Song
 
     @maps = {}
     @addMap defaultMapKey
+    @file = ""
 
     @setTitle title
 
@@ -132,9 +133,29 @@ class Song
 
     defaultMapData.push "@blank"
     @addMap "@default", new Map("@default", defaultMapData)
+    @file = f
     this
 
+  @saveToFile: (f) ->
+    content = @title + "\n"
+    for map in @maps
+      content += map.title + ": "
+      for verse in map.verses
+        content += verse + ", "
+      content = content.substring(0, content.length - 2) + "\n"
+    content += "\n"
+    for verse of @verses
+      content += verse + ":\n"
+      content += @verses[verse]
+      content += "\n\n"
 
+    @file = f
+    console.log content
+    # fs.writeFileSync(f, content, 'utf8')
+
+  @save: ->
+    if @file == "" then return false
+    @saveToFile(@file)
 
 module.exports = {
   Song: Song

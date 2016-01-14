@@ -8,8 +8,8 @@
       i.fa.fa-backward
 
   .control-panel-button
-    a(href="" ng-click="toggleBlank()" title="{{ state.blank ? 'Unblank all displays' ='Make all displays blank'}}" data-click-keyboard-shortcut="3211627")
-      i.fa(ng-class="{'fa-pause'=!state.blank 'fa-play'=state.blank}")
+    a(href="" ng-click="toggleBlank()" title="{{ state.blank ? 'Unblank all displays' : 'Make all displays blank'}}" data-click-keyboard-shortcut="3211627")
+      i.fa(ng-class="{'fa-pause': !state.blank, 'fa-play': state.blank}")
 
   .control-panel-button
     a(href="" ng-click="nextVerse()" data-click-keyboard-shortcut="394034")
@@ -24,12 +24,12 @@
       i.fa.fa-fast-backward
 
   .control-panel-button
-    a(href="" ng-click="toggleFrozen()" title="{{ state.frozen ? 'Unfreeze displays' ='Freeze displays' }}" data-click-keyboard-shortcut="70190")
-      i.fa(ng-class="{'fa-toggle-off'=state.frozen 'fa-toggle-on'=!state.frozen}")
+    a(href="" ng-click="toggleFrozen()" title="{{ state.frozen ? 'Unfreeze displays' : 'Freeze displays' }}" data-click-keyboard-shortcut="70190")
+      i.fa(ng-class="{'fa-toggle-off': !state.frozen, 'fa-toggle-on': state.frozen}")
 
   .control-panel-button
-    a(href="" ng-click="toggleMenu()" data-click-keyboard-shortcut="")
-      i.fa.fa-bars(ng-class="{'active'=mainMenuShowing}")
+    a(href="" ng-click="toggleMenu('main')" data-click-keyboard-shortcut="")
+      i.fa.fa-bars(ng-class="{'active': mainMenuShowing}")
 
   .control-panel-button
     a(href="" ng-click="reloadPlaylist()" data-click-keyboard-shortcut="81")

@@ -1,12 +1,8 @@
 doctype html
 html(ng-app="LyricScreen")
   head
-    include ./client/src/templates/partials/header.jade
-
+    include ../partials/header.jade
   body(ng-controller="LyricScreenCtrl")
-    include ./client/src/templates/partials/display.jade
-
-    script(src="/js/client.js")
-
-    include ./client/src/templates/partials/footer.jade
+    include ../partials/display.jade
+    include ../partials/footer.jade
 

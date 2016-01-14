@@ -62,10 +62,25 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   $scope.showNextPrevSlides = false
   $scope.showBackgroundsInGrid = false
 
+  $scope.menus =
+    main:
+      showing: false
+    playlist:
+      showing: false
+    songlist:
+      showing: true
+    song:
+      showing: false
+      song: false
+
   # handle slide transitions on display text changes
   $scope.$watch 'nextDisplay', ->
+    toSwitchTo = $scope.nextDisplay
     $timeout ->
-      $scope.display = $scope.nextDisplay
+      if typeof toSwitchTo != "string"
+        $scope.display = ""
+      else
+        $scope.display = toSwitchTo
     , slideSwitchTime
 
   # message received handler
@@ -77,7 +92,10 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
       $scope.setState {}
 
     if msg.type == "display"
-      $scope.nextDisplay = msg.data
+      if typeof msg.data != "string"
+        $scope.nextDisplay = ""
+      else
+        $scope.nextDisplay = msg.data
 
   # callbacks for controls
   $scope.nextSong = ->
@@ -97,6 +115,36 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
 
   $scope.toggleFrozen = ->
     LyricScreenService.send type: "toggle frozen"
+
+  $scope.savePlaylist = ->
+    LyricScreenService.send type: "save playlist"
+
+  $scope.toggleSongMenu = (songId) ->
+    $scope.menus.song.song = $scope.state.playlists[$scope.state.currentPlaylistKey].songs[songId]
+    $scope.menus.song.songId = songId
+    $scope.toggleMenu('song')
+
+  $scope.toggleMenu = (key) ->
+    console.log key
+    for menu of $scope.menus
+      if key == menu
+        continue
+      $scope.menus[menu].showing = false
+    $scope.menus[key].showing = !$scope.menus[key].showing
+
+  $scope.toggleAllMenus = ->
+    anyOpen = false
+    for menu of $scope.menus
+      if $scope.menus[menu].showing
+        anyOpen = true
+      $scope.menus[menu].showing = false
+
+    if not anyOpen
+      $scope.toggleMenu("main")
+
+  $scope.closeMenus = ->
+    for menu of $scope.menus
+      $scope.menus[menu].showing = false
 
   $scope.toggleBlank = ->
     LyricScreenService.send type: "toggle blank"
@@ -152,17 +200,19 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
 
   $scope.getCurrentSlides = ->
     s = $scope.getCurrentSong()
-    console.log s
     return false if not s? or !s
     m = $scope.getCurrentSongMap()
-    console.log m
     return false if not m? or !m
     slides = []
     i = 0
-    for v in m.verses
-      console.log v
+    for i in [0..m.verses.length-1]
+      j = i
+      title = m.verses[i]
+      while m.verses[j].toLowerCase() == "repeat"
+        j--
+      v = m.verses[j]
       verseData =
-        "title": v
+        "title": title
         "contents": ""
         "mapVerseId": i
         "active": i == m.currentVerseId

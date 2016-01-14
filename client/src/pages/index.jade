@@ -1,16 +1,14 @@
 doctype html
 html(ng-app="LyricScreen")
   head
-    include ../partials/header.hamlc
+    include ../partials/header.jade
 
   body(ng-controller="LyricScreenCtrl")
-    include ../partials/main-menu.hamlc
-    include ../partials/slide-grid.hamlc
-    include ../partials/control-panel.hamlc
-    include ../partials/message-console.hamlc
-    include ../partials/display-preview.hamlc
+    include ../partials/main-menu.jade
+    include ../partials/slide-grid.jade
+    include ../partials/control-panel.jade
+    include ../partials/message-console.jade
+    include ../partials/display-preview.jade
 
-    script(src="/js/client.js")
-
-    include ../partials/footer.hamlc
+    include ../partials/footer.jade
 

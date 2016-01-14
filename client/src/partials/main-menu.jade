@@ -1,1 +1,48 @@
-#main-menu
+// #menu-songlist.sidemenu(ng-class="{'show': menus.songs.showing}")
+//   .menu-superheader Songlist
+//   .song-menu-section(ng-repeat="(songId, song) in state.playlists[state.currentPlaylistKey].songs")
+//     a.menu-item(ng-click="(songId)") Remove from Playlist
+//     a.menu-item(ng-click="saveSong(songId)") Save
+//     a.menu-item(ng-click="savePlaylistAs(songId)") Save As...
+//     a.menu-item(ng-click="rename()") Rename
+//   .menu-separator
+//   a.menu-item(ng-click="closeMenus()") Close Menu
+
+#menu-song.sidemenu(ng-class="{'show': menus.song.showing}")
+  .menu-superheader Song
+  .menu-header {{ menus.song.song.title }}
+  a.menu-item(ng-click="manageSong()") Edit...
+  a.menu-item(ng-click="saveSong()") Save
+  a.menu-item(ng-click="saveSong()") Save As...
+  a.menu-item(ng-click="removeSongFromPlaylist(menus.song.songId); toggleMenu('songlist')") Remove from Playlist
+  .menu-separator
+  a.menu-item(ng-click="closeMenus()") Close Menu
+
+#menu-songlist.sidemenu(ng-class="{'show': menus.songlist.showing}")
+  .menu-superheader Songlist
+  .menu-header Playlist: {{ state.currentPlaylistKey }}
+  .song-menu-section(ng-repeat="(songId, song) in state.playlists[state.currentPlaylistKey].songs")
+    a.menu-item(ng-click="toggleSongMenu(songId)") {{ song.title }}
+  .menu-separator
+  a.menu-item(ng-click="closeMenus()") Close Menu
+
+#menu-playlist.sidemenu(ng-class="{'show': menus.playlist.showing}")
+  .menu-superheader Playlist
+  .menu-header Playlist: {{ state.currentPlaylistKey }}
+  a.menu-item(ng-click="toggleMenu('songlist')") Manage Songlist...
+  a.menu-item(ng-click="savePlaylist()") Save
+  a.menu-item(ng-click="savePlaylistAs()") Save As...
+  a.menu-item(ng-click="clearPlaylist()") Clear
+  .menu-separator
+  a.menu-item(ng-click="closeMenus()") Close Menu
+
+#menu-main.sidemenu(ng-class="{'show': menus.main.showing}")
+  .menu-superheader Main Menu
+  .menu-header Sections
+  a.menu-item(ng-click="toggleMenu('playlist')") Playlist...
+  a.menu-item(ng-click="toggleMenu('songlist')") Songlist...
+  a.menu-item Maps
+  a.menu-item Editor
+  .menu-separator
+  a.menu-item(ng-click="closeMenus()") Close Menu
+

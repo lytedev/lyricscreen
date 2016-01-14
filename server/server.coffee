@@ -30,9 +30,11 @@ Playlist = require('./playlist').Playlist
 playlistDir = require('./playlist').playlistDir
 state =
   frozen: false
+  frozenIndex: ["", -1, "", -1]
   blank: false
   playlists:
     default: new Playlist()
+    secondary: new Playlist()
   currentPlaylistKey: 'default'
 
 state.playlists.default.addSong(new Song("Song 2"))
@@ -89,6 +91,15 @@ app.ws '/admin', (ws, req) ->
 
       if data.type == "toggle frozen"
         state.frozen = !state.frozen
+        if state.frozen
+          state.frozenIndex = [
+            state.currentPlaylistKey
+            state.playlists[state.currentPlaylistKey].currentSongId
+            state.playlists[state.currentPlaylistKey].getCurrentSong().currentMapKey
+            state.playlists[state.currentPlaylistKey].getCurrentSong().getCurrentMap().currentVerseId
+          ]
+        else
+          state.frozenIndex = -1
         broadcastState()
 
       if data.type == "toggle blank"
@@ -111,6 +122,53 @@ app.ws '/admin', (ws, req) ->
         p.getCurrentSong().gotoMap curMap
         p.getCurrentSong().getCurrentMap().jumpToVerse curVerse
         broadcastState()
+
+      if data.type == "clear playlist"
+        p = state.playlists[state.currentPlaylistKey]
+        while p.getCurrentSong() != false
+          p.removeCurrentSong()
+        broadcastState()
+
+      if data.type == "save song"
+        p = state.playlists[state.currentPlaylistKey]
+        if data.songId?
+          # wait to check for invalid songId
+        else # use the current songId
+          data.songId = p.currentSongId
+        if data.songId < 0 or data.songId >= p.songs.length
+          wsSendObject ws, "save song error",
+            message: "Invalid songId"
+        else
+          s = p.songs[data.songId]
+          if data.filename?
+            if not data.filename.match(/[A-Za-z1-90-_]+/)
+              wsSendObject ws, "save song error",
+                message: "Invalid filename"
+            else
+              file = path.join(songDir, data.filename)
+              s.saveToFile(file)
+              wsSendObject ws, "save song success",
+                message: "Song saved as " + file
+          else
+            wsSendObject ws, "save song success",
+              message: "Song saved to " + s.file
+            s.save()
+
+      if data.type == "save playlist"
+        p = state.playlists[state.currentPlaylistKey]
+        if data.filename?
+          if not data.filename.match(/[A-Za-z1-90-_]+/)
+            wsSendObject ws, "save playlist error",
+              message: "Invalid filename"
+          else
+            file = path.join(playlistDir, data.filename)
+            p.saveToFile(file)
+            wsSendObject ws, "save playlist success",
+              message: "Playlist saved as " + file
+        else
+          p.save()
+          wsSendObject ws, "save playlist success",
+            message: "Playlist saved to " + p.file
 
     catch e
       console.log "Bad WebSocket Message:", msg, e

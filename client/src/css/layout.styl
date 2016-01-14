@@ -75,11 +75,16 @@ nav.primary
   bottom: 0
   left: 0
   right: 0
+  margin: 0 auto
   z-index: 1000
   max-width: 1000px
+  background: #111
 
   display: flex
   flex-wrap: wrap
+
+  +desktop-only-response
+    width: 12px
 
   .control-panel-button
     width: 20%
@@ -88,9 +93,9 @@ nav.primary
     justify-content: center
     align-items: center
 
-    @media screen and (max-width: $desktop-breakpoint)
-      width: 10% !important
-      height: 100% !important
+    +desktop-only-response()
+      width: 10%
+      height: 100%
 
     a
       width: 100%
@@ -105,11 +110,56 @@ nav.primary
       text-shadow: 0px 1px 2px #000
       transition: background-color 0.2s ease
 
+      i.active
+        color: #0ff
+
       @media screen and (max-width: $mobile-breakpoint)
         font-size: 2rem
 
       &:hover
         background: rgba(255, 255, 255, 0.2)
+
+.sidemenu
+  display: none
+  position: fixed
+  z-index: 10000
+  background: #111
+  top: 0
+  width: 200px
+  bottom: 0
+  border-right: solid 1px #666
+  overflow-y: auto
+
+  &.show
+    display: block
+
+  .menu-superheader
+    font-weight: 100
+    font-size: 24px
+    text-align: center
+    padding: 0.5em
+
+  .menu-header
+    color: #888
+    text-transform: uppercase
+    font-size: 12px
+    padding: 0.5em
+    background: #222
+
+  .menu-separator
+    margin: 5px
+    border-top: solid 1px #666
+
+  .menu-item
+    display: block
+    color: #fff
+    padding: 1em
+
+    transition: background-color 0.2s ease
+
+    &:hover
+      cursor: pointer
+      background: #444
 
 #slide-grid
   position: absolute
@@ -171,6 +221,18 @@ nav.primary
 
     &.active:hover
       border-color: rgba(150, 255, 0, 1)
+
+    &.frozen.active
+      border-color: rgba(0, 255, 255, 0.5)
+
+    &.frozen.active:hover
+      border-color: rgba(0, 255, 255, 1)
+
+    &.frozen
+      border-color: rgba(0, 120, 255, 0.5)
+
+    &.frozen:hover
+      border-color: rgba(0, 120, 255, 1)
 
     &.active
       border-color: rgba(150, 255, 0, 0.8)

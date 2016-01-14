@@ -24,7 +24,7 @@ appSrcDir = appDir + "src/"
 appPublicDir = appDir + "build/"
 
 cfg =
-  stylesheetsSrc: [appSrcDir + "css/app.styl"]
+  stylesheetsSrc: [appSrcDir + "css/style.styl"]
   stylesheetsDest: appPublicDir + "css/"
   pagesSrc: [appSrcDir + "pages/**/*.jade"]
   pagesDest: appPublicDir
@@ -35,9 +35,9 @@ cfg =
 
   testSrc: ["./test/**/*.coffee"]
 
-  vendorFontSrc: ["./bower_components/lato/font/**/*.*", "./bower_components/Font-Awesome-Stylus/fonts/**/*.*"]
+  vendorFontSrc: ["./bower_components/lato/font/**/*.*", "./bower_components/font-awesome-stylus/fonts/**/*.*"]
   vendorFontDest: appPublicDir + "font/"
-  vendorScriptsSrc: ["./bower_components/vue/dist/vue.min.js"]
+  vendorScriptsSrc: ["./bower_components/angular/angular.min.js"]
   vendorScriptsDest: appPublicDir + "js/vendor/"
 
   templatesSrc: [appSrcDir + "pages/**/*.jade", appSrcDir + "partials/**/*.jade"]
@@ -97,7 +97,7 @@ gulp.task "build-scripts", buildScripts
 gulp.task "vendor-fonts", buildVendorFonts
 gulp.task "vendor-scripts", buildVendorScripts
 
-gulp.task "build-all", ["build-stylesheets", "build-pages", "build-images", "build-scripts", "vendor-scripts", "vendor-fonts"]
+gulp.task "build-all", ["build-stylesheets", "build-pages", "build-images", "build-scripts", "vendor-scripts", "vendor-fonts", "test"]
 gulp.task "build", ["build-all"]
 
 # WATCH TASKS
@@ -123,8 +123,7 @@ gulp.task "watch-scripts", ->
   gulp.watch cfg.scriptsSrc, ["build-scripts"], (e) ->
     console.log e
 
-gulp.task "watch-all", ["livereload", "watch-styles", "watch-templates", "watch-scripts", "watch-tests", "build"], ->
-  test()
+gulp.task "watch-all", ["livereload", "watch-styles", "watch-templates", "watch-scripts", "watch-tests", "build"]
 
 gulp.task "watch", ["watch-all"]
 

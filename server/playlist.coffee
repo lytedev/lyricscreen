@@ -11,7 +11,7 @@ class Playlist
     @songs = [
       new Song()
     ]
-
+    @file = ""
     @currentSongId = 0
 
   setTitle: (newTitle = "Default Playlist") ->
@@ -154,9 +154,21 @@ class Playlist
       if l.trim() != ""
         @addSong new Song().loadFromFile(path.join(songDir, l + ".txt"))
 
+    @file = f
+
     this
 
+  saveToFile: (f) ->
+    content = @title + "\n\n"
+    for song in @songs
+      content += path.basename(song.file, ".txt") + "\n"
+    @file = f
+    console.log content
+    fs.writeFileSync(f, content, 'utf8')
 
+  save: ->
+    if @file == "" then return false
+    @saveToFile(@file)
 
 module.exports = {
   Playlist: Playlist
