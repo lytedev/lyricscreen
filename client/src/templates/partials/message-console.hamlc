@@ -1,7 +1,0 @@
--# #counter
--#   %li Verse ID: {{ getCurrentVerseId() }}
--#   %li Song ID: {{ getCurrentSongId() }}
--#   %li Frozen: {{ state.frozen }}
--#   %li Blank: {{ state.blank }}
-
--# Map: {{ getCurrentSongMap() }} Map

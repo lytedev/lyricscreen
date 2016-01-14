@@ -76,6 +76,7 @@ nav.primary
   left: 0
   right: 0
   z-index: 1000
+  max-width: 1000px
 
   display: flex
   flex-wrap: wrap
@@ -87,9 +88,9 @@ nav.primary
     justify-content: center
     align-items: center
 
-    @media screen and (min-width: $desktop-breakpoint)
-      width: 10%
-      height: 100%
+    @media screen and (max-width: $desktop-breakpoint)
+      width: 10% !important
+      height: 100% !important
 
     a
       width: 100%

@@ -1,3 +1,5 @@
+process.env.NODE_ENV = "test"
+
 chai = require 'chai'
 assert = chai.assert
 
@@ -103,12 +105,18 @@ describe 'Playlist loaded from file', ->
   it 'handles repeat and missing map keys', ->
     song = playlist.getCurrentSong()
     verses = song.getCurrentMappedVerses()
+    map = song.getCurrentMap()
+    map.jumpToVerse(2)
     assert.equal verses[5].name, "Empty because this key doesn't exist"
     assert.equal verses[5].content, ""
     assert.equal verses[0].name, "Second Verse"
     assert.equal verses[0].content, "This is the second test verse\nIn the second test song"
     assert.equal verses[2].name, "Repeat"
     assert.equal verses[2].content, "This is the first test verse\nIn the first test song"
+
+    # properly test repeat
+    assert.equal verses[2].name, "Repeat"
+    assert.equal playlist.getCurrentVerseContent(), "This is the first test verse\nIn the first test song"
 
 describe 'Default song', ->
   song = new Song()

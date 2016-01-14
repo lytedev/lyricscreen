@@ -1,134 +1,165 @@
-gulp    = require 'gulp'
-coffee  = require 'gulp-coffee'
-stylus  = require 'gulp-stylus'
-hamlc   = require 'gulp-haml-coffee'
-reload  = require 'gulp-livereload'
-mocha   = require 'gulp-mocha'
-fs      = require 'fs'
+# REQUIRES
 
-fork    = require('child_process').fork
+dotenv = require("dotenv").load()
+gulp = require "gulp"
+jade = require "gulp-jade"
+coffee = require "gulp-coffee"
+stylus = require "gulp-stylus"
+reload = require "gulp-livereload"
+plumber = require "gulp-plumber"
+image = require "gulp-image"
+mocha = require "gulp-mocha"
+nodemon = require "nodemon"
+path = require "path"
 
-packageDetails = JSON.parse fs.readFileSync 'package.json', 'utf8'
-templateContext = {
-  title: packageDetails.name
-  version: packageDetails.version
-}
+fork = require("child_process").fork
 
-console.log "Task Runner for", packageDetails.name, "version", packageDetails.version
+# TASK AND DEPLOYMENT CONFIGURATION
 
-clientBuildDir = './client/build/'
+if not process.env.NODE_ENV?
+  process.env.NODE_ENV = "production"
+
+appDir = "./client/"
+appSrcDir = appDir + "src/"
+appPublicDir = appDir + "build/"
+
 cfg =
-  templateSrc: [
-    './client/src/templates/display.hamlc'
-    './client/src/templates/index.hamlc'
-  ]
-  templateWatch: [
-    './client/src/templates/**/*.hamlc'
-  ]
-  templateDest: clientBuildDir
-  styleSrc: [
-    './client/src/stylus/style.styl'
-  ]
-  styleWatch: [
-    './client/src/stylus/**/*.styl'
-  ]
-  styleDest: clientBuildDir + "css/"
-  vendorScriptSrc: [
-    './bower_components/angular-websocket/angular-websocket.min.js'
-    './bower_components/angular/angular.min.js'
-  ]
-  vendorScriptDest: clientBuildDir + "js/"
-  scriptSrc: [
-    './client/src/coffeescripts/client.coffee'
-  ]
-  scriptWatch: [
-    './client/src/coffeescripts/**/*.coffee'
-  ]
-  scriptDest: clientBuildDir + "js/"
-  # imgSrc: './public/img/**/*.*'
-  # imgDest: clientBuildDir + 'img/'
-  fontSrc: [
-    'bower_components/font-awesome-stylus/fonts/*'
-    'bower_components/lato/font/**/*'
-  ]
-  fontDest: clientBuildDir + 'fonts/'
-  testSrc: [
-    './test/**/*.coffee'
-  ]
-  serverSrc: './server/**/*.coffee'
+  stylesheetsSrc: [appSrcDir + "css/app.styl"]
+  stylesheetsDest: appPublicDir + "css/"
+  pagesSrc: [appSrcDir + "pages/**/*.jade"]
+  pagesDest: appPublicDir
+  imagesSrc: [appSrcDir + "img/**/*.+(png|jpg|gif|ico|swf)"]
+  imagesDest: appPublicDir + "img/"
+  scriptsSrc: [appSrcDir + "js/**/*.coffee"]
+  scriptsDest: appPublicDir + "js/"
 
-gulp.task 'build-templates', ->
-  gulp.src cfg.templateSrc
-    .pipe hamlc locals: templateContext
-    .pipe gulp.dest cfg.templateDest
-    .pipe reload()
+  testSrc: ["./test/**/*.coffee"]
 
-gulp.task 'watch-templates', ->
-  gulp.watch cfg.templateWatch, ['build-templates']
+  vendorFontSrc: ["./bower_components/lato/font/**/*.*", "./bower_components/Font-Awesome-Stylus/fonts/**/*.*"]
+  vendorFontDest: appPublicDir + "font/"
+  vendorScriptsSrc: ["./bower_components/vue/dist/vue.min.js"]
+  vendorScriptsDest: appPublicDir + "js/vendor/"
 
-gulp.task 'build-styles', ->
-  gulp.src cfg.styleSrc
-    .pipe stylus()
-    .pipe gulp.dest cfg.styleDest
-    .pipe reload()
+  templatesSrc: [appSrcDir + "pages/**/*.jade", appSrcDir + "partials/**/*.jade"]
+  stylesSrc: [appSrcDir + "css/**/*.styl"]
 
-gulp.task 'watch-styles', ->
-  gulp.watch cfg.styleWatch, ['build-styles']
+  serverExec: "coffee"
+  serverIndex: path.join __dirname, "server/app.coffee"
+  serverWatch: [path.join __dirname, "server/"]
 
-gulp.task 'build-scripts', ->
-  gulp.src cfg.vendorScriptSrc
-    .pipe gulp.dest cfg.vendorScriptDest
+# BUILD TASKS
 
-  gulp.src cfg.scriptSrc
-    .pipe coffee()
-    .pipe gulp.dest cfg.scriptDest
-    .pipe reload()
+buildPages = ->
+  gulp.src(cfg.pagesSrc)
+    .pipe(plumber())
+    .pipe(jade())
+    .pipe(gulp.dest(cfg.pagesDest))
+    .pipe(reload())
 
-gulp.task 'watch-tests', ->
-  gulp.watch [cfg.testSrc, cfg.serverSrc], ['test']
+buildStylesheets = ->
+  gulp.src(cfg.stylesheetsSrc)
+    .pipe(plumber())
+    .pipe(stylus())
+    .pipe(gulp.dest(cfg.stylesheetsDest))
+    .pipe(reload())
 
-gulp.task 'watch-scripts', ->
-  gulp.watch cfg.scriptWatch, ['build-scripts']
+buildImages = ->
+  gulp.src(cfg.imagesSrc)
+    .pipe(plumber())
+    .pipe(image())
+    .pipe(gulp.dest(cfg.imagesDest))
+    .pipe(reload())
 
-# gulp.task 'build-images', ->
-#   gulp.src cfg.imgSrc
-#     .pipe gulp.dest cfg.imgDest
-#     .pipe reload()
+buildScripts = ->
+  gulp.src(cfg.scriptsSrc)
+    .pipe(plumber())
+    .pipe(coffee())
+    .pipe(gulp.dest(cfg.scriptsDest))
+    .pipe(reload())
 
-# gulp.task 'watch-images', ->
-#   gulp.watch cfg.imgSrc, ['build-images']
+buildVendorFonts = ->
+  gulp.src(cfg.vendorFontSrc)
+    .pipe(plumber())
+    .pipe(gulp.dest(cfg.vendorFontDest))
+    .pipe(reload())
 
-gulp.task 'build-fonts', ->
-  gulp.src(cfg.fontSrc)
-    .pipe gulp.dest cfg.fontDest
-    .pipe reload()
+buildVendorScripts = ->
+  gulp.src(cfg.vendorScriptsSrc)
+    .pipe(plumber())
+    .pipe(gulp.dest(cfg.vendorScriptsDest))
+    .pipe(reload())
 
-gulp.task 'watch-fonts', ->
-  gulp.watch cfg.fontSrc, ['build-fonts']
+gulp.task "build-pages", buildPages
+gulp.task "build-stylesheets", buildStylesheets
+gulp.task "build-images", buildImages
+gulp.task "build-scripts", buildScripts
 
-gulp.task 'livereload', ->
-  reload.listen({quiet: true})
+gulp.task "vendor-fonts", buildVendorFonts
+gulp.task "vendor-scripts", buildVendorScripts
 
-gulp.task 'build', ['build-templates', 'build-styles', 'build-scripts', 'build-fonts'] # , 'build-images']
+gulp.task "build-all", ["build-stylesheets", "build-pages", "build-images", "build-scripts", "vendor-scripts", "vendor-fonts"]
+gulp.task "build", ["build-all"]
 
-gulp.task 'watch', ['livereload', 'build', 'watch-templates', 'watch-styles', 'watch-scripts', 'watch-fonts', 'watch-tests'], -> # , 'watch-images']
+# WATCH TASKS
+# Note: Watch tasks should call the respective build tasks!
+
+gulp.task "watch-templates", ->
+  gulp.watch cfg.templatesSrc, ["build-pages"], (e) ->
+    console.log e
+
+gulp.task "watch-styles", ->
+  gulp.watch cfg.stylesSrc, ["build-stylesheets"], (e) ->
+    console.log e
+
+gulp.task "watch-images", ->
+  gulp.watch cfg.imagesSrc, ["build-images"], (e) ->
+    console.log e
+
+gulp.task "watch-tests", ["test"], ->
+  gulp.watch cfg.testSrc, ["test"], (e) ->
+    console.log e
+
+gulp.task "watch-scripts", ->
+  gulp.watch cfg.scriptsSrc, ["build-scripts"], (e) ->
+    console.log e
+
+gulp.task "watch-all", ["livereload", "watch-styles", "watch-templates", "watch-scripts", "watch-tests", "build"], ->
   test()
+
+gulp.task "watch", ["watch-all"]
+
+# MISC/DEVELOPMENT TASKS
+
+gulp.task "livereload", ->
+  reload.listen { quiet: true }
 
 test = ->
-  gulp.src cfg.testSrc
-    .pipe mocha()
+  gulp.src(cfg.testSrc)
+    .pipe(plumber())
+    .pipe(mocha())
 
-gulp.task 'test', ->
+gulp.task "test", ->
   test()
 
-gulp.task 'default', ['build', 'test']
-
 serve = ->
-  fork 'server/app.coffee', ''
+  nodemonOptions =
+    execMap:
+      js: cfg.serverExec
+    script: cfg.serverIndex
+    watch: cfg.serverWatch
+    ext: "noop"
+  nodemon(nodemonOptions).on("restart", ->
+    console.log "Relaunching server..."
+  )
 
-gulp.task 'serve', (cb) ->
+gulp.task "serve", ->
   serve()
 
-gulp.task 'watch-serve', ['watch'], (cb) ->
+gulp.task "watch-serve", ["watch"], ->
   serve()
+
+if process.env.NODE_ENV == "production"
+  gulp.task "default", ["build-all", "test"]
+else
+  gulp.task "default", ["watch-serve"]
 

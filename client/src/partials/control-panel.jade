@@ -1,0 +1,40 @@
+#control-panel
+  .control-panel-button
+    a(href="" ng-click="previousSong()" data-click-keyboard-shortcut="c37c38")
+      i.fa.fa-step-backward
+
+  .control-panel-button
+    a(href="" ng-click="previousVerse()" data-click-keyboard-shortcut="373833")
+      i.fa.fa-backward
+
+  .control-panel-button
+    a(href="" ng-click="toggleBlank()" title="{{ state.blank ? 'Unblank all displays' ='Make all displays blank'}}" data-click-keyboard-shortcut="3211627")
+      i.fa(ng-class="{'fa-pause'=!state.blank 'fa-play'=state.blank}")
+
+  .control-panel-button
+    a(href="" ng-click="nextVerse()" data-click-keyboard-shortcut="394034")
+      i.fa.fa-forward
+
+  .control-panel-button
+    a(href="" ng-click="nextSong()" data-click-keyboard-shortcut="c39c40")
+      i.fa.fa-step-forward
+
+  .control-panel-button
+    a(href="" ng-click="jumpToPlaylistBeginning()" data-click-keyboard-shortcut="cs37cs38")
+      i.fa.fa-fast-backward
+
+  .control-panel-button
+    a(href="" ng-click="toggleFrozen()" title="{{ state.frozen ? 'Unfreeze displays' ='Freeze displays' }}" data-click-keyboard-shortcut="70190")
+      i.fa(ng-class="{'fa-toggle-off'=state.frozen 'fa-toggle-on'=!state.frozen}")
+
+  .control-panel-button
+    a(href="" ng-click="toggleMenu()" data-click-keyboard-shortcut="")
+      i.fa.fa-bars(ng-class="{'active'=mainMenuShowing}")
+
+  .control-panel-button
+    a(href="" ng-click="reloadPlaylist()" data-click-keyboard-shortcut="81")
+      i.fa.fa-refresh
+
+  .control-panel-button
+    a(href="" ng-click="jumpToPlaylistEnd()" data-click-keyboard-shortcut="cs39cs40")
+      i.fa.fa-fast-forward

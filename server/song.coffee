@@ -132,11 +132,6 @@ class Song
 
     defaultMapData.push "@blank"
     @addMap "@default", new Map("@default", defaultMapData)
-
-    console.log JSON.stringify defaultMapData
-
-    console.log JSON.stringify(this, null, "  ")
-
     this
 
 

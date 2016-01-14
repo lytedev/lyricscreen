@@ -1,8 +1,6 @@
 express = require 'express'
 ws = require 'express-ws'
-http = require 'http'
 path = require 'path'
-yaml = require 'js-yaml'
 fs = require 'fs'
 
 app = express()
@@ -12,7 +10,6 @@ default_port = 3000
 port = default_port
 clientSourceDir = "../client/build"
 
-http_server = http.createServer app
 websocket = ws app
 
 # allow really hackish friendly urls
@@ -41,7 +38,6 @@ state =
 state.playlists.default.addSong(new Song("Song 2"))
 
 defaultPlaylistFile = path.join(playlistDir, "default.txt")
-console.log defaultPlaylistFile
 if fs.existsSync(defaultPlaylistFile)
   console.log "Loading default playlist..."
   state.playlists.default = new Playlist().loadFromFile(defaultPlaylistFile)
@@ -141,13 +137,13 @@ app.ws '/admin', (ws, req) ->
 
 app.ws '/moderator', (ws, req) ->
   ws.on 'message', (msg) ->
-    console.log msg
+    console.log "Moderator Message:", msg
 
   console.log 'Connection: moderator socket'
 
 app.ws '/display', (ws, req) ->
   ws.on 'message', (msg) ->
-    console.log msg
+    console.log "Display Message:", msg
 
 #   console.log 'Connection: display socket'
 
@@ -161,7 +157,6 @@ module.exports = {
   default_port
   port
   clientSourceDir
-  http_server
   websocket
 }
 

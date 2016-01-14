@@ -1,9 +1,4 @@
 Default Playlist
 
-Leaning on the Everlasting Arms
-Apostles Creed
-Divine Romance
-Holy Spirit
-Silent Night
-Little Drummer Boy
-
+Default Test Song 1
+Default Test Song 2

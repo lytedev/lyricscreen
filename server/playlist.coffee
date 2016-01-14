@@ -63,8 +63,9 @@ class Playlist
     return '' if not m? or !m
     cv = m.getCurrentVerse()
     return '' if not cv? or !cv
-    if cv of s.verses
-      return s.verses[cv]
+    for verse in s.getCurrentMappedVerses()
+      if cv == verse.name
+        return s.verses[cv]
     return ''
 
   # song removal
