@@ -1,16 +1,16 @@
 doctype html
 html(ng-app="LyricScreen")
   head
-    include ./client/src/templates/partials/header.hamlc
+    include ../partials/header.hamlc
 
   body(ng-controller="LyricScreenCtrl")
-    include ./client/src/templates/partials/main-menu.hamlc
-    include ./client/src/templates/partials/slide-grid.hamlc
-    include ./client/src/templates/partials/control-panel.hamlc
-    include ./client/src/templates/partials/message-console.hamlc
-    include ./client/src/templates/partials/display-preview.hamlc
+    include ../partials/main-menu.hamlc
+    include ../partials/slide-grid.hamlc
+    include ../partials/control-panel.hamlc
+    include ../partials/message-console.hamlc
+    include ../partials/display-preview.hamlc
 
     script(src="/js/client.js")
 
-    include ./client/src/templates/partials/footer.hamlc
+    include ../partials/footer.hamlc
 
