@@ -104,6 +104,10 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   $scope.previousSong = ->
     LyricScreenService.send type: "previous song"
 
+  $scope.gotoSong = (songId) ->
+    console.log "Going to song...", songId
+    LyricScreenService.send type: "goto song", songId: songId
+
   $scope.nextVerse = ->
     LyricScreenService.send type: "next verse"
 

@@ -11,10 +11,13 @@
 #menu-song.sidemenu(ng-class="{'show': menus.song.showing}")
   .menu-superheader Song
   .menu-header {{ menus.song.song.title }}
+  a.menu-item(ng-click="gotoSong(menus.song.songId)") Jump to Song
   a.menu-item(ng-click="manageSong()") Edit...
   a.menu-item(ng-click="saveSong()") Save
   a.menu-item(ng-click="saveSong()") Save As...
   a.menu-item(ng-click="removeSongFromPlaylist(menus.song.songId); toggleMenu('songlist')") Remove from Playlist
+  .menu-separator
+  a.menu-item(ng-click="toggleMenu('songlist')") Back to Songlist
   .menu-separator
   a.menu-item(ng-click="closeMenus()") Close Menu
 
