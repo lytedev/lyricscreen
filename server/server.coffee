@@ -123,6 +123,25 @@ app.ws '/admin', (ws, req) ->
         p.getCurrentSong().getCurrentMap().jumpToVerse curVerse
         broadcastState()
 
+      if data.type == "remove song from playlist"
+        p = state.playlists[state.currentPlaylistKey]
+        if data.songId?
+          # wait to check for invalid songId
+        else # use the current songId
+          data.songId = p.currentSongId
+        if data.songId < 0 or data.songId >= p.songs.length
+          wsSendObject ws, "save song error",
+            message: "Invalid songId"
+        else
+          p.removeSong(data.songId)
+          broadcastState()
+
+      if data.type == "clear playlist"
+        p = state.playlists[state.currentPlaylistKey]
+        while p.getCurrentSong() != false
+          p.removeCurrentSong()
+        broadcastState()
+
       if data.type == "clear playlist"
         p = state.playlists[state.currentPlaylistKey]
         while p.getCurrentSong() != false
