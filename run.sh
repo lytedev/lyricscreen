@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-coffee ./server/server.coffee
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+coffee "$SCRIPTPATH/server/server.coffee"
