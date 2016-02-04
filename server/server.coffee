@@ -148,6 +148,18 @@ app.ws '/admin', (ws, req) ->
           p.removeCurrentSong()
         broadcastState()
 
+      if data.type == "goto song"
+        p = state.playlists[state.currentPlaylistKey]
+        if not data.songId?
+          wsSendObject ws, "goto song error",
+            message: "No songId provided"
+        if data.songId < 0 or data.songId >= p.songs.length
+          wsSendObject ws, "goto song error",
+            message: "Invalid songId"
+        else
+          p.gotoSong data.songId
+          broadcastState()
+
       if data.type == "save song"
         p = state.playlists[state.currentPlaylistKey]
         if data.songId?
