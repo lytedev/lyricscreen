@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=LyricScreen
+Exec=terminal --execute "sh ~/Applications/LyricScreen/run.sh"
+Icon=~/Applications/LyricScreen/client/src/img/icon.png
+Comment=Lyrics management and display server
+Terminal=false
+Categories=Application;Development;Utility;
+StartupNotify=false
