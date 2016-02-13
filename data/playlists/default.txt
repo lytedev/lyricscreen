@@ -1,9 +1,6 @@
 Default Playlist
 
-Glory
-Be Thou My Vision
-Apostles Creed
-I Wonder
-Amazing Love
-Unashamed
+Default Test Song 1
+Default Test Song 2
+Default Test Song 1
 
