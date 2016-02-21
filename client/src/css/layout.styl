@@ -157,6 +157,19 @@ nav.primary
 
     transition: background-color 0.2s ease
 
+    &.menu-item-no-action
+      cursor default
+
+      &:hover
+        cursor default
+        background inherit
+
+    &.menu-item-error
+      background rgba(255, 0, 0, 0.2)
+
+      &.menu-item-no-action:hover
+        background rgba(255, 0, 0, 0.2)
+
     &:hover
       cursor: pointer
       background: #444

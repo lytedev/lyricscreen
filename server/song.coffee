@@ -82,7 +82,12 @@ class Song
     @verses = {}
 
     # load file, split off header
-    contents = fs.readFileSync f, 'utf8'
+    contents = ""
+    try
+      contents = fs.readFileSync f, 'utf8'
+    catch error
+      console.log "Could not load Song", f, " (could not open file)"
+      return false
     contents = contents.replace(/\r?\n\r?[\r?\n\r?]+/g, "\n\n").trim() # condense extra extra new lines
     data = contents.split /\r?\n\r?\r?\n\r?/
 

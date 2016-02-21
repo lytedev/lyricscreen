@@ -24,8 +24,12 @@
 #menu-songlist.sidemenu(ng-class="{'show': menus.songlist.showing}")
   .menu-superheader Songlist
   .menu-header Playlist: {{ state.currentPlaylistKey }}
+  //- TODO: Reorderable songs
   .song-menu-section(ng-repeat="(songId, song) in state.playlists[state.currentPlaylistKey].songs")
-    a.menu-item(ng-click="toggleSongMenu(songId)") {{ song.title }}
+    a.menu-item.menu-item-reorderable(ng-click="toggleSongMenu(songId)") {{ song.title }}
+  .menu-item.menu-item-no-action.menu-item-error(ng-show="state.playlists[state.currentPlaylistKey].songs.length < 1") Playlist is Empty
+  .menu-separator
+  a.menu-item(ng-click="addSong()") Add Song...
   .menu-separator
   a.menu-item(ng-click="closeMenus()") Close Menu
 

@@ -132,6 +132,9 @@ angular.module("LyricScreen.controllers").controller "LyricScreenCtrl", ($scope,
   $scope.savePlaylist = ->
     LyricScreenService.send type: "save playlist"
 
+  $scope.removeSongFromPlaylist = (songId) ->
+    LyricScreenService.send type: "remove song from playlist", songId: songId
+
   $scope.toggleSongMenu = (songId) ->
     $scope.menus.song.song = $scope.state.playlists[$scope.state.currentPlaylistKey].songs[songId]
     $scope.menus.song.songId = songId

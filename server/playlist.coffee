@@ -126,7 +126,12 @@ class Playlist
     @songs = []
 
     # load file, split off header
-    contents = fs.readFileSync f, 'utf8'
+    contents = ""
+    try
+      contents = fs.readFileSync f, 'utf8'
+    catch error
+      console.log "Could not load Playlist", f, " (could not open file)"
+      return false
     contents = contents.replace(/\#.*/g, '').trim()
     contents = contents.replace(/\r?\n\r?[\r?\n\r?]+/g, "\n\n").trim() # condense extra extra new lines
     data = contents.split /\r?\n\r?\r?\n\r?/
@@ -152,7 +157,9 @@ class Playlist
     data = data.join("\n").trim().split("\n")
     for l in data
       if l.trim() != ""
-        @addSong new Song().loadFromFile(path.join(songDir, l + ".txt"))
+        song = new Song().loadFromFile(path.join(songDir, l + ".txt"))
+        if song
+          @addSong song
 
     @file = f
 

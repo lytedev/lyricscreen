@@ -3,4 +3,5 @@ bower_components
 client/build
 *.log
 data
+.env
 
