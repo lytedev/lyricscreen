@@ -50,6 +50,15 @@ angular.module "LyricScreen", [
   "LyricScreen.services"
 ]
 
+angular.module('filters', [])
+angular.module('filters.stringUtils', [])
+  .filter 'alphanum', [ ->
+    return (str) ->
+      if not angular.isString(str) then return str
+      return str.replace /t/g, ''
+  ]
+
+
 angular.module "LyricScreen.controllers", []
 angular.module "LyricScreen.services", []
 
