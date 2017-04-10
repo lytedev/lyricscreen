@@ -85,6 +85,7 @@ class Song
     contents = ""
     try
       contents = fs.readFileSync f, 'utf8'
+      console.log "Loaded song file", f
     catch error
       console.log "Could not load Song", f, " (could not open file)"
       return false
