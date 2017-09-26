@@ -157,7 +157,7 @@ class Playlist
     data = data.join("\n").trim().split("\n")
     for l in data
       if l.trim() != ""
-        song = new Song().loadFromFile(path.join(songDir, l + ".txt"))
+        song = new Song().loadFromFile(path.join(songDir, l.trim() + ".txt"))
         if song
           @addSong song
 
